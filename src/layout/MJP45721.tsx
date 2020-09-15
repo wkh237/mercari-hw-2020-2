@@ -50,30 +50,28 @@ const colors = tinycolor(baseColor)
   .tetrad()
   .map((c) => c.toHexString());
 export default () => (
-  <MJP45721
-    overlay=""
-    color={[baseColor, ...colors]}
-    element={[
-      {
-        type: "text",
-        percentage: 20,
-        position: "left",
-        backgroundImage: "xx",
-        values: ["新規登錄者", "限定"]
-      },
-      {
-        type: "text",
-        percentage: 20,
-        position: "left",
-        values: ["出品", "するだけで"],
-        fonts: ["38px", "15px"]
-      },
-      {
-        type: "pointYen",
-        percentage: 20,
-        position: "left",
-        values: ["最大", "1,000", "GET!"]
-      }
-    ]}
-  />
+  <>
+    <MJP45721
+      overlay=""
+      color={[baseColor, ...colors]}
+      element={[
+        {
+          type: "text",
+          position: "left",
+          values: ["新規登錄者", "限定"]
+        },
+        {
+          type: "text",
+          position: "left",
+          values: ["出品", "するだけで"],
+          fonts: ["38px", "15px"]
+        },
+        {
+          type: "pointYen",
+          position: "left",
+          values: ["最大", "1,000", "GET!"]
+        }
+      ]}
+    />
+  </>
 );
