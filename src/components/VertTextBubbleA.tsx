@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import tinycolor from "tinycolor2";
 
 export const meta: ElementMeta = {
   type: "text",
