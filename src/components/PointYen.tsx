@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+export const meta: ElementMeta = {
+  type: "text",
+  percentage: 63,
+  position: "any",
+  inputs: ["text", "text", "text", "text"]
+};
+
 const StyledPointYen = styled.div<{ color: string }>`
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
