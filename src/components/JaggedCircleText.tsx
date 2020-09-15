@@ -12,7 +12,7 @@ export const meta: ElementMeta = {
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$background'],
-  values: ['このり', '3', '日'],
+  values: ['のこり', '3', '日'],
 };
 
 const JaggedCircleText = ({ colors, values, hasBorder }: ElementPropDesciptor) => {
