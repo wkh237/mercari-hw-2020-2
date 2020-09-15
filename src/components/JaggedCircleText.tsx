@@ -3,21 +3,25 @@ import { jaggedCircle } from "../utils/svg";
 import styled from "styled-components";
 
 export const meta: ElementMeta = {
-  position: "any",
+  position: "left",
   type: "text",
   percentage: 14.3,
   inputs: ["text"]
 };
 
+export const defaultProps = {
+  colors: ["$background", "$foreground"],
+  values: ["れーディス", "HOT", "アイテム"]
+};
+
 const JaggedCircleText = ({
-  bgColor,
-  color,
+  colors,
   values
 }: {
   values: string[];
-  bgColor: string;
-  color: string;
+  colors: string[];
 }) => {
+  const [bgColor, color] = colors;
   return (
     <StyledJaggedCircleTextA>
       <StyledJaggedCircle viewBox="0 0 20 20">

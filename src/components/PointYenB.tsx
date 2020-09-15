@@ -3,19 +3,26 @@ import styled from "styled-components";
 
 export const meta: ElementMeta = {
   type: "text",
-  percentage: 63,
+  percentage: 45,
   position: "any",
-  inputs: ["text", "text", "text", "text"]
+  inputs: ["text", "text"]
 };
 
-const StyledPointYen = styled.div<{ color: string }>`
+export const defaultProps = {
+  values: ["最大", "1000"]
+};
+
+const StyledPointYen = styled.div<{ colors: string[] }>`
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  color: ${(props) => props.color || "red"};
+  color: ${(props) => props.colors[2] || "red"};
   display: flex;
   align-items: center;
+  justify-content: space-around;
   flex: 1;
+  max-width: ${meta.percentage}%;
+  min-width: ${meta.percentage}%;
 `;
 
 const StyledValue = styled.div`
@@ -37,21 +44,22 @@ const StyledPointYenWord = styled.div`
   }
 `;
 
-const StyledPointYenAction = styled.div`
-  font-size: 50px;
-  font-weight: 700;
-`;
-
 const StyledPointYenAdjective = styled.div`
   writing-mode: vertical-lr;
   font-size: 25px;
   font-weight: 700;
 `;
 
-const PointYen = ({ values, color }: { values: string[]; color: string }) => {
-  const [left, amount, right] = values;
+const PointYenB = ({
+  values,
+  colors
+}: {
+  values: string[];
+  colors: string[];
+}) => {
+  const [left, amount] = values;
   return (
-    <StyledPointYen color={color}>
+    <StyledPointYen colors={colors}>
       {left && <StyledPointYenAdjective>{left}</StyledPointYenAdjective>}
       <StyledValue>{amount}</StyledValue>
       <StyledPointYenWord>
@@ -61,9 +69,8 @@ const PointYen = ({ values, color }: { values: string[]; color: string }) => {
         </div>
         <div>ポイント</div>
       </StyledPointYenWord>
-      {right && <StyledPointYenAction>{right}</StyledPointYenAction>}
     </StyledPointYen>
   );
 };
 
-export default PointYen;
+export default PointYenB;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import tinycolor from "tinycolor2";
 
 export const meta: ElementMeta = {
   type: "text",
@@ -10,10 +11,10 @@ export const meta: ElementMeta = {
 
 export const defaultProps = {
   color: "$secondary",
-  values: ["かしこく", "みつけて"]
+  values: ["出品", "するだけで"]
 };
 
-const StackTextSmallA = ({
+const StackTextBigSmallA = ({
   color,
   values,
   singleColor
@@ -28,6 +29,13 @@ const StackTextSmallA = ({
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>
   );
+};
+
+const fontColorGen = (baseColor: string) => {
+  const colors = tinycolor(baseColor)
+    .tetrad()
+    .map((c) => c.toHexString());
+  return colors;
 };
 
 const underline = `data:image/svg+xml;base64,${btoa(
@@ -59,11 +67,15 @@ const StyledContainer = styled.div<{
   min-width: ${meta.percentage}%;
   padding: 4px;
   div:nth-child(1) {
-    font-size: 20px;
+    text-align: center;
+    font-size: 2.5em;
+    color: ${(props) => fontColorGen(props.color)[1]};
     line-height: 100%;
   }
   div:nth-child(2) {
-    font-size: 20px;
+    text-align: center;
+    font-size: 1em;
+    color: ${(props) => fontColorGen(props.color)[3]};
   }
   > div {
     position: relative;
@@ -72,4 +84,4 @@ const StyledContainer = styled.div<{
   }
 `;
 
-export default StackTextSmallA;
+export default StackTextBigSmallA;

@@ -8,6 +8,11 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
+export const defaultProps = {
+  color: "$foreground",
+  values: ["販売手数料"]
+};
+
 const LargeTextB = ({ color, values }: { color: string; values: string[] }) => (
   <StyledContainer color={color}>{values[0]}</StyledContainer>
 );

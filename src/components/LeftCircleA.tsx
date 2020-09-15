@@ -18,6 +18,11 @@ const LeftCircleA = ({
   </StyledContainer>
 );
 
+export const defaultProps = {
+  color: "$primary",
+  values: ["れーディス", "HOT", "アイテム"]
+};
+
 export const meta: ElementMeta = {
   type: "text",
   percentage: 20,

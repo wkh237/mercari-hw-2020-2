@@ -6,10 +6,11 @@ import MJP45721 from "./layout/MJP45721";
 import MJP48801 from "./layout/MJP48801";
 import CouponLayoutMJP34066 from "./layout/CouponLayout-MJP-34046";
 import Background from "./layout/Background";
-// test
+import BackgroundLayer from "./components/BackgroundLayer";
+import Randomize from "./layout/Randomize";
 
 const Container = styled.div`
-  border: 4px solid #efefef;
+  border: 1px solid #000;
   width: 600px;
   height: 100px;
   overflow: hidden;
@@ -25,6 +26,12 @@ export default () => (
     <Container>
       <Router>
         <Switch>
+          <Route path="/banners/RandomImage">
+            <BackgroundLayer />
+          </Route>
+          <Route path="/">
+            <Randomize />
+          </Route>
           <Route path="/banners/MJP48801">
             <MJP48801 />
           </Route>

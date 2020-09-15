@@ -1,0 +1,69 @@
+import React from "react";
+import styled from "styled-components";
+
+export const meta: ElementMeta = {
+  type: "text",
+  percentage: 40,
+  position: "any",
+  inputs: ["text"]
+};
+
+export const defaultProps = {
+  values: ["1000"]
+};
+
+const StyledPointYen = styled.div<{ colors: string[] }>`
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: ${(props) => props.colors[2] || "red"};
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1;
+  max-width: ${meta.percentage}%;
+  min-width: ${meta.percentage}%;
+`;
+
+const StyledValue = styled.div`
+  font-size: 60px;
+  font-weight: 700;
+`;
+
+const StyledPointYenWord = styled.div`
+  div:first-child {
+    font-size: 32px;
+    font-weight: 700;
+    span:first-child {
+      margin-right: 2px;
+    }
+  }
+  div:nth-child(2) {
+    font-size: 16px;
+    font-weight: 700;
+  }
+`;
+
+const PointYen = ({
+  values,
+  colors
+}: {
+  values: string[];
+  colors: string[];
+}) => {
+  const [amount] = values;
+  return (
+    <StyledPointYen colors={colors}>
+      <StyledValue>{amount}</StyledValue>
+      <StyledPointYenWord>
+        <div>
+          <span>円</span>
+          <span>分</span>
+        </div>
+        <div>ポイント</div>
+      </StyledPointYenWord>
+    </StyledPointYen>
+  );
+};
+
+export default PointYen;

@@ -1,10 +1,10 @@
 import React from "react";
 import LeftRecA, { meta as LeftRecAAMeta } from "../components/LeftRecA";
-import StackTextSmallA, {
-  meta as StackTextSmallAMeta
-} from "../components/StackTextSmallA";
+import StackTextBigSmallA, {
+  meta as StackTextBigSmallAMeta
+} from "../components/StackTextBigSmallA";
 import styled from "styled-components";
-import PointYen from "../components/PointYen";
+import PointYenA from "../components/PointYenA";
 import tinycolor from "tinycolor2";
 
 // source https://github.com/kouzoh/banner.mercari.jp/blob/master/src/2019/12/MJP-45721/banner_01.png
@@ -15,12 +15,8 @@ const MJP45721 = ({ color, element, overlay }: Layout) => {
     <StyledContainer color={color[0]}>
       {overlay && <StyledOverlay src={overlay} />}
       <LeftRecA color={color[0]} values={element[0].values} />
-      <StackTextSmallA
-        values={element[1].values}
-        color={textColor}
-        fonts={element[1].fonts}
-      />
-      <PointYen values={element[2].values} color={textColor} />
+      <StackTextBigSmallA values={element[1].values} color={textColor} />
+      <PointYenA values={element[2].values} color={textColor} />
     </StyledContainer>
   );
 };
@@ -63,8 +59,7 @@ export default () => (
         {
           type: "text",
           position: "left",
-          values: ["出品", "するだけで"],
-          fonts: ["38px", "15px"]
+          values: ["出品", "するだけで"]
         },
         {
           type: "pointYen",
