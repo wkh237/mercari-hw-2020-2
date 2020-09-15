@@ -31,7 +31,7 @@ type LayoutMeta = {
   element: ElementMeta[];
 };
 
-interface BannerPropDesciptor {
+interface ElementPropDesciptor {
   colors?: string[];
   color?: string;
   hasBorder?: boolean;

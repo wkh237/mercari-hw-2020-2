@@ -9,7 +9,7 @@ export const meta: ElementMeta = {
   inputs: [],
 };
 
-export const defaultProps: BannerPropDesciptor = {
+export const defaultProps: ElementPropDesciptor = {
   colors: ['$border'],
   values: []
 };

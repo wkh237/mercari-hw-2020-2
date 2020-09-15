@@ -8,7 +8,7 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
-export const defaultProps: BannerPropDesciptor = {
+export const defaultProps: ElementPropDesciptor = {
   values: ["1000", "GET!"]
 };
 

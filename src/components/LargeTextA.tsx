@@ -8,7 +8,7 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
-export const defaultProps: BannerPropDesciptor = {
+export const defaultProps: ElementPropDesciptor = {
   color: "$foreground",
   values: ["お買い物上手"]
 };

@@ -9,20 +9,22 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
-export const defaultProps: BannerPropDesciptor = {
-  color: "$secondary",
+export const defaultProps: ElementPropDesciptor = {
+  colors: ['$background', '$secondary'],
   values: ["かしこく", "みつけて"]
 };
 
 const StackTextSmallA = ({
-  color,
+  colors,
   values,
-}: {
-  values: string[];
-  color: string;
-}) => {
+}: ElementPropDesciptor) => {
+  const [background, secondary] = colors || [];
+  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
+  if (tinycolor.readability(textColor, background) < 2) {
+    textColor.darken(10)
+  }
   return (
-    <StyledContainer color={tinycolor(color).lighten(15).desaturate(40).toHexString()}>
+    <StyledContainer color={textColor.toHexString()}>
       <StyledBlock>{values[0]}</StyledBlock>
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>
