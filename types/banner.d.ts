@@ -3,7 +3,7 @@ type LayoutInput = "text" | "number";
 
 interface BaseElement {
   percentage: number;
-  position?: "left" | "right" | "any";
+  position?: "left" | "right" | "any" | "center";
   inputs: LayoutInput[];
   values: string[];
 }
@@ -20,7 +20,7 @@ type LayoutElement =
       type: "pointText" | "pointYen";
     } & BaseElement);
 
-type ElementMeta = Omit<LayoutElement, "values">;
+type ElementMeta = Omit<LayoutElement, "values"> & { position: BaseElement['position'] };
 
 type LayoutMeta = {
   // width of border

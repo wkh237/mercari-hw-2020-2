@@ -82,7 +82,7 @@ export default () => {
       if (
         (isFirst && el.meta.position === 'right') ||
         (isLast && el.meta.position === 'left') ||
-        (!isFirst && !isLast && el.meta.position !== 'any')
+        (!isFirst && !isLast && (el.meta.position !== 'any' && el.meta.position !== 'center'))
       ) {
         continue;
       }
