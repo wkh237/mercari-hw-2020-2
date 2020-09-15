@@ -14,9 +14,9 @@ const MJP45721 = ({ color, element, overlay }: Layout) => {
   return (
     <StyledContainer color={color[0]}>
       {overlay && <StyledOverlay src={overlay} />}
-      <LeftRecA color={color[0]} values={element[0].values} />
+      {/* <LeftRecA color={color[0]} values={element[0].values} /> */}
       <StackTextBigSmallA values={element[1].values} color={textColor} />
-      <PointYenA values={element[2].values} color={textColor} />
+      {/* <PointYenA values={element[2].values} color={textColor} /> */}
     </StyledContainer>
   );
 };

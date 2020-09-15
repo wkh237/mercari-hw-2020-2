@@ -10,6 +10,7 @@ export default () => {
   const svg = useRef(null);
   useEffect(() => {
     if (svg.current) {
+      // @ts-ignore
       svg.current.appendChild(svgGenerated);
     }
   }, []);

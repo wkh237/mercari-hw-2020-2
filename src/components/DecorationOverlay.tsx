@@ -48,7 +48,7 @@ const positions = (num: number) => {
   return arr;
 };
 
-export default ({ svg, color, transform }: Props) => {
+export default () => {
   const arr = positions(4);
   return (
     <>

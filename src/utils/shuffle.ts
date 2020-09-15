@@ -1,4 +1,4 @@
-const shuffle = (arr) => {
+const shuffle = (arr: any) => {
   let i;
   let j;
   let temp;

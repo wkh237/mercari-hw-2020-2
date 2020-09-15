@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SVG from "react-inlinesvg";
 
-const StyledSvg = styled(SVG)<{ color?: string; transform?: string }>`
+const StyledSvg = styled(SVG)<{ color?: string; transform?: string; }>`
   fill: ${(props) => props.color};
   path {
     transform: ${(props) => props.transform};

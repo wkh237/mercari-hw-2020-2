@@ -3,7 +3,7 @@ import DecorationOverlay from "../components/DecorationOverlay";
 import BackgroundOverlay from "../components/BackgroundOverlay";
 import { BackgroundOverlays } from "../utils/assets";
 
-export default ({ color }: { color: string }) => {
+export default ({ color }: { color: string; }) => {
   const backgroundOverlay = BackgroundOverlays[1];
   return (
     <div>

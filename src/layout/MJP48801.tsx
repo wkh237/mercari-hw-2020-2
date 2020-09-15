@@ -72,16 +72,16 @@ const MJP48801 = ({ color, element }: Layout) => {
         left="82%"
         size={16}
       />
-      <JaggedCircleText
+      {/* <JaggedCircleText
         color={color[0]}
         bgColor={secondaryColor}
         values={element[0].values}
-      />
-      <VertTextBubbleA
+      /> */}
+      {/* <VertTextBubbleA
         color={color[0]}
         values={element[1].values}
         bgColor={textColor}
-      />
+      /> */}
       <LargeTextB values={element[2].values} color={textColor} />
       <VertTextA values={element[3].values} color={textColor} />
       <LargeTextC values={element[4].values} color={secondaryColor} />

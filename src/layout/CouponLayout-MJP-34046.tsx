@@ -19,7 +19,7 @@ const MJP34046 = ({ color, element, overlay }: Layout) => {
         color={textColor}
         singleColor
       />
-      <CuttingEdge color={color[0]} />
+      {/* <CuttingEdge color={color[0]} /> */}
     </StyledContainer>
   );
 };
