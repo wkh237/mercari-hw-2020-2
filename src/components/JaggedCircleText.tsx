@@ -9,7 +9,7 @@ export const meta: ElementMeta = {
   inputs: ["text"]
 };
 
-export const defaultProps = {
+export const defaultProps: BannerPropDesciptor = {
   colors: ["$foreground", "$background"],
   values: ["このり", "3", "日"]
 };

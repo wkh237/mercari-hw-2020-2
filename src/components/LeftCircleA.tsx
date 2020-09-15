@@ -18,7 +18,7 @@ const LeftCircleA = ({
   </StyledContainer>
 );
 
-export const defaultProps = {
+export const defaultProps: BannerPropDesciptor = {
   color: "$primary",
   values: ["れーディス", "HOT", "アイテム"]
 };

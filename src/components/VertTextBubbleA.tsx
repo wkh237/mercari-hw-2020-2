@@ -14,11 +14,9 @@ export const defaultProps = {
 
 const VertTextBubbleA = ({
   colors,
-  layoutBackground,
   values
 }: {
   colors: string[];
-  layoutBackground: string;
   values: string[];
 }) => {
   const [fg, bg] = colors;

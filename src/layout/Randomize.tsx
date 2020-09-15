@@ -2,7 +2,6 @@ import React from 'react';
 import Elements from '../components';
 import shuffle from '../utils/shuffle';
 import styled from 'styled-components';
-import tinycolor from 'tinycolor2';
 import { getThemeFromColor } from '../utils/colors';
 
 interface RandomLayoutProps {
@@ -34,9 +33,7 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
         const ElementClass = elementDef.default;
         const props = {
           ...elementDef.defaultProps,
-          layoutBackground: tinycolor(colors.primary)
-            .setAlpha(border ? 0.3 : 1)
-            .toHex8String(),
+          hasBorder: border,
           color: replaceColorToken(elementDef.defaultProps.color),
           colors: elementDef.defaultProps.colors
             ? elementDef.defaultProps.colors.map(replaceColorToken)
@@ -48,11 +45,13 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
   );
 };
 
-const StyledContainer = styled.div<{
+interface StyledContainerProps {
   color: string;
   background: string;
   border: boolean;
-}>`
+}
+
+const StyledContainer = styled.div<StyledContainerProps>`
   display: flex;
   flex-direction: row;
   position: relative;
@@ -71,8 +70,6 @@ export default () => {
   let maxIteration = 10000;
   let i = 0;
   const ids = shuffle(Object.keys(Elements));
-  // decide if it has border
-  const hasBorder = Math.random() > 0.5;
   const findCombinations = (availableElementIds: ElementKey[], current: ElementKey[], space: number) => {
     i++;
     if (i > maxIteration) return;
@@ -112,9 +109,20 @@ export default () => {
   };
   findCombinations(ids, [], 100);
   console.log(`${combinations.length} combinations (${maxIteration} iterations)`);
-
-  const banners = ['red', 'yellow', '#0077ff', '#ff5533', '#33cc00'].map((baseColor, i) => {
-    const n = i * ~~(combinations.length / 5);
+  const banners = [
+    'red',
+    'yellow',
+    '#0077ff',
+    '#ff5533',
+    '#33cc00',
+    'red',
+    'yellow',
+    '#0077ff',
+    '#ff5533',
+    '#33cc00',
+  ].map((baseColor, i) => {
+    const n = i * ~~(combinations.length / 10);
+    const hasBorder = i > 4;
     return (
       <DynamicLayout
         key={i}

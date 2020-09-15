@@ -21,7 +21,7 @@ const LeftRecA = ({
   </StyledContainer>
 );
 
-export const defaultProps = {
+export const defaultProps: BannerPropDesciptor = {
   values: ["新規登錄者", "限定"]
 };
 

@@ -26,9 +26,17 @@ type LayoutMeta = {
   // width of border
   border?: number;
   overlay?: string;
+  hasBorder?: boolean;
   // omit values because it's a metadata
   element: ElementMeta[];
 };
+
+interface BannerPropDesciptor {
+  colors?: string[];
+  color?: string;
+  hasBorder?: boolean;
+  values: string[];
+}
 
 interface Layout {
   color: string[];

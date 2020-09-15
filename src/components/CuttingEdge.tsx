@@ -1,16 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import React from 'react';
+import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 3,
-  position: "any",
-  inputs: []
+  position: 'any',
+  inputs: [],
 };
 
-export const defaultProps = {
-  colors: ["$border"]
+export const defaultProps: BannerPropDesciptor = {
+  colors: ['$border'],
+  values: []
 };
 
 const CuttingEdge = ({ colors }: { colors: string[] }) => {
@@ -43,7 +44,7 @@ const StyledCuttingEdge = styled.div<{
   justify-content: space-around;
   > ul {
     padding-inline-start: 20px;
-    color: ${(props) => props.dotColor[3] || "#fff"};
+    color: ${(props) => props.dotColor[3] || '#fff'};
     li {
       margin-top: -8px;
     }
@@ -55,7 +56,7 @@ const StyledCuttingEdge = styled.div<{
     border-radius: 50%;
     position: absolute;
     top: -13px;
-    background-color: ${(props) => props.colors[3] || "#efefef"};
+    background-color: ${(props) => props.colors[3] || '#efefef'};
     right: 20%;
   }
   div:last-child {
@@ -65,7 +66,7 @@ const StyledCuttingEdge = styled.div<{
     border-radius: 50%;
     position: absolute;
     bottom: -13px;
-    background-color: ${(props) => props.colors[3] || "#efefef"};
+    background-color: ${(props) => props.colors[3] || '#efefef'};
     right: 20%;
   }
 `;

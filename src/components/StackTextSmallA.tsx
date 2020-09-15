@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import tinycolor from "tinycolor2";
 
 export const meta: ElementMeta = {
   type: "text",
@@ -8,7 +9,7 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
-export const defaultProps = {
+export const defaultProps: BannerPropDesciptor = {
   color: "$secondary",
   values: ["かしこく", "みつけて"]
 };
@@ -16,14 +17,12 @@ export const defaultProps = {
 const StackTextSmallA = ({
   color,
   values,
-  singleColor
 }: {
   values: string[];
   color: string;
-  singleColor?: boolean;
 }) => {
   return (
-    <StyledContainer color={color}>
+    <StyledContainer color={tinycolor(color).lighten(15).desaturate(40).toHexString()}>
       <StyledBlock>{values[0]}</StyledBlock>
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>
