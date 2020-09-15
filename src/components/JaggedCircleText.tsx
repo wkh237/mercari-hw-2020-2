@@ -10,8 +10,8 @@ export const meta: ElementMeta = {
 };
 
 export const defaultProps = {
-  colors: ["$background", "$foreground"],
-  values: ["れーディス", "HOT", "アイテム"]
+  colors: ["$foreground", "$background"],
+  values: ["このり", "3", "日"]
 };
 
 const JaggedCircleText = ({
@@ -21,26 +21,26 @@ const JaggedCircleText = ({
   values: string[];
   colors: string[];
 }) => {
-  const [bgColor, color] = colors;
+  const [bg, fg] = colors;
   return (
     <StyledJaggedCircleTextA>
       <StyledJaggedCircle viewBox="0 0 20 20">
-        <path d={jaggedCircle(20)} fill={bgColor} />
+        <path d={jaggedCircle(20)} fill={bg} />
       </StyledJaggedCircle>
       <StyledText
-        color={color}
+        color={fg}
         style={{ top: "23%", left: "4%", fontSize: 20 }}
       >
         {values[0]}
       </StyledText>
       <StyledText
-        color={color}
+        color={fg}
         style={{ top: "40%", left: "8%", fontSize: 42 }}
       >
         {values[1]}
       </StyledText>
       <StyledText
-        color={color}
+        color={fg}
         style={{ top: "46%", left: "40%", fontSize: 28 }}
       >
         {values[2]}
@@ -53,6 +53,8 @@ const StyledJaggedCircleTextA = styled.div`
   max-width: ${meta.percentage}%;
   min-width: ${meta.percentage}%;
   position: relative;
+  display: flex;
+  align-self: stretch;
 `;
 
 const StyledText = styled.div<{ color: string }>`

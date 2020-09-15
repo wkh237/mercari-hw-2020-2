@@ -16,6 +16,8 @@ interface RandomLayoutProps {
   elements: Array<{ id: keyof typeof Elements; props: any }>;
 }
 
+type ElementKey = keyof typeof Elements;
+
 const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
   const replaceColorToken = (token: string) => {
     if (token?.startsWith("$")) {
@@ -88,13 +90,13 @@ export default () => {
       ? tinycolor(triadColors[0]).lighten(35).toHexString()
       : triadColors[0]
   };
-  const combinations: string[][] = [];
+  const combinations: Array<ElementKey[]> = [];
   let maxIteration = 300;
   let i = 0;
   const ids = shuffle(Object.keys(Elements));
   const findCombinations = (
-    availableElementIds: string[],
-    current: string[],
+    availableElementIds: ElementKey[],
+    current: ElementKey[],
     space: number
   ) => {
     i++;
@@ -138,6 +140,8 @@ export default () => {
     `${combinations.length} combinations (${maxIteration} iterations)`
   );
   const result = combinations[3];
+  // result[0] = 'JaggedCircleText'
+  // result[1] = 'VertTextBubbleA'
   console.log(
     tinycolor
       .mostReadable(colors.primary, [tinycolor(colors.primary).lighten(10)])
