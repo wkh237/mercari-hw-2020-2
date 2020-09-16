@@ -3,6 +3,7 @@ import Elements from '../components';
 import shuffle from '../utils/shuffle';
 import { Col, Row } from '../styles/Flex';
 import Input from '../Input';
+import styled from 'styled-components';
 
 import 'string_score';
 import { definedThemes } from '../utils/colors';
@@ -10,7 +11,7 @@ import DynamicBanner from './DynamicLayout';
 
 type ElementKey = keyof typeof Elements;
 
-export default () => {
+const Randomize = () => {
   const [userInput, setUserInput] = useState<string>('');
 
   let combinations: Array<ElementKey[]> = [];
@@ -116,11 +117,30 @@ export default () => {
     );
   });
   return (
-    <Row>
-      <Col>{banners}</Col>
-      <Col>
+    <StyledContainer>
+      <StyledLayer>
         <Input setUserInput={setUserInput} />
-      </Col>
-    </Row>
+        <Col>{banners}</Col>
+      </StyledLayer>
+    </StyledContainer>
   );
 };
+
+const StyledLayer = styled(Col)`
+  width: 700px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 16px;
+  padding: 24px;
+  > div {
+    width: 600px;
+  }
+`;
+
+const StyledContainer = styled(Col)`
+  align-items: center;
+  justify-content: center;
+`;
+
+export default Randomize;

@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import Elements from '../components';
 import styled from 'styled-components';
 import DecorationOverlay from '../components/DecorationOverlay';
@@ -63,21 +63,23 @@ interface StyledContainerProps {
 }
 
 const StyledWrapper = styled.div<{ background: string }>`
-  overflow: hidden;
   position: relative;
   background-color: ${(props) => props.background};
+  max-height: 100px;
+  max-width: 600px;
+  overflow: hidden;
 `;
 
 const StyledContainer = styled.div<StyledContainerProps>`
   display: flex;
   flex-direction: row;
   position: relative;
+  justify-content: space-between;
+  align-items: center;
   max-height: 100px;
   min-height: 100px;
   max-width: 600px;
   min-width: 600px;
-  justify-content: space-between;
-  align-items: center;
   border: ${(props) => (props.borderType ? `4px ${props.borderType} ${props.border}` : 'none')};
   padding-left: ${(props) => (props.paddingLeft ? '1%' : '0')};
   padding-right: ${(props) => (props.paddingRight ? '1%' : '0')};

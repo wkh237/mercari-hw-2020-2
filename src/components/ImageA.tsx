@@ -9,7 +9,7 @@ export const meta: ElementMeta = {
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  values: ['https://i.pinimg.com/originals/2d/41/bb/2d41bb997e38a68affc15ad38daf4ae3.png'],
+  values: [require('../assets/imgs/mercari-box.png')],
 };
 
 const ImageA = ({ values }: ElementPropDesciptor) => {
