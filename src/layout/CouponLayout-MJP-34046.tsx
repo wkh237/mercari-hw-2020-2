@@ -65,7 +65,7 @@ export default () => (
         values: ["出品", "するだけで"]
       },
       {
-        type: "pointYen",
+        type: "point",
         position: "left",
         values: ["最大", "1,000"]
       }

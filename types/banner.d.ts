@@ -17,8 +17,11 @@ type LayoutElement =
       backgroundImage?: string;
     } & BaseElement)
   | ({
-      type: "pointText" | "pointYen";
-    } & BaseElement);
+      type: "point";
+    } & BaseElement)
+  | ({
+    type: "cuttingEdge";
+  } & BaseElement)
 
 type ElementMeta = Omit<LayoutElement, "values"> & { position: BaseElement['position'] };
 

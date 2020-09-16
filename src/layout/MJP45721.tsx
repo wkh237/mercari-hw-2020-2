@@ -1,22 +1,19 @@
 import React from "react";
-import LeftRecA, { meta as LeftRecAAMeta } from "../components/LeftRecA";
-import StackTextBigSmallA, {
-  meta as StackTextBigSmallAMeta
-} from "../components/StackTextBigSmallA";
-import styled from "styled-components";
+import LeftRecA from "../components/LeftRecA";
 import PointYenA from "../components/PointYenA";
+import StackTextBigSmallA from "../components/StackTextBigSmallA";
+import styled from "styled-components";
 import tinycolor from "tinycolor2";
 
 // source https://github.com/kouzoh/banner.mercari.jp/blob/master/src/2019/12/MJP-45721/banner_01.png
 
 const MJP45721 = ({ color, element, overlay }: Layout) => {
-  const textColor = tinycolor(color[3]).darken(5).desaturate(25).toHexString();
   return (
     <StyledContainer color={color[0]}>
       {overlay && <StyledOverlay src={overlay} />}
-      {/* <LeftRecA color={color[0]} values={element[0].values} /> */}
-      <StackTextBigSmallA values={element[1].values} color={textColor} />
-      {/* <PointYenA values={element[2].values} color={textColor} /> */}
+      <LeftRecA colors={color} values={element[0].values} />
+      <StackTextBigSmallA values={element[1].values} colors={color} />
+      <PointYenA values={element[2].values} colors={color} />
     </StyledContainer>
   );
 };
@@ -32,16 +29,16 @@ const StyledOverlay = styled.img`
 const StyledContainer = styled.div<{ color: string }>`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   position: relative;
   height: 100%;
+  width: 600px;
   max-height: 100%;
   background-color: ${(props) => props.color + "30"};
   border: 4px solid ${(props) => props.color};
 `;
 
 ///// FOR DEBUGGING
-const baseColor = "#B3ECD3";
+const baseColor = tinycolor("red").toHex8String();
 const colors = tinycolor(baseColor)
   .tetrad()
   .map((c) => c.toHexString());
@@ -62,7 +59,7 @@ export default () => (
           values: ["出品", "するだけで"]
         },
         {
-          type: "pointYen",
+          type: "point",
           position: "left",
           values: ["最大", "1,000", "GET!"]
         }

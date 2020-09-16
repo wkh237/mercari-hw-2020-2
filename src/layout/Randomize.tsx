@@ -27,21 +27,23 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
     return token;
   };
   return (
-    <StyledContainer color={colors.primary} border={border} background={colors.background}>
-      {elements.map((el, i) => {
-        const elementDef = Elements[el.id];
-        const ElementClass = elementDef.default;
-        const props = {
-          ...elementDef.defaultProps,
-          hasBorder: border,
-          color: replaceColorToken(elementDef.defaultProps.color),
-          colors: elementDef.defaultProps.colors
-            ? elementDef.defaultProps.colors.map(replaceColorToken)
-            : [colors.primary, colors.secondary, colors.foreground, colors.background],
-        };
-        return <ElementClass key={i} {...props} />;
-      })}
-    </StyledContainer>
+    <StyledWrapper>
+      <StyledContainer color={colors.primary} border={border} background={colors.background}>
+        {elements.map((el, i) => {
+          const elementDef = Elements[el.id];
+          const ElementClass = elementDef.default;
+          const props = {
+            ...elementDef.defaultProps,
+            hasBorder: border,
+            color: replaceColorToken(elementDef.defaultProps.color),
+            colors: elementDef.defaultProps.colors
+              ? elementDef.defaultProps.colors.map(replaceColorToken)
+              : [colors.primary, colors.secondary, colors.foreground, colors.background],
+          };
+          return <ElementClass key={i} {...props} />;
+        })}
+      </StyledContainer>
+    </StyledWrapper>
   );
 };
 
@@ -51,6 +53,10 @@ interface StyledContainerProps {
   border: boolean;
 }
 
+const StyledWrapper = styled.div`
+  overflow: hidden;
+`;
+
 const StyledContainer = styled.div<StyledContainerProps>`
   display: flex;
   flex-direction: row;
@@ -58,7 +64,6 @@ const StyledContainer = styled.div<StyledContainerProps>`
   max-height: 100px;
   min-height: 100px;
   max-width: 600px;
-  overflow: hidden;
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.background};
@@ -81,13 +86,18 @@ export default () => {
       const isLast = space - size <= 5;
       if (
         (isFirst && el.meta.position === 'right') ||
+        (isFirst && el.meta.type === 'cuttingEdge') ||
         (isLast && el.meta.position === 'left') ||
+        (isLast && el.meta.type === 'cuttingEdge') ||
         (!isFirst && !isLast && (el.meta.position !== 'any' && el.meta.position !== 'center'))
       ) {
         continue;
       }
       // found matched
       if (space - size >= 0) {
+        if (matched.indexOf(id) !== -1 && el.meta.type === "point") {
+          // no op
+        }
         matched.push(id);
       }
     }

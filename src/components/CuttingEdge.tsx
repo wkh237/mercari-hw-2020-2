@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
-  type: 'text',
+  type: 'cuttingEdge',
   percentage: 3,
   position: 'any',
   inputs: [],
@@ -14,7 +14,8 @@ export const defaultProps: ElementPropDesciptor = {
   values: []
 };
 
-const CuttingEdge = ({ colors }: { colors: string[] }) => {
+const CuttingEdge = ({ colors = [], hasBorder }: ElementPropDesciptor) => {
+  if (!hasBorder) return null; 
   const dotColor = tinycolor(colors[4])
     .triad()
     .map((s) => s.toHex8String());

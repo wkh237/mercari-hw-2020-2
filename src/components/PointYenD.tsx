@@ -1,22 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import tinycolor from "tinycolor2";
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: "point",
   percentage: 40,
   position: "any",
   inputs: ["text"]
 };
 
 export const defaultProps: ElementPropDesciptor = {
+  colors: ['$background', '$secondary'],
   values: ["1000"]
 };
 
-const StyledPointYen = styled.div<{ colors: string[] }>`
+const StyledPointYen = styled.div<{ textColor: string }>`
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  color: ${(props) => props.colors[2] || "red"};
+  color: ${(props) => props.textColor};
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -52,8 +54,13 @@ const PointYen = ({
   colors: string[];
 }) => {
   const [amount] = values;
+  const [background, secondary] = colors || [];
+  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
+  if (tinycolor.readability(textColor, background) < 5) {
+    textColor.darken(10);
+  }
   return (
-    <StyledPointYen colors={colors}>
+    <StyledPointYen textColor={textColor.toHex8String()}>
       <StyledValue>{amount}</StyledValue>
       <StyledPointYenWord>
         <div>
