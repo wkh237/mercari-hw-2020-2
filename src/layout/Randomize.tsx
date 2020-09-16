@@ -28,7 +28,7 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
     <StyledWrapper>
       <StyledContainer color={colors.primary} border={colors.border} background={colors.background} borderType={border}>
       { shouldRenderWithChance(0.3) && <DecorationOverlay />}
-      { shouldRenderWithChance(0.4) && <BackgroundOverlay color={colors.secondary} /> }
+      { shouldRenderWithChance(0.4) && <BackgroundOverlay color="#ffffff60" /> }
         {elements.map((el, i) => {
           const elementDef = Elements[el.id];
           const ElementClass = elementDef.default;
