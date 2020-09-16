@@ -1,7 +1,8 @@
-import React from 'react';
-import Elements from '../components';
-import shuffle from '../utils/shuffle';
-import styled from 'styled-components';
+import React from "react";
+import Elements from "../components";
+import shuffle from "../utils/shuffle";
+import styled from "styled-components";
+import DecorationOverlay from "../components/DecorationOverlay";
 import { getThemeFromColor } from '../utils/colors';
 
 interface RandomLayoutProps {
@@ -42,6 +43,7 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
           };
           return <ElementClass key={i} {...props} />;
         })}
+        <DecorationOverlay />
       </StyledContainer>
     </StyledWrapper>
   );
