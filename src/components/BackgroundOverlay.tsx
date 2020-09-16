@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import SVG from "react-inlinesvg";
+import BackgroundDecoration from './BackgroundDecoration';
 import { BackgroundOverlays } from "../utils/assets";
-import { getRandomInt } from "../utils/random";
+import { getRandomInt, shouldRenderWithChance } from "../utils/random";
 
 const StyledSvg = styled(SVG)<{ color?: string; transform?: { x: number, y: number }; }>`
   position: absolute;
@@ -29,5 +30,5 @@ export default ({ color }: Props) => {
     x: defaultTransform.x + getRandomInt(horiztonalTransformRange[0], horiztonalTransformRange[1]),
     y: defaultTransform.y + getRandomInt(verticalTransformRange[0], verticalTransformRange[1])
   }
-  return <StyledSvg src={svg} color={color} transform={transform} />;
+  return shouldRenderWithChance(0.5) ? <StyledSvg src={svg} color={color} transform={transform} /> : <BackgroundDecoration color={color} />;
 };
