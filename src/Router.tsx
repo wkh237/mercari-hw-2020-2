@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import MJP48801 from "./layout/MJP48801";
 // import CouponLayoutMJP34066 from "./layout/CouponLayout-MJP-34046";
 // import Background from "./layout/Background";
-import BackgroundLayer from './components/BackgroundLayer';
+// import BackgroundLayer from './components/BackgroundLayer';
+import BackgroundDecoration from './components/BackgroundDecoration';
 import Randomize from './layout/Randomize';
 
 const GlobalStyle = createGlobalStyle`
@@ -20,7 +21,7 @@ export default () => (
     <Router>
       <Switch>
         <Route path="/banners/RandomImage">
-          <BackgroundLayer />
+          <BackgroundDecoration color="blue" />
         </Route>
         <Route path="/">
           <Randomize />

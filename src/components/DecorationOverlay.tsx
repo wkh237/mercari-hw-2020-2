@@ -52,6 +52,7 @@ export default ({ decorationCount }: Props) => {
         const index = getRandomInt(0, Decorations.length);
         return (
           <StyledSvg
+            key={index}
             src={Decorations[index]}
             rotate={rotate}
             height={size}
