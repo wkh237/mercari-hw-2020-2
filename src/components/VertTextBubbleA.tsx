@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
   type: 'text',
@@ -15,7 +14,7 @@ export const defaultProps: ElementPropDesciptor = {
 };
 
 const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {
-  const [bgColor, textColor] = colors;
+  const [, textColor] = colors;
   return (
     <StyledContainer color={textColor}>
       <StyledSVG viewBox="0 0 230 332">

@@ -28,24 +28,12 @@ export const definedThemes: Array<(
     text: '#fff',
     background: border ? baseColor.lighten(35).toHexString() : baseColor.toHexString(),
   }),
+  (_border: BannerBorderType, baseColor = tinycolor('#000')) => ({
+    primary: baseColor.toHexString(),
+    border: tinycolor('rgb(255,248,42)').toHexString(),
+    secondary: tinycolor('rgb(9,67,87))').toHexString(),
+    foreground: baseColor.toHex8String(),
+    text: '#fff',
+    background: tinycolor('rgb(17,175,74)').toHexString(),
+  }),
 ];
-
-export const getThemeFromColor = (baseColor: string, hasBorder: boolean) => {
-  const backgroundColor = hasBorder ? tinycolor(baseColor).lighten(35).toHexString() : baseColor;
-  if (!tinycolor.isReadable(baseColor, backgroundColor)) {
-    // baseColor = tinycolor(baseColor).darken(18).toHexString();
-  }
-  // generate colors
-  const triadColors = tinycolor(baseColor)
-    .triad()
-    .map((s) => s.toHex8String());
-  // create color combination
-  const colors = {
-    primary: baseColor,
-    border: hasBorder ? baseColor : '',
-    secondary: triadColors[2],
-    foreground: hasBorder ? baseColor : '#fff',
-    background: backgroundColor,
-  };
-  return colors;
-};

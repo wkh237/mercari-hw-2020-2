@@ -1,27 +1,19 @@
-import React from "react";
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import React from 'react';
+import styled from 'styled-components';
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 14.5,
-  position: "any",
-  inputs: ["text", "text"]
+  position: 'any',
+  inputs: ['text', 'text'],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$text'],
-  values: ["出品", "するだけで"]
+  values: ['出品', 'するだけで'],
 };
 
-const StackTextBigSmallA = ({
-  colors,
-  values,
-}: {
-  values: string[];
-  colors: string[];
-  singleColor?: boolean;
-}) => {
+const StackTextBigSmallA = ({ colors, values }: { values: string[]; colors: string[]; singleColor?: boolean }) => {
   const [foreground, textColor] = colors || [];
   return (
     <StyledContainer color={foreground} color2={textColor}>
@@ -29,11 +21,6 @@ const StackTextBigSmallA = ({
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>
   );
-};
-
-const fontColorGen = (baseColor: string) => {
-  const color = tinycolor(baseColor).lighten(15).desaturate(40).toHexString();
-  return color;
 };
 
 const StyledBlock = styled.div`
@@ -54,8 +41,8 @@ const StyledContainer = styled.div<{
   justify-content: center;
   align-self: center;
   line-height: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
   max-width: ${meta.percentage}%;
   min-width: ${meta.percentage}%;
   padding: 4px;
