@@ -1,6 +1,7 @@
 import React from "react";
 import Elements from "../components";
 import shuffle from "../utils/shuffle";
+import DecorationOverlay from "../components/DecorationOverlay";
 import styled from "styled-components";
 import tinycolor from "tinycolor2";
 
@@ -51,6 +52,7 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
         };
         return <ElementClass key={i} {...props} />;
       })}
+      <DecorationOverlay decorationCount={6} />
     </StyledContainer>
   );
 };
