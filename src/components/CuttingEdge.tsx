@@ -11,7 +11,7 @@ export const meta: ElementMeta = {
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$border'],
-  values: []
+  values: ['ポイント']
 };
 
 const CuttingEdge = ({ colors = [], hasBorder }: ElementPropDesciptor) => {
