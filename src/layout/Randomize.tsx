@@ -88,6 +88,7 @@ const StyledContainer = styled.div<StyledContainerProps>`
   max-height: 100px;
   min-height: 100px;
   max-width: 600px;
+  min-width: 600px;
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.background};
