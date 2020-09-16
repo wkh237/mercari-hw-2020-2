@@ -83,19 +83,19 @@ export default () => {
       const isFirst = current.length === 0;
       const el = Elements[id];
       const size = el.meta.percentage;
-      const isLast = space - size <= 5;
+      const isLast = space - size < 8;
+      const isCenter = !isLast && !isFirst;
       if (
         (isFirst && el.meta.position === 'right') ||
-        (isFirst && el.meta.type === 'cuttingEdge') ||
         (isLast && el.meta.position === 'left') ||
-        (isLast && el.meta.type === 'cuttingEdge') ||
-        (!isFirst && !isLast && (el.meta.position !== 'any' && el.meta.position !== 'center'))
+        ((isFirst || isLast) && el.meta.position === 'center') ||
+        (isCenter && el.meta.position !== 'center' && el.meta.position !== 'any')
       ) {
         continue;
       }
       // found matched
       if (space - size >= 0) {
-        if (matched.indexOf(id) !== -1 && el.meta.type === "point") {
+        if (matched.indexOf(id) !== -1 && el.meta.type === 'point') {
           // no op
         }
         matched.push(id);

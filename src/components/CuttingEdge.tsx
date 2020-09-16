@@ -5,7 +5,7 @@ import tinycolor from 'tinycolor2';
 export const meta: ElementMeta = {
   type: 'cuttingEdge',
   percentage: 3,
-  position: 'any',
+  position: 'center',
   inputs: [],
 };
 
