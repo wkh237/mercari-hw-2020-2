@@ -27,10 +27,11 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
     }
     return token;
   };
+  const elemetMeta = Elements[elements[0]?.id]?.meta;
   // for those elements has position "left" or "right" we don't need extra space
   // on each sides, otherwise give it a 1% padding
-  const shouldPadLeft = Elements[elements[0].id].meta.position !== 'left';
-  const shouldPadRight = Elements[elements[0].id].meta.position !== 'right';
+  const shouldPadLeft = elemetMeta?.position !== 'left';
+  const shouldPadRight = elemetMeta?.position !== 'right';
   return (
     <StyledWrapper>
       <StyledContainer
