@@ -36,4 +36,12 @@ export const definedThemes: Array<(
     text: '#fff',
     background: tinycolor('rgb(17,175,74)').toHexString(),
   }),
+  (_border: BannerBorderType, baseColor = tinycolor('#000')) => ({
+    primary: baseColor.toHexString(),
+    border: tinycolor('rgb(247,206,15)').toHexString(),
+    secondary: tinycolor('rgb(247,206,15)').toHexString(),
+    foreground: baseColor.toHex8String(),
+    text: '#fff',
+    background: tinycolor('rgb(231,29,26)').toHexString(),
+  }),
 ];
