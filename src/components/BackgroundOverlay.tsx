@@ -8,6 +8,7 @@ const StyledSvg = styled(SVG)<{ color?: string; transform?: { x: number, y: numb
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 0;
   fill: ${(props) => props.color};
   path {
     transform: ${(props) => `translate(${props.transform!.y}px, ${props.transform!.x}px)` };
