@@ -10,7 +10,7 @@ export const meta: ElementMeta = {
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  colors: ['$background', '$secondary'],
+  colors: ['$secondary'],
   values: ["かしこく", "みつけて"]
 };
 
@@ -18,11 +18,8 @@ const StackTextSmallA = ({
   colors,
   values,
 }: ElementPropDesciptor) => {
-  const [background, secondary] = colors || [];
-  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
-  if (tinycolor.readability(textColor, background) < 2) {
-    textColor.darken(10)
-  }
+  const [secondary] = colors || [];
+  let textColor = tinycolor(secondary);
   return (
     <StyledContainer color={textColor.toHexString()}>
       <StyledBlock>{values[0]}</StyledBlock>
@@ -32,7 +29,7 @@ const StackTextSmallA = ({
 };
 
 const underline = `data:image/svg+xml;base64,${btoa(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M0 0 h30v30h-30 Z" fill="#ffffffa0" /></svg>'
+  '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M0 0 h30v30h-30 Z" fill="#ffffff70" /></svg>'
 )}`;
 
 const StyledBlock = styled.div`

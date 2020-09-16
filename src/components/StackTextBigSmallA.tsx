@@ -10,26 +10,21 @@ export const meta: ElementMeta = {
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  colors: ['$background', '$secondary'],
+  colors: ['$foreground', '$text'],
   values: ["出品", "するだけで"]
 };
 
 const StackTextBigSmallA = ({
   colors,
   values,
-  singleColor
 }: {
   values: string[];
   colors: string[];
   singleColor?: boolean;
 }) => {
-  const [background, secondary] = colors || [];
-  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
-  if (tinycolor.readability(textColor, background) < 5) {
-    textColor.darken(10);
-  }
+  const [foreground, textColor] = colors || [];
   return (
-    <StyledContainer color={textColor.toHexString()}>
+    <StyledContainer color={foreground} color2={textColor}>
       <StyledBlock>{values[0]}</StyledBlock>
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>
@@ -50,6 +45,7 @@ const StyledBlock = styled.div`
 
 const StyledContainer = styled.div<{
   color: string;
+  color2: string;
 }>`
   display: flex;
   flex-direction: column;
@@ -66,13 +62,14 @@ const StyledContainer = styled.div<{
   div:nth-child(1) {
     text-align: center;
     font-size: 2.5em;
+    font-weight: bolder;
     color: ${(props) => props.color};
     line-height: 100%;
   }
   div:nth-child(2) {
     text-align: center;
     font-size: 1em;
-    color: ${(props) => fontColorGen(props.color)};
+    color: ${(props) => props.color2};
   }
   > div {
     position: relative;

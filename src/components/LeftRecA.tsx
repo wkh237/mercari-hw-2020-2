@@ -1,42 +1,33 @@
-import React from "react";
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import React from 'react';
+import styled from 'styled-components';
 
-const LeftRecA = ({
-  colors,
-  values,
-  hasBorder,
-}: ElementPropDesciptor) => {
-  const [bg, fg] = colors || [];
-  const tempColor = hasBorder ? bg : fg;
-  let textColor = tinycolor(tempColor).lighten(15).desaturate(40);
-  if (tinycolor.readability(textColor, tempColor) < 2) {
-    textColor.lighten(20);
-  }
+const LeftRecA = ({ colors, values, borderType }: ElementPropDesciptor) => {
+  const [borderColor, primaryColor] = colors || [];
   return (
-  <StyledContainer color={textColor.toHex8String()} bg={bg}>
-    <StyledSVG width="139" height="90" viewBox="0 0 139 90">
-      <path
-        fill={bg}
-        d="M128.073 90H0V0H123.314C110.1 12.6769 123.94 18.1303 138.547 20.0801C132.506 23.1045 128 27.5474 128 32.5C128 36.9952 131.712 41.0706 136.915 44.0465C130.501 46.3994 126 49.8172 126 54.4C126 58.6883 129.941 63.2962 135.702 67.1501C127.081 69.6743 121.368 74.0838 121.061 79.3946C120.839 83.231 123.474 86.9251 128.073 90Z"
-      />
-    </StyledSVG>
-    {values.map((s, i) => (
-      <div key={i}>{s}</div>
-    ))}
-  </StyledContainer>
-)};
+    <StyledContainer color={borderType ? '#fff' : primaryColor}>
+      <StyledSVG width="139" height="90" viewBox="0 0 139 90">
+        <path
+          fill={borderType ? borderColor : '#fff'}
+          d="M128.073 90H0V0H123.314C110.1 12.6769 123.94 18.1303 138.547 20.0801C132.506 23.1045 128 27.5474 128 32.5C128 36.9952 131.712 41.0706 136.915 44.0465C130.501 46.3994 126 49.8172 126 54.4C126 58.6883 129.941 63.2962 135.702 67.1501C127.081 69.6743 121.368 74.0838 121.061 79.3946C120.839 83.231 123.474 86.9251 128.073 90Z"
+        />
+      </StyledSVG>
+      {values.map((s, i) => (
+        <div key={i}>{s}</div>
+      ))}
+    </StyledContainer>
+  );
+};
 
 export const defaultProps: ElementPropDesciptor = {
-  colors: ['$foreground', '$background'],
-  values: ["新規登錄者", "限定"]
+  colors: ['$border', '$primary'],
+  values: ['新規登錄者', '限定'],
 };
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 20,
-  position: "left",
-  inputs: ["text", "text", "text"]
+  position: 'left',
+  inputs: ['text', 'text', 'text'],
 };
 
 const StyledSVG = styled.svg`
@@ -45,7 +36,7 @@ const StyledSVG = styled.svg`
   z-index: 2;
 `;
 
-const StyledContainer = styled.div<{ color: string; bg: string }>`
+const StyledContainer = styled.div<{ color: string }>`
   display: flex;
   flex-direction: column;
   line-height: 27px;
@@ -54,10 +45,10 @@ const StyledContainer = styled.div<{ color: string; bg: string }>`
   flex: ${meta.percentage};
   justify-content: center;
   position: relative;
-  color: ${(props) => props.color || "white"};
+  color: ${(props) => props.color || 'white'};
   padding: 2px 6px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
   > svg {
     transform: scale(1.1);
   }

@@ -10,7 +10,7 @@ export const meta: ElementMeta = {
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  colors: ['$background', '$secondary'],
+  colors: ['$secondary'],
   values: ["1000"]
 };
 
@@ -54,11 +54,8 @@ const PointYen = ({
   colors: string[];
 }) => {
   const [amount] = values;
-  const [background, secondary] = colors || [];
-  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
-  if (tinycolor.readability(textColor, background) < 5) {
-    textColor.darken(10);
-  }
+  const [secondary] = colors || [];
+  let textColor = tinycolor(secondary)
   return (
     <StyledPointYen textColor={textColor.toHex8String()}>
       <StyledValue>{amount}</StyledValue>
