@@ -79,7 +79,7 @@ const Randomize = () => {
       }
     }
     // no more elements can be put into the banner
-    if (matched.length === 0 && space >= 0) {
+    if (matched.length === 0 && space >= 0 && score > 0) {
       combinations.push({ els: current, score });
     }
     // continue with next slot
