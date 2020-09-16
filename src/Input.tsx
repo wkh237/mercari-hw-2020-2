@@ -21,7 +21,7 @@ export interface ValueSuggestion {
 export type ElementSuggestion = Record<ElementKey, ValueSuggestion>;
 const ElementKeys = Object.keys(Elements);
 const DescriptorWeight = {
-  $len: 0.5,
+  $len: 0.8,
   $num: 1.5,
   $date: 1.5,
 };

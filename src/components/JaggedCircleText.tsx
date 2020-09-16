@@ -8,7 +8,7 @@ export const meta: ElementMeta = {
   type: 'text',
   percentage: 14.3,
   inputs: ['text'],
-  keywords: [['殘り', '殘', 'のこり', 'あと'], ['$num'], ['$date']],
+  keywords: [['殘り', '殘', 'のこり', 'あと', '$len:3:2'], ['$num'], ['$date']],
 };
 
 export const defaultProps: ElementPropDesciptor = {

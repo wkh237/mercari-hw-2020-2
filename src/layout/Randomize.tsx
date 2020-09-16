@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Elements from '../components';
-import shuffle from '../utils/shuffle';
 import { Col } from '../styles/Flex';
 import Input from '../Input';
 import styled from 'styled-components';
@@ -15,7 +14,7 @@ export type MatchedElement = { key: ElementKey; predictedValues: string[] | null
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
 const maxIteration = 10000;
-const threshold = 0.65;
+const threshold = 0.45;
 const maxResults = 25;
 
 const Randomize = () => {
