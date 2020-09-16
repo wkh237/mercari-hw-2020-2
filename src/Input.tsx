@@ -9,8 +9,8 @@ export default function Input({ setUserInput }: InputProps) {
   return (
     <input type="text" onChange={e => {
       setInputValue(e.target.value);
-    }} onKeyDown={e => {
-      if(e.keyCode === 32) {
+    }} onKeyPress={e => {
+      if(e.charCode === 13) {
         setUserInput(value);
       }
     }}/>

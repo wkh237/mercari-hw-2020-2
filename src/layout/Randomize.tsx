@@ -88,8 +88,8 @@ const StyledContainer = styled.div<StyledContainerProps>`
 export default () => {
   const [userInput, setUserInput] = useState<string>('');
 
-  const combinations: Array<ElementKey[]> = [];
-  let maxIteration = 10000;
+  let combinations: Array<ElementKey[]> = [];
+  let maxIteration = 100;
   let i = 0;
   const ids = shuffle(Object.keys(Elements));
 
@@ -139,13 +139,14 @@ export default () => {
         if (matched.indexOf(id) !== -1 && el.meta.type === "point") {
           // no op
         }
-        // check correlation
-        //@ts-ignore
-        const score = userInput.score(el.defaultProps.values.join(' '), 0.5);
-        console.log({ score });
-        if (score > 0.1) {
-          matched.push(id);
-        }
+        // // check correlation
+        // //@ts-ignore
+        // const score = userInput.score(el.defaultProps.values.join(' '), 0.5);
+        // console.log({ score });
+        // if (score > 0.1) {
+         
+        // }
+        matched.push(id);
       }
     }
     // no more elements can be put into the banner
@@ -169,6 +170,16 @@ export default () => {
   console.log(
     `${combinations.length} combinations (${maxIteration} iterations)`
   );
+  combinations = combinations.filter(combination => {
+    const combinationScore = combination.reduce((acc, cur) => {
+      const values = Elements[cur].defaultProps.values.join(' ');
+      //@ts-ignore
+      const score = userInput.score(values, 0.5);
+      acc += score;
+      return acc;
+    }, 0)
+    return combinationScore > 0.2 ? true : false;
+  });
   const banners = [
     "red",
     "yellow",
