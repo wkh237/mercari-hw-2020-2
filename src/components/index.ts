@@ -13,11 +13,13 @@ import * as StackTextSmallA from './StackTextSmallA';
 import * as VertTextA from './VertTextA';
 import * as VertTextBubbleA from './VertTextBubbleA';
 import * as ImageA from './ImageA';
+import { ValueSuggestion } from '../Input';
 
 interface ElementDescriptor {
   default: React.FC<any>;
   meta: ElementMeta;
   defaultProps: any;
+  predict?: (suggestion: ValueSuggestion) => { fulfill: boolean; values: string[] };
 }
 
 const elements: Record<string, ElementDescriptor> = {

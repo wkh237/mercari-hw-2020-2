@@ -6,14 +6,16 @@ import DecorationOverlay from '../components/DecorationOverlay';
 import { shouldRenderWithChance } from '../utils/random';
 import BackgroundOverlay from '../components/BackgroundOverlay';
 import { MatchedElement } from './Randomize';
+import { ElementSuggestion } from '../Input';
 
 interface DynamicBannerProps {
   border: BannerBorderType;
   colors: BannerColors;
   elements: MatchedElement[];
+  suggestion: ElementSuggestion | null;
 }
 
-const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
+const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerProps) => {
   const replaceColorToken = (token: string) => {
     if (token?.startsWith('$')) {
       // @ts-ignore
@@ -47,6 +49,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
             colors: elementDef.defaultProps.colors
               ? elementDef.defaultProps.colors.map(replaceColorToken)
               : [colors.primary, colors.secondary, colors.foreground, colors.background],
+            values: el.predictedValues || elementDef.defaultProps.values,
           };
           return <ElementClass key={`${el.key}-${i}`} {...props} />;
         })}

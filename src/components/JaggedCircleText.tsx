@@ -1,13 +1,14 @@
 import React from 'react';
 import { jaggedCircle } from '../utils/svg';
 import styled from 'styled-components';
+import { ValueSuggestion } from '../Input';
 
 export const meta: ElementMeta = {
   position: 'left',
   type: 'text',
   percentage: 14.3,
   inputs: ['text'],
-  keywords: [['殘', 'のこり', 'あと'], ['$num'], ['$date']],
+  keywords: [['殘り', '殘', 'のこり', 'あと'], ['$num'], ['$date']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
@@ -15,9 +16,43 @@ export const defaultProps: ElementPropDesciptor = {
   values: ['のこり', '3', '日'],
 };
 
-const JaggedCircleText = ({ colors, values, borderType }: ElementPropDesciptor) => {
+interface Props extends ElementPropDesciptor {
+  suggestion: ValueSuggestion;
+}
+
+export const predict = (suggestion: ValueSuggestion): { fulfill: boolean; values: string[] } => {
+  const predictFirst = () => {
+    let answer: [number, string] = [0, ''];
+    suggestion.valueSuggestions[0]?.forEach((s) => {
+      // if top match from string score, assume the word is the best choice
+      if (s.sum > answer[0]) answer = [s.sum, s.word];
+    });
+    return answer[1];
+  };
+  const predictSecond = () => {
+    let answer: [number, string] = [0, ''];
+    suggestion.valueSuggestions[1]?.forEach((s) => {
+      // if top match from string score, assume the word is the best choice
+      if (s.sum > answer[0]) answer = [s.sum, s.word];
+    });
+    return answer[1];
+  };
+  const predictThird = () => {
+    let answer: [number, string] = [0, ''];
+    suggestion.valueSuggestions[2]?.forEach((s) => {
+      // if top match from string score, assume the word is the best choice
+      if (s.sum > answer[0]) answer = [s.sum, s.word];
+    });
+    return answer[1].substr(0, 1);
+  };
+  const values = [predictFirst(), predictSecond(), predictThird()];
+  return { fulfill: !!values[0] && !!values[1] && !!values[2], values };
+};
+
+const JaggedCircleText = ({ colors, values, borderType, suggestion }: Props) => {
   const [primary, bg, second] = colors || [];
   const isVariation = Math.random() > 0.5;
+
   let finalColors: string[] = [];
   if (isVariation) {
     finalColors = ['#fff', second];
@@ -36,7 +71,7 @@ const JaggedCircleText = ({ colors, values, borderType }: ElementPropDesciptor) 
       <StyledText color={finalColors[0]} style={{ top: '23%', left: '4%', fontSize: 20 }}>
         {values[0]}
       </StyledText>
-      <StyledText color={finalColors[0]} style={{ top: '40%', left: '8%', fontSize: 42 }}>
+      <StyledText color={finalColors[0]} style={{ top: '42%', left: '3%', fontSize: 36 }}>
         {values[1]}
       </StyledText>
       <StyledText color={finalColors[0]} style={{ top: '46%', left: '40%', fontSize: 28 }}>

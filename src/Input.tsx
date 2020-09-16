@@ -14,13 +14,11 @@ interface KeywordMatchResult {
 interface InputProps {
   commitChange: (suggestions: ElementSuggestion) => void;
 }
-export type ElementSuggestion = Record<
-  ElementKey,
-  {
-    score: number;
-    valueSuggestions: Record<number, KeywordMatchResult[]>;
-  }
->;
+export interface ValueSuggestion {
+  score: number;
+  valueSuggestions: Record<number, KeywordMatchResult[]>;
+}
+export type ElementSuggestion = Record<ElementKey, ValueSuggestion>;
 const ElementKeys = Object.keys(Elements);
 const DescriptorWeight = {
   $len: 0.5,
@@ -29,6 +27,7 @@ const DescriptorWeight = {
 };
 
 let debounce: NodeJS.Timeout | null = null;
+let throttle = -1;
 
 const matchElements = (words: string[]) => {
   const q = [...words];
@@ -56,7 +55,7 @@ const matchElements = (words: string[]) => {
             // stric text length $len:n:n
             if (max === min && word.length === +max) {
               score = DescriptorWeight.$len;
-            } 
+            }
             // ranged text length $len:n1:n2 or $len:n1
             else {
               const diff = Math.abs(word.length - +max);
@@ -71,8 +70,27 @@ const matchElements = (words: string[]) => {
             if (word === '日' || word === '月' || word === '年' || word === '分' || word === '週')
               score = DescriptorWeight.$date;
           } else if (des === '$num') {
-            if (/[一二三四五六七八九十百千萬億零0123456789１２３４５６７８９０]/.test(word))
+            if (/[一二三四五六七八九十百千萬万億零0123456789１２３４５６７８９０]/.test(word)) {
+              const [, max, min] = des.split(':');
               score = DescriptorWeight.$num;
+              if (max !== undefined && min === undefined) {
+                if (word.length > +max || word.length < +min) {
+                  score = 0;
+                } else {
+                  score *= word.length / +max;
+                }
+              } else if (max !== undefined) {
+                if (word.length > +max) {
+                  score = 0;
+                } else {
+                  score *= word.length / +max;
+                }
+              } else if (min !== undefined) {
+                if (word.length < +min) {
+                  score = 0;
+                }
+              }
+            }
           }
           // use string score
           else {
@@ -83,8 +101,8 @@ const matchElements = (words: string[]) => {
             top = [des, score];
           }
           // add score to sum with extra weight
-          if (sum >= 1) sum += score * 0.1;
-          else sum += score;
+          // if (sum >= 1) sum += score * 0.1;
+          sum += score;
           acc[des] = score;
           return acc;
         }, {});
@@ -128,11 +146,13 @@ function Input({ commitChange }: InputProps) {
 
   useEffect(() => {
     if (debounce) clearTimeout(debounce);
+    const words = value.split(/[ 　]/).filter((s) => s);
+    if (words.length < 1) return;
     // calculate score and commit update
     debounce = setTimeout(() => {
-      const suggestions = matchElements(value.split(/[ 　]/));
+      const suggestions = matchElements(words);
       commitChange(suggestions);
-    }, 1000);
+    }, Math.max(1000 - words.length * 200, 300));
   }, [value, commitChange]);
 
   return (
@@ -140,16 +160,29 @@ function Input({ commitChange }: InputProps) {
       <StyledForm>
         <input
           type="text"
+          value={value}
           placeholder="keywords separated by spaces .."
           onChange={(e) => {
             const val = e.target.value;
-            setInputValue(val);
+            setInputValue(val.replace(/　/g, ' '));
+          }}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              if (Date.now() - throttle > 500) {
+                throttle = Date.now();
+                const suggestions = matchElements(value.split(/ /));
+                commitChange(suggestions);
+              }
+            }
           }}
         />
         <button
           onClick={() => {
-            const suggestions = matchElements(value.split(/[ 　]/));
-            commitChange(suggestions);
+            if (Date.now() - throttle > 500) {
+              throttle = Date.now();
+              const suggestions = matchElements(value.split(/[ 　]/));
+              commitChange(suggestions);
+            }
           }}
         >
           Shuffle

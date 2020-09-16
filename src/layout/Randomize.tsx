@@ -10,17 +10,18 @@ import { definedThemes } from '../utils/colors';
 import DynamicBanner from './DynamicLayout';
 import { ElementSuggestion } from '../Input';
 
-export type MatchedElement = { key: ElementKey; matchesWords: { value: string; score: number }[] };
+export type MatchedElement = { key: ElementKey; predictedValues: string[] | null; debug?: any };
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
 const maxIteration = 10000;
 const threshold = 0.65;
+const maxResults = 25;
 
 const Randomize = () => {
   const [suggestion, setSuggestion] = useState<ElementSuggestion | null>(null);
-  let combinations: Array<MatchedElement[]> = [];
-  const ids = shuffle(ElementKeys).filter((id) => (suggestion?.[id]?.score || 0) > threshold);
+  let combinations: Array<{ score: number; els: MatchedElement[] }> = [];
+  const ids = ElementKeys.filter((id) => (suggestion?.[id]?.score || 0) > threshold);
   const findMinAndCanBeLast = (ids: string[]) => {
     let min = 100;
     for (let id of ids) {
@@ -33,7 +34,12 @@ const Randomize = () => {
   };
 
   let i = 0;
-  const findCombinations = (availableElementIds: ElementKey[], current: MatchedElement[], space: number) => {
+  const findCombinations = (
+    availableElementIds: ElementKey[],
+    current: MatchedElement[],
+    space: number,
+    score: number = 0,
+  ) => {
     i++;
     if (i > maxIteration) return;
     const matched: MatchedElement[] = [];
@@ -45,23 +51,37 @@ const Randomize = () => {
       const size = el.meta.percentage;
       const isLast = space - size <= findMinAndCanBeLast(remained);
       const isCenter = !isLast && !isFirst;
+      const predict = el.predict;
+      const hasPredict = predict && suggestion;
+      let predictedValues = null;
+      let predictFulfill = false;
+      if (predict && suggestion) {
+        const predictResult = predict(suggestion[id]);
+        if (predictResult.fulfill) {
+          predictFulfill = predictResult.fulfill;
+          predictedValues = predictResult.values;
+        }
+      }
       // check if this element can be put in this position
       if (
         (isFirst && el.meta.position === 'right') ||
         (isLast && el.meta.position === 'left') ||
         ((isFirst || isLast) && el.meta.position === 'center') ||
-        (isCenter && el.meta.position !== 'center' && el.meta.position !== 'any')
+        (isCenter && el.meta.position !== 'center' && el.meta.position !== 'any') ||
+        // when the element provides predict function and it failed to pass it
+        // we consider all the words are not suitable for that element
+        (hasPredict && predictFulfill === false)
       ) {
         continue;
       }
       // found matched
       if (space - size >= 0) {
-        matched.push({ key: id, matchesWords: [] });
+        matched.push({ key: id, predictedValues, debug: suggestion?.[id] });
       }
     }
     // no more elements can be put into the banner
     if (matched.length === 0 && space >= 0) {
-      combinations.push(current);
+      combinations.push({ els: current, score });
     }
     // continue with next slot
     else {
@@ -71,25 +91,33 @@ const Randomize = () => {
           availableElementIds.filter((s) => s !== m.key),
           [...current, m],
           space - Elements[m.key].meta.percentage,
+          score + (suggestion?.[m.key]?.score || 0),
         );
       });
     }
   };
 
   findCombinations(ids, [], 100);
-
+  combinations = combinations.sort((a, b) => -(a.score - b.score));
   console.log(`${combinations.length} combinations from ${ids.length} elements (${i} iterations)`);
-
-  const banners = definedThemes.map((theme, i) => {
-    const n = i * ~~(combinations.length / 10);
+  console.log(combinations.slice(0, maxResults));
+  const banners = combinations.slice(0, maxResults).map((comb, i) => {
     let borderType: BannerBorderType = '';
     let rseed = Math.random();
     if (rseed < 0.2) borderType = '';
     else if (rseed < 0.4) borderType = 'dotted';
     else if (rseed < 0.6) borderType = 'dashed';
-    else if (rseed < 0.8) borderType = 'solid';
+    else if (rseed < 0.8) borderType = 'double';
     else borderType = 'solid';
-    return <DynamicBanner key={i} border={borderType} colors={theme(borderType)} elements={combinations[n] || []} />;
+    return (
+      <DynamicBanner
+        key={i}
+        border={borderType}
+        colors={definedThemes[i % definedThemes.length](borderType)}
+        elements={comb.els || []}
+        suggestion={suggestion}
+      />
+    );
   });
 
   return (

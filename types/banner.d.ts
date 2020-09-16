@@ -51,6 +51,7 @@ interface ElementPropDesciptor {
   borderType?: BannerBorderType;
   values: string[];
   matchedWords?: { value: string; score: number }[];
+  suggestion?: ElementSuggestion | null;
 }
 
 interface Layout {
