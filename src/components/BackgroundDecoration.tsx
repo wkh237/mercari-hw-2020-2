@@ -1,6 +1,4 @@
 import React from "react";
-import styled from "styled-components";
-import tinycolor from 'tinycolor2';
 import DecorationSVG, { imgMap } from "../components/DecorationSVG";
 import { getRandomInt } from "../utils/random";
 
