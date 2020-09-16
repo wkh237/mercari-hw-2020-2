@@ -1,23 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import React from 'react';
+import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 14.5,
-  position: "any",
-  inputs: ["text", "text"]
+  position: 'any',
+  inputs: ['text', 'text'],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
-  values: ["かしこく", "みつけて"]
+  values: ['かしこく', 'みつけて'],
+  keywords: [['$len'], ['$len']],
 };
 
-const StackTextSmallA = ({
-  colors,
-  values,
-}: ElementPropDesciptor) => {
+const StackTextSmallA = ({ colors, values }: ElementPropDesciptor) => {
   const [secondary] = colors || [];
   let textColor = tinycolor(secondary);
   return (
@@ -29,7 +27,7 @@ const StackTextSmallA = ({
 };
 
 const underline = `data:image/svg+xml;base64,${btoa(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M0 0 h30v30h-30 Z" fill="#ffffff70" /></svg>'
+  '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M0 0 h30v30h-30 Z" fill="#ffffff70" /></svg>',
 )}`;
 
 const StyledBlock = styled.div`
@@ -51,8 +49,8 @@ const StyledContainer = styled.div<{
   color: ${(props) => props.color};
   align-self: center;
   line-height: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
   max-width: ${meta.percentage}%;
   min-width: ${meta.percentage}%;
   padding: 4px;

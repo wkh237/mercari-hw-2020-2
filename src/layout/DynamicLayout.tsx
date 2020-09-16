@@ -47,7 +47,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
               ? elementDef.defaultProps.colors.map(replaceColorToken)
               : [colors.primary, colors.secondary, colors.foreground, colors.background],
           };
-          return <ElementClass key={i} {...props} />;
+          return <ElementClass key={`${el.id}-${i}`} {...props} />;
         })}
       </StyledContainer>
     </StyledWrapper>

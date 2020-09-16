@@ -50,6 +50,7 @@ interface ElementPropDesciptor {
   color?: string;
   borderType?: BannerBorderType;
   values: string[];
+  keywords: string[][];
 }
 
 interface Layout {

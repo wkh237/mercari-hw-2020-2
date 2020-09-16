@@ -10,7 +10,8 @@ export const meta: ElementMeta = {
 
 export const defaultProps: ElementPropDesciptor = {
   color: "$foreground",
-  values: ["実質"]
+  values: ["実質"],
+  keywords: [['$len', '実質']],
 };
 
 const VertTextA = ({ color, values }: { color: string; values: string[] }) => (

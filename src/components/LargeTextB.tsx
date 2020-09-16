@@ -10,7 +10,8 @@ export const meta: ElementMeta = {
 
 export const defaultProps: ElementPropDesciptor = {
   color: "$foreground",
-  values: ["販売手数料"]
+  values: ["販売手数料"],
+  keywords: [['$len']]
 };
 
 const LargeTextB = ({ color, values }: { color: string; values: string[] }) => (

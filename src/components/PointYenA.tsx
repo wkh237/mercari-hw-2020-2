@@ -12,6 +12,7 @@ export const meta: ElementMeta = {
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
   values: ['最大', '1,000', 'GET!'],
+  keywords: [['最大', 'max'], ['$num'], ['GET', 'UP', '上限', '$len']],
 };
 
 const StyledPointYen = styled.div<{ textColor: string }>`
@@ -60,7 +61,7 @@ const StyledPointYenAdjective = styled.div`
 const PointYen = ({ values, colors }: ElementPropDesciptor) => {
   const [left, amount, right] = values;
   const [secondary] = colors || [];
-  let textColor = tinycolor(secondary).toHexString()
+  let textColor = tinycolor(secondary).toHexString();
   return (
     <StyledPointYen textColor={textColor}>
       {left && <StyledPointYenAdjective>{left}</StyledPointYenAdjective>}

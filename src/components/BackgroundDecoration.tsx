@@ -24,8 +24,9 @@ export default ({ color, size }: {color?: string, size?: number}) => {
   const imgs = Object.keys(imgMap) as any;
   const index = getRandomInt(0, imgs.length);
   return <>
-    {arr.map((item) => {
+    {arr.map((item, i) => {
       return <DecorationSVG
+        key={i}
         color={color || 'red'}
         img={imgs[index]}
         top={`${item.y}px`}

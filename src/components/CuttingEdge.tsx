@@ -10,7 +10,8 @@ export const meta: ElementMeta = {
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$border'],
-  values: ['ポイント']
+  values: ['ポイント'],
+  keywords: [['ポイント', 'point', '円', 'かね', 'カネ', 'クーポン', 'coupon', 'discount', 'ディスカウント']],
 };
 
 const CuttingEdge = ({ colors = [], borderType }: ElementPropDesciptor) => {

@@ -11,6 +11,8 @@ export const meta: ElementMeta = {
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$background'],
   values: ['抽選で'],
+  keywords: [['$len', '実質']],
+  
 };
 
 const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {

@@ -10,6 +10,7 @@ export const meta: ElementMeta = {
 
 export const defaultProps: ElementPropDesciptor = {
   values: [require('../assets/imgs/mercari-box.png')],
+  keywords: [['mercari', 'メルカリ']],
 };
 
 const ImageA = ({ values }: ElementPropDesciptor) => {

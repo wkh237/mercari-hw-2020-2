@@ -1,16 +1,17 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 25,
-  position: "any",
-  inputs: ["text"]
+  position: 'any',
+  inputs: ['text'],
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  color: "$foreground",
-  values: ["無料"]
+  color: '$foreground',
+  values: ['無料'],
+  keywords: [['$len', 'タダ', 'おまけ', 'フリー', '0', '０', '!', '！']],
 };
 
 const LargeTextC = ({ color, values }: { color: string; values: string[] }) => (
@@ -29,8 +30,8 @@ const StyledContainer = styled.div<{ color: string }>`
   letter-spacing: -2px;
   font-weight: bolder;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
 `;
 
 export default LargeTextC;

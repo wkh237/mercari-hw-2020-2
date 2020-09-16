@@ -1,16 +1,17 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 47,
-  position: "any",
-  inputs: ["text", "text"]
+  position: 'any',
+  inputs: ['text', 'text'],
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  color: "$foreground",
-  values: ["お買い物上手"]
+  color: '$foreground',
+  values: ['お買い物上手'],
+  keywords: [['$len']],
 };
 
 const LargeTextA = ({ color, values }: { color: string; values: string[] }) => (
@@ -28,8 +29,8 @@ const StyledContainer = styled.div<{ color: string }>`
   padding: 0px 4px;
   font-weight: bolder;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
 `;
 
 export default LargeTextA;

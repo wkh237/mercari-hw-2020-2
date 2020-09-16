@@ -21,6 +21,7 @@ const LeftRecA = ({ colors, values, borderType }: ElementPropDesciptor) => {
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$border', '$primary'],
   values: ['新規登錄者', '限定'],
+  keywords: [['$len'], ['限定', '$len', 'のみ', '限る']],
 };
 
 export const meta: ElementMeta = {

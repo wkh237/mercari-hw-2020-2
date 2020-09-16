@@ -11,6 +11,7 @@ export const meta: ElementMeta = {
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$text'],
   values: ['出品', 'するだけで'],
+  keywords: [['出品', '$len'], ['するだけで', '$len']],
 };
 
 const StackTextBigSmallA = ({ colors, values }: { values: string[]; colors: string[]; singleColor?: boolean }) => {

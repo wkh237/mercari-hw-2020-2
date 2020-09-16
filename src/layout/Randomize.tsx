@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Elements from '../components';
 import shuffle from '../utils/shuffle';
-import { Col, Row } from '../styles/Flex';
+import { Col } from '../styles/Flex';
 import Input from '../Input';
 import styled from 'styled-components';
 
@@ -81,7 +81,7 @@ const Randomize = () => {
       });
     }
   };
-  findCombinations(ids, [], 98);
+  findCombinations(ids, [], 100);
   console.log(`${combinations.length} combinations (${maxIteration} iterations)`);
   combinations = combinations.filter((combination) => {
     const combinationScore = combination.reduce((acc, cur) => {
@@ -119,7 +119,7 @@ const Randomize = () => {
   return (
     <StyledContainer>
       <StyledLayer>
-        <img src={require('../assets/imgs/header.png')} />
+        <img src={require('../assets/imgs/header.png')} alt="foo" />
         <Input setUserInput={setUserInput} />
         <Col>{banners}</Col>
       </StyledLayer>

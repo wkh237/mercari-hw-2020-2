@@ -16,13 +16,20 @@ function Input({ setUserInput }: InputProps) {
           onChange={(e) => {
             setInputValue(e.target.value);
           }}
-          onKeyPress={(e) => {
-            if (e.charCode === 13) {
+          onKeyUp={(e) => {
+            const keyCode = e.keyCode
+            if (keyCode === 13) {
               setUserInput(value);
             }
           }}
         />
-        <button>Shuffle</button>
+        <button
+          onClick={() => {
+            setUserInput(value);
+          }}
+        >
+          Shuffle
+        </button>
       </StyledForm>
     </StyledContainer>
   );

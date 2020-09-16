@@ -1,23 +1,24 @@
-import React from "react";
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import React from 'react';
+import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
-  type: "point",
+  type: 'point',
   percentage: 40,
-  position: "any",
-  inputs: ["text"]
+  position: 'any',
+  inputs: ['text'],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
-  values: ["1000"]
+  values: ['1000'],
+  keywords: [['$num']],
 };
 
 const StyledPointYen = styled.div<{ textColor: string }>`
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
   color: ${(props) => props.textColor};
   display: flex;
   align-items: center;
@@ -46,16 +47,10 @@ const StyledPointYenWord = styled.div`
   }
 `;
 
-const PointYen = ({
-  values,
-  colors
-}: {
-  values: string[];
-  colors: string[];
-}) => {
+const PointYen = ({ values, colors }: { values: string[]; colors: string[] }) => {
   const [amount] = values;
   const [secondary] = colors || [];
-  let textColor = tinycolor(secondary)
+  let textColor = tinycolor(secondary);
   return (
     <StyledPointYen textColor={textColor.toHex8String()}>
       <StyledValue>{amount}</StyledValue>

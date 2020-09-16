@@ -20,7 +20,8 @@ const LeftCircleA = ({
 
 export const defaultProps: ElementPropDesciptor = {
   color: "$primary",
-  values: ["れーディス", "HOT", "アイテム"]
+  values: ["れーディス", "HOT", "アイテム"],
+  keywords: [['$len']]
 };
 
 export const meta: ElementMeta = {
