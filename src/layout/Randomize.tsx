@@ -14,7 +14,7 @@ export type MatchedElement = { key: ElementKey; predictedValues: string[] | null
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
 const maxIteration = 10000;
-const threshold = 0.45;
+const threshold = 0.65;
 const maxResults = 25;
 
 const Randomize = () => {
