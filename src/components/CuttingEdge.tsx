@@ -6,12 +6,12 @@ export const meta: ElementMeta = {
   percentage: 3,
   position: 'center',
   inputs: [],
+  keywords: [['ポイント', 'point', '円', 'かね', 'カネ', 'クーポン', 'coupon', 'discount', 'ディスカウント']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$border'],
   values: ['ポイント'],
-  keywords: [['ポイント', 'point', '円', 'かね', 'カネ', 'クーポン', 'coupon', 'discount', 'ディスカウント']],
 };
 
 const CuttingEdge = ({ colors = [], borderType }: ElementPropDesciptor) => {

@@ -6,12 +6,12 @@ export const meta: ElementMeta = {
   percentage: 47,
   position: 'any',
   inputs: ['text', 'text'],
+  keywords: [['$len:6']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   color: '$foreground',
   values: ['お買い物上手'],
-  keywords: [['$len']],
 };
 
 const LargeTextA = ({ color, values }: { color: string; values: string[] }) => (

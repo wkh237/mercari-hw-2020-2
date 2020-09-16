@@ -8,7 +8,7 @@ interface BaseElement {
   values: string[];
 }
 
-type BannerBorderType = '' | 'dotted' | 'dashed' | 'solid' | 'double' | undefined ;
+type BannerBorderType = '' | 'dotted' | 'dashed' | 'solid' | 'double' | undefined;
 
 interface BannerColors {
   primary: string;
@@ -34,7 +34,7 @@ type LayoutElement =
       type: 'cuttingEdge';
     } & BaseElement);
 
-type ElementMeta = Omit<LayoutElement, 'values'> & { position: BaseElement['position'] };
+type ElementMeta = Omit<LayoutElement, 'values'> & { position: BaseElement['position']; keywords: string[][] };
 
 type LayoutMeta = {
   // width of border
@@ -50,7 +50,7 @@ interface ElementPropDesciptor {
   color?: string;
   borderType?: BannerBorderType;
   values: string[];
-  keywords: string[][];
+  matchedWords?: { value: string; score: number }[];
 }
 
 interface Layout {

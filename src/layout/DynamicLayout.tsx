@@ -5,11 +5,12 @@ import DecorationOverlay from '../components/DecorationOverlay';
 
 import { shouldRenderWithChance } from '../utils/random';
 import BackgroundOverlay from '../components/BackgroundOverlay';
+import { MatchedElement } from './Randomize';
 
 interface DynamicBannerProps {
   border: BannerBorderType;
   colors: BannerColors;
-  elements: Array<{ id: keyof typeof Elements; props: any }>;
+  elements: MatchedElement[];
 }
 
 const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
@@ -20,7 +21,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
     }
     return token;
   };
-  const elemetMeta = Elements[elements[0]?.id]?.meta;
+  const elemetMeta = Elements[elements[0]?.key]?.meta;
   // for those elements has position "left" or "right" we don't need extra space
   // on each sides, otherwise give it a 1% padding
   const shouldPadLeft = elemetMeta?.position !== 'left';
@@ -37,7 +38,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
         paddingRight={shouldPadRight}
       >
         {elements.map((el, i) => {
-          const elementDef = Elements[el.id];
+          const elementDef = Elements[el.key];
           const ElementClass = elementDef.default;
           const props = {
             ...elementDef.defaultProps,
@@ -47,7 +48,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
               ? elementDef.defaultProps.colors.map(replaceColorToken)
               : [colors.primary, colors.secondary, colors.foreground, colors.background],
           };
-          return <ElementClass key={`${el.id}-${i}`} {...props} />;
+          return <ElementClass key={`${el.key}-${i}`} {...props} />;
         })}
       </StyledContainer>
     </StyledWrapper>

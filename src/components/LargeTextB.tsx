@@ -1,17 +1,17 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 50,
-  position: "any",
-  inputs: ["text", "text"]
+  position: 'any',
+  inputs: ['text', 'text'],
+  keywords: [['$len:5']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  color: "$foreground",
-  values: ["販売手数料"],
-  keywords: [['$len']]
+  color: '$foreground',
+  values: ['販売手数料'],
 };
 
 const LargeTextB = ({ color, values }: { color: string; values: string[] }) => (
@@ -31,8 +31,8 @@ const StyledContainer = styled.div<{ color: string }>`
   overflow: hidden;
   font-weight: bolder;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
 `;
 
 export default LargeTextB;

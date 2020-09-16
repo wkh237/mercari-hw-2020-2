@@ -6,13 +6,12 @@ export const meta: ElementMeta = {
   percentage: 8,
   position: 'center',
   inputs: ['text'],
+  keywords: [['$len:3', '実質']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$background'],
   values: ['抽選で'],
-  keywords: [['$len', '実質']],
-  
 };
 
 const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {

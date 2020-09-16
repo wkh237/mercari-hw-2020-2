@@ -1,12 +1,122 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Elements from './components';
 import styled from 'styled-components';
+import 'string_score';
 
-interface InputProps {
-  setUserInput: React.Dispatch<string>;
+type ElementKey = keyof typeof Elements;
+type DescriptorMatchResult = Record<string, number>;
+interface KeywordMatchResult {
+  topMatch: string;
+  sum: number;
+  word: string;
+  matches: DescriptorMatchResult;
 }
+interface InputProps {
+  commitChange: React.Dispatch<string>;
+}
+const ElementKeys = Object.keys(Elements);
+const DescriptorWeight = {
+  $len: 0.5,
+  $num: 1.5,
+  $date: 1.5,
+};
 
-function Input({ setUserInput }: InputProps) {
-  const [value, setInputValue] = useState<string>('false');
+let debounce: NodeJS.Timeout | null = null;
+
+const matchElements = (words: string[]) => {
+  const q = [...words];
+  const ranksByWord: Record<string, Record<ElementKey, KeywordMatchResult[]>> = {};
+  while (q.length) {
+    const word = q.shift();
+    if (!word) break;
+    // match elements with the word
+    // word -> elementA --> kw1 --> d1, d2 ,d3 ...
+    //                  --> kw2 --> d1, d2 ,d3 ...
+    //                  --> kw3 --> d1, d2 ,d3 ...
+    for (let id of ElementKeys) {
+      // match the word with each keywords of the element and get a score
+      const kw = Elements[id].meta.keywords;
+      const result: Array<KeywordMatchResult> = [];
+      for (let descriptors of kw) {
+        let top: [string, number] = ['', 0];
+        let sum = 0;
+        // a map that records scores for each desciptor
+        const scoreMap = descriptors.reduce<DescriptorMatchResult>((acc, des) => {
+          let score = 0;
+          // use length score
+          if (des.startsWith('$len')) {
+            const [, len] = des.split(':');
+            const diff = Math.abs(word.length - +len);
+            const matchedLen = Math.max(+len - diff, 0);
+            score = (matchedLen / +len) * DescriptorWeight.$len;
+          } else if (des === '$date') {
+            if (word === '日' || word === '月' || word === '年' || word === '分' || word === '週')
+              score = DescriptorWeight.$date;
+          } else if (des === '$num') {
+            if (/[一二三四五六七八九十百千萬億零0123456789１２３４５６７８９０]/.test(word))
+              score = DescriptorWeight.$num;
+          }
+          // use string score
+          else {
+            score = `${word}`.score(des, 0.5);
+          }
+          // update top match if the score is larger than current one
+          if (score > top[1]) {
+            top = [des, score];
+          }
+          // add score to sum with extra weight
+          if (sum >= 1) sum += score * 0.1;
+          else sum += score;
+          acc[des] = score;
+          return acc;
+        }, {});
+        result.push({
+          topMatch: top[0],
+          sum: sum / kw.length,
+          word,
+          matches: scoreMap,
+        });
+      }
+      if (result.length > 0) {
+        ranksByWord[word] = ranksByWord[word] || {};
+        ranksByWord[word][id] = result;
+      }
+    }
+  }
+  console.log(ranksByWord);
+  const elementSuggestions: Record<ElementKey, any> = {};
+  for (let word in ranksByWord) {
+    const elementMatches = ranksByWord[word];
+    for (let elementId in elementMatches) {
+      elementSuggestions[elementId] = elementSuggestions[elementId] || {
+        score: 0,
+        valueSuggestions: [],
+      };
+      ranksByWord[word][elementId].forEach((d, i) => {
+        if (d.sum > 0) {
+          elementSuggestions[elementId].valueSuggestions[i] = elementSuggestions[elementId].valueSuggestions[i] || [];
+          elementSuggestions[elementId].valueSuggestions[i].push(d);
+          elementSuggestions[elementId].score += elementSuggestions[elementId].score >= 1 ? d.sum * 0.1 : d.sum;
+        }
+      });
+    }
+  }
+  console.log(elementSuggestions);
+};
+
+function Input({ commitChange }: InputProps) {
+  const [value, setInputValue] = useState<string>('');
+
+  useEffect(() => {
+    if (debounce) clearTimeout(debounce);
+    // calculate score and commit update
+    debounce = setTimeout(() => {
+      const elementRank = matchElements(value.split(/[ 　]/));
+      console.log(elementRank);
+      commitChange(value);
+    }, 1000);
+  }, [value]);
+
   return (
     <StyledContainer>
       <StyledForm>
@@ -14,18 +124,19 @@ function Input({ setUserInput }: InputProps) {
           type="text"
           placeholder="keywords separated by spaces .."
           onChange={(e) => {
-            setInputValue(e.target.value);
+            const val = e.target.value;
+            setInputValue(val);
           }}
           onKeyUp={(e) => {
-            const keyCode = e.keyCode
+            const keyCode = e.keyCode;
             if (keyCode === 13) {
-              setUserInput(value);
+              commitChange(value);
             }
           }}
         />
         <button
           onClick={() => {
-            setUserInput(value);
+            commitChange(value);
           }}
         >
           Shuffle

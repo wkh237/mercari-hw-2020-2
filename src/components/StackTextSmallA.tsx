@@ -7,12 +7,12 @@ export const meta: ElementMeta = {
   percentage: 14.5,
   position: 'any',
   inputs: ['text', 'text'],
+  keywords: [['$len:4'], ['$len:4']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
   values: ['かしこく', 'みつけて'],
-  keywords: [['$len'], ['$len']],
 };
 
 const StackTextSmallA = ({ colors, values }: ElementPropDesciptor) => {

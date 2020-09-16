@@ -7,12 +7,12 @@ export const meta: ElementMeta = {
   percentage: 45,
   position: 'any',
   inputs: ['text', 'text'],
+  keywords: [['最大', 'max'], ['$num']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
   values: ['最大', '1000'],
-  keywords: [['最大', 'max'], ['$num']],
 };
 
 const StyledPointYen = styled.div<{ textColor: string }>`

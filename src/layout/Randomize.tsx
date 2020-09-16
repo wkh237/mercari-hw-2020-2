@@ -9,14 +9,16 @@ import 'string_score';
 import { definedThemes } from '../utils/colors';
 import DynamicBanner from './DynamicLayout';
 
+export type MatchedElement = { key: ElementKey; matchesWords: { value: string; score: number }[] };
+
 type ElementKey = keyof typeof Elements;
+
+const maxIteration = 100;
 
 const Randomize = () => {
   const [userInput, setUserInput] = useState<string>('');
-
-  let combinations: Array<ElementKey[]> = [];
-  let maxIteration = 100;
-  let i = 0;
+  let combinations: Array<MatchedElement[]> = [];
+  
   const ids = shuffle(Object.keys(Elements));
 
   const findMinAndCanBeLast = (ids: string[]) => {
@@ -29,11 +31,12 @@ const Randomize = () => {
     }
     return min;
   };
-
-  const findCombinations = (availableElementIds: ElementKey[], current: ElementKey[], space: number) => {
+  
+  let i = 0;
+  const findCombinations = (availableElementIds: ElementKey[], current: MatchedElement[], space: number) => {
     i++;
     if (i > maxIteration) return;
-    const matched: string[] = [];
+    const matched: MatchedElement[] = [];
     const remained = [...availableElementIds];
     for (let id of availableElementIds) {
       remained.pop();
@@ -42,6 +45,7 @@ const Randomize = () => {
       const size = el.meta.percentage;
       const isLast = space - size <= findMinAndCanBeLast(remained);
       const isCenter = !isLast && !isFirst;
+      // check if this element can be put in this position
       if (
         (isFirst && el.meta.position === 'right') ||
         (isLast && el.meta.position === 'left') ||
@@ -52,17 +56,7 @@ const Randomize = () => {
       }
       // found matched
       if (space - size >= 0) {
-        if (matched.indexOf(id) !== -1 && el.meta.type === 'point') {
-          // no op
-        }
-        // // check correlation
-        // //@ts-ignore
-        // const score = userInput.score(el.defaultProps.values.join(' '), 0.5);
-        // console.log({ score });
-        // if (score > 0.1) {
-
-        // }
-        matched.push(id);
+        matched.push({ key: id, matchesWords: [] });
       }
     }
     // no more elements can be put into the banner
@@ -71,28 +65,21 @@ const Randomize = () => {
     }
     // continue with next slot
     else {
-      matched.forEach((id) => {
+      matched.forEach((m) => {
         findCombinations(
           // remove last matched one from available id list
-          availableElementIds.filter((s) => s !== id),
-          [...current, id],
-          space - Elements[id].meta.percentage,
+          availableElementIds.filter((s) => s !== m.key),
+          [...current, m],
+          space - Elements[m.key].meta.percentage,
         );
       });
     }
   };
+
   findCombinations(ids, [], 100);
+
   console.log(`${combinations.length} combinations (${maxIteration} iterations)`);
-  combinations = combinations.filter((combination) => {
-    const combinationScore = combination.reduce((acc, cur) => {
-      const values = Elements[cur].defaultProps.values.join(' ');
-      //@ts-ignore
-      const score = userInput.score(values, 0.5);
-      acc += score;
-      return acc;
-    }, 0);
-    return combinationScore > 0.2 ? true : false;
-  });
+
   const banners = definedThemes.map((theme, i) => {
     const n = i * ~~(combinations.length / 10);
     let borderType: BannerBorderType = '';
@@ -102,25 +89,14 @@ const Randomize = () => {
     else if (rseed < 0.6) borderType = 'dashed';
     else if (rseed < 0.8) borderType = 'solid';
     else borderType = 'solid';
-    return (
-      <DynamicBanner
-        key={i}
-        border={borderType}
-        colors={theme(borderType)}
-        elements={
-          combinations[n]?.map((id) => ({
-            id,
-            props: {},
-          })) || []
-        }
-      />
-    );
+    return <DynamicBanner key={i} border={borderType} colors={theme(borderType)} elements={combinations[n] || []} />;
   });
+
   return (
     <StyledContainer>
       <StyledLayer>
         <img src={require('../assets/imgs/header.png')} alt="foo" />
-        <Input setUserInput={setUserInput} />
+        <Input commitChange={setUserInput} />
         <Col>{banners}</Col>
       </StyledLayer>
     </StyledContainer>

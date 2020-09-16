@@ -6,12 +6,15 @@ export const meta: ElementMeta = {
   percentage: 14.5,
   position: 'any',
   inputs: ['text', 'text'],
+  keywords: [
+    ['出品', '$len:2'],
+    ['するだけで', '$len:5'],
+  ],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$text'],
   values: ['出品', 'するだけで'],
-  keywords: [['出品', '$len'], ['するだけで', '$len']],
 };
 
 const StackTextBigSmallA = ({ colors, values }: { values: string[]; colors: string[]; singleColor?: boolean }) => {

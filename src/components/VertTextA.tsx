@@ -5,13 +5,13 @@ export const meta: ElementMeta = {
   type: "text",
   percentage: 7,
   position: "any",
-  inputs: ["text"]
+  inputs: ["text"],
+  keywords: [['$len:2', '実質']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   color: "$foreground",
   values: ["実質"],
-  keywords: [['$len', '実質']],
 };
 
 const VertTextA = ({ color, values }: { color: string; values: string[] }) => (

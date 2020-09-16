@@ -1,13 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const LeftCircleA = ({
-  color,
-  values
-}: {
-  color: string;
-  values: string[];
-}) => (
+const LeftCircleA = ({ color, values }: { color: string; values: string[] }) => (
   <StyledContainer color="white" bg={color}>
     <StyledSVG height="25" width="30">
       <path fill={color} d="M 0 5 L 25 3 Q 15 20 0 20Z" />
@@ -19,16 +13,16 @@ const LeftCircleA = ({
 );
 
 export const defaultProps: ElementPropDesciptor = {
-  color: "$primary",
-  values: ["れーディス", "HOT", "アイテム"],
-  keywords: [['$len']]
+  color: '$primary',
+  values: ['れーディス', 'HOT', 'アイテム'],
 };
 
 export const meta: ElementMeta = {
-  type: "text",
+  type: 'text',
   percentage: 20,
-  position: "left",
-  inputs: ["text", "text", "text"]
+  position: 'left',
+  inputs: ['text', 'text', 'text'],
+  keywords: [['$len:5'], ['$len:3'], ['$len:4']],
 };
 
 const StyledSVG = styled.svg`
@@ -47,10 +41,10 @@ const StyledContainer = styled.div<{ color: string; bg: string }>`
   flex: ${meta.percentage};
   justify-content: center;
   position: relative;
-  color: ${(props) => props.color || "white"};
+  color: ${(props) => props.color || 'white'};
   padding: 2px 6px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
   > div:nth-child(2) {
     font-size: 16px;
     letter-spacing: 1.5px;
@@ -79,7 +73,7 @@ const StyledContainer = styled.div<{ color: string; bg: string }>`
     top: -50%;
     z-index: 1;
     border-radius: 100%;
-    content: "";
+    content: '';
   }
 `;
 

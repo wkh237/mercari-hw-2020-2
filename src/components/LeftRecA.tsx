@@ -21,7 +21,6 @@ const LeftRecA = ({ colors, values, borderType }: ElementPropDesciptor) => {
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$border', '$primary'],
   values: ['新規登錄者', '限定'],
-  keywords: [['$len'], ['限定', '$len', 'のみ', '限る']],
 };
 
 export const meta: ElementMeta = {
@@ -29,6 +28,7 @@ export const meta: ElementMeta = {
   percentage: 20,
   position: 'left',
   inputs: ['text', 'text', 'text'],
+  keywords: [['$len:5'], ['限定', '$len:2', 'のみ', '限る']],
 };
 
 const StyledSVG = styled.svg`

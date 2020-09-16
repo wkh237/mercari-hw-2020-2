@@ -7,12 +7,12 @@ export const meta: ElementMeta = {
   percentage: 40,
   position: 'any',
   inputs: ['text'],
+  keywords: [['$num']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
   values: ['1000'],
-  keywords: [['$num']],
 };
 
 const StyledPointYen = styled.div<{ textColor: string }>`
