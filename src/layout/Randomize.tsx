@@ -3,7 +3,9 @@ import Elements from "../components";
 import shuffle from "../utils/shuffle";
 import styled from "styled-components";
 import DecorationOverlay from "../components/DecorationOverlay";
+import BackgroundOverlay from "../components/BackgroundOverlay";
 import { getThemeFromColor } from '../utils/colors';
+import { shouldRenderWithChance } from '../utils/random';
 
 interface RandomLayoutProps {
   border: boolean;
@@ -30,6 +32,8 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
   return (
     <StyledWrapper>
       <StyledContainer color={colors.primary} border={border} background={colors.background}>
+      { shouldRenderWithChance(0.3) && <DecorationOverlay />}
+      { shouldRenderWithChance(0.4) && <BackgroundOverlay color={colors.secondary} /> }
         {elements.map((el, i) => {
           const elementDef = Elements[el.id];
           const ElementClass = elementDef.default;
@@ -43,7 +47,6 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
           };
           return <ElementClass key={i} {...props} />;
         })}
-        <DecorationOverlay />
       </StyledContainer>
     </StyledWrapper>
   );
@@ -57,6 +60,7 @@ interface StyledContainerProps {
 
 const StyledWrapper = styled.div`
   overflow: hidden;
+  position: relative;
 `;
 
 const StyledContainer = styled.div<StyledContainerProps>`

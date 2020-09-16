@@ -1,6 +1,7 @@
 // backgrounds
 import bg from "../assets/bgs/bg.svg";
-import bg1 from "../assets/bgs/bg1.svg";
+import bg2 from "../assets/bgs/bg2.svg";
+import bg3 from "../assets/bgs/bg3.svg";
 
 // decorations
 import book from '../assets/decorations/book.svg';
@@ -50,10 +51,17 @@ export const BackgroundOverlays = [
     }
   },
   {
-    src: bg1,
+    src: bg2,
     defaultTransform: {
-      x: 0,
-      y: 0
+      y: -2232,
+      x: -980
+    }
+  },
+  {
+    src: bg3,
+    defaultTransform: {
+      y: -36,
+      x: -2309
     }
   }
 ];

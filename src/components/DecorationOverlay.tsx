@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SVG from "react-inlinesvg";
 import { Decorations } from "../utils/assets";
+import { getRandomInt } from "../utils/random";
 
 const StyledSvg = styled(SVG)<{ top?: number; left?: number; rotate?: number }>`
   position: absolute;
@@ -18,14 +19,8 @@ interface Props {
 const horizontalRange = [0, 600];
 const topVerticalRange = [-20, -5];
 const bottomVerticalRange = [60, 80];
-const imageSizeRange = [30, 50];
+const imageSizeRange = [30, 40];
 const rotationRange = [-90, 90];
-
-const getRandomInt = (min: number, max: number) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-};
 
 const positions = (num: number) => {
   const widthDouble = 600 * 2;
