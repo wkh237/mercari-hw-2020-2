@@ -28,7 +28,7 @@ export const meta: ElementMeta = {
   percentage: 20,
   position: 'left',
   inputs: ['text', 'text', 'text'],
-  keywords: [['$len:5'], ['限定', '$len:2', 'のみ', '限る']],
+  keywords: [['$len:5'], ['限定', '$len:2:2', 'のみ', '限る']],
 };
 
 const StyledSVG = styled.svg`

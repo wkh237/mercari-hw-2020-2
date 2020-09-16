@@ -1,4 +1,4 @@
-const shuffle = (arr: any) => {
+const shuffle = (arr: any): string[] => {
   let i;
   let j;
   let temp;

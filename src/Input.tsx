@@ -12,8 +12,15 @@ interface KeywordMatchResult {
   matches: DescriptorMatchResult;
 }
 interface InputProps {
-  commitChange: React.Dispatch<string>;
+  commitChange: (suggestions: ElementSuggestion) => void;
 }
+export type ElementSuggestion = Record<
+  ElementKey,
+  {
+    score: number;
+    valueSuggestions: Record<number, KeywordMatchResult[]>;
+  }
+>;
 const ElementKeys = Object.keys(Elements);
 const DescriptorWeight = {
   $len: 0.5,
@@ -45,10 +52,21 @@ const matchElements = (words: string[]) => {
           let score = 0;
           // use length score
           if (des.startsWith('$len')) {
-            const [, len] = des.split(':');
-            const diff = Math.abs(word.length - +len);
-            const matchedLen = Math.max(+len - diff, 0);
-            score = (matchedLen / +len) * DescriptorWeight.$len;
+            const [, max, min] = des.split(':');
+            // stric text length $len:n:n
+            if (max === min && word.length === +max) {
+              score = DescriptorWeight.$len;
+            } 
+            // ranged text length $len:n1:n2 or $len:n1
+            else {
+              const diff = Math.abs(word.length - +max);
+              const matchedLen = Math.max(+max - diff, 0);
+              score = (matchedLen / +max) * DescriptorWeight.$len;
+              // the score would be zero if lower bound is defined and word length smaller than lower bound
+              if (min !== undefined && word.length < +min) {
+                score = 0;
+              }
+            }
           } else if (des === '$date') {
             if (word === '日' || word === '月' || word === '年' || word === '分' || word === '週')
               score = DescriptorWeight.$date;
@@ -84,7 +102,7 @@ const matchElements = (words: string[]) => {
     }
   }
   console.log(ranksByWord);
-  const elementSuggestions: Record<ElementKey, any> = {};
+  const elementSuggestions: ElementSuggestion = {};
   for (let word in ranksByWord) {
     const elementMatches = ranksByWord[word];
     for (let elementId in elementMatches) {
@@ -102,6 +120,7 @@ const matchElements = (words: string[]) => {
     }
   }
   console.log(elementSuggestions);
+  return elementSuggestions;
 };
 
 function Input({ commitChange }: InputProps) {
@@ -111,11 +130,10 @@ function Input({ commitChange }: InputProps) {
     if (debounce) clearTimeout(debounce);
     // calculate score and commit update
     debounce = setTimeout(() => {
-      const elementRank = matchElements(value.split(/[ 　]/));
-      console.log(elementRank);
-      commitChange(value);
+      const suggestions = matchElements(value.split(/[ 　]/));
+      commitChange(suggestions);
     }, 1000);
-  }, [value]);
+  }, [value, commitChange]);
 
   return (
     <StyledContainer>
@@ -127,16 +145,11 @@ function Input({ commitChange }: InputProps) {
             const val = e.target.value;
             setInputValue(val);
           }}
-          onKeyUp={(e) => {
-            const keyCode = e.keyCode;
-            if (keyCode === 13) {
-              commitChange(value);
-            }
-          }}
         />
         <button
           onClick={() => {
-            commitChange(value);
+            const suggestions = matchElements(value.split(/[ 　]/));
+            commitChange(suggestions);
           }}
         >
           Shuffle

@@ -22,7 +22,7 @@ export const meta: ElementMeta = {
   percentage: 20,
   position: 'left',
   inputs: ['text', 'text', 'text'],
-  keywords: [['$len:5'], ['$len:3'], ['$len:4']],
+  keywords: [['$len:5:4'], ['$len:4:3'], ['$len:4:4']],
 };
 
 const StyledSVG = styled.svg`

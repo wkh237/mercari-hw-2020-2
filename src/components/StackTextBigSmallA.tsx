@@ -7,8 +7,8 @@ export const meta: ElementMeta = {
   position: 'any',
   inputs: ['text', 'text'],
   keywords: [
-    ['出品', '$len:2'],
-    ['するだけで', '$len:5'],
+    ['出品', '$len:2:2'],
+    ['するだけで', '$len:5:3'],
   ],
 };
 

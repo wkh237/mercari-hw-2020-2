@@ -6,7 +6,7 @@ export const meta: ElementMeta = {
   percentage: 7,
   position: "any",
   inputs: ["text"],
-  keywords: [['$len:2', '実質']],
+  keywords: [['$len:2:2', '実質']],
 };
 
 export const defaultProps: ElementPropDesciptor = {

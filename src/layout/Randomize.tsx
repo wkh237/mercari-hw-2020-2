@@ -8,19 +8,19 @@ import styled from 'styled-components';
 import 'string_score';
 import { definedThemes } from '../utils/colors';
 import DynamicBanner from './DynamicLayout';
+import { ElementSuggestion } from '../Input';
 
 export type MatchedElement = { key: ElementKey; matchesWords: { value: string; score: number }[] };
 
 type ElementKey = keyof typeof Elements;
-
-const maxIteration = 100;
+const ElementKeys = Object.keys(Elements);
+const maxIteration = 10000;
+const threshold = 0.65;
 
 const Randomize = () => {
-  const [userInput, setUserInput] = useState<string>('');
+  const [suggestion, setSuggestion] = useState<ElementSuggestion | null>(null);
   let combinations: Array<MatchedElement[]> = [];
-  
-  const ids = shuffle(Object.keys(Elements));
-
+  const ids = shuffle(ElementKeys).filter((id) => (suggestion?.[id]?.score || 0) > threshold);
   const findMinAndCanBeLast = (ids: string[]) => {
     let min = 100;
     for (let id of ids) {
@@ -31,7 +31,7 @@ const Randomize = () => {
     }
     return min;
   };
-  
+
   let i = 0;
   const findCombinations = (availableElementIds: ElementKey[], current: MatchedElement[], space: number) => {
     i++;
@@ -78,7 +78,7 @@ const Randomize = () => {
 
   findCombinations(ids, [], 100);
 
-  console.log(`${combinations.length} combinations (${maxIteration} iterations)`);
+  console.log(`${combinations.length} combinations from ${ids.length} elements (${i} iterations)`);
 
   const banners = definedThemes.map((theme, i) => {
     const n = i * ~~(combinations.length / 10);
@@ -96,7 +96,7 @@ const Randomize = () => {
     <StyledContainer>
       <StyledLayer>
         <img src={require('../assets/imgs/header.png')} alt="foo" />
-        <Input commitChange={setUserInput} />
+        <Input commitChange={setSuggestion} />
         <Col>{banners}</Col>
       </StyledLayer>
     </StyledContainer>
