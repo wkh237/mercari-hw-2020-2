@@ -1,48 +1,36 @@
-import React from "react";
-import { jaggedCircle } from "../utils/svg";
-import styled from "styled-components";
+import React from 'react';
+import { jaggedCircle } from '../utils/svg';
+import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
-  position: "left",
-  type: "text",
+  position: 'left',
+  type: 'text',
   percentage: 14.3,
-  inputs: ["text"]
+  inputs: ['text'],
 };
 
-export const defaultProps = {
-  colors: ["$background", "$foreground"],
-  values: ["れーディス", "HOT", "アイテム"]
+export const defaultProps: ElementPropDesciptor = {
+  colors: ['$foreground', '$background'],
+  values: ['のこり', '3', '日'],
 };
 
-const JaggedCircleText = ({
-  colors,
-  values
-}: {
-  values: string[];
-  colors: string[];
-}) => {
-  const [bgColor, color] = colors;
+const JaggedCircleText = ({ colors, values, hasBorder }: ElementPropDesciptor) => {
+  const [bg, fg] = colors || [];
+  const tempColor = hasBorder ? bg : fg;
+  const color = tinycolor.readability(tempColor, '#fff') > 2 ? tempColor : '#000';
   return (
     <StyledJaggedCircleTextA>
       <StyledJaggedCircle viewBox="0 0 20 20">
-        <path d={jaggedCircle(20)} fill={bgColor} />
+        <path d={jaggedCircle(20)} fill="#fff" />
       </StyledJaggedCircle>
-      <StyledText
-        color={color}
-        style={{ top: "23%", left: "4%", fontSize: 20 }}
-      >
+      <StyledText color={color} style={{ top: '23%', left: '4%', fontSize: 20 }}>
         {values[0]}
       </StyledText>
-      <StyledText
-        color={color}
-        style={{ top: "40%", left: "8%", fontSize: 42 }}
-      >
+      <StyledText color={color} style={{ top: '40%', left: '8%', fontSize: 42 }}>
         {values[1]}
       </StyledText>
-      <StyledText
-        color={color}
-        style={{ top: "46%", left: "40%", fontSize: 28 }}
-      >
+      <StyledText color={color} style={{ top: '46%', left: '40%', fontSize: 28 }}>
         {values[2]}
       </StyledText>
     </StyledJaggedCircleTextA>
@@ -53,6 +41,8 @@ const StyledJaggedCircleTextA = styled.div`
   max-width: ${meta.percentage}%;
   min-width: ${meta.percentage}%;
   position: relative;
+  display: flex;
+  align-self: stretch;
 `;
 
 const StyledText = styled.div<{ color: string }>`
@@ -62,8 +52,8 @@ const StyledText = styled.div<{ color: string }>`
   transform: rotateZ(-10deg);
   font-weight: 900;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
 `;
 
 const StyledJaggedCircle = styled.svg`

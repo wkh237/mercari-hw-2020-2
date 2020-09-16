@@ -1,17 +1,18 @@
-import * as CuttingEdge from "./CuttingEdge";
-import * as JaggedCircleText from "./JaggedCircleText";
-import * as LargeTextA from "./LargeTextA";
-import * as LargeTextB from "./LargeTextB";
-import * as LargeTextC from "./LargeTextC";
-import * as LeftRecA from "./LeftRecA";
-import * as PointYenA from "./PointYenA";
-import * as PointYenB from "./PointYenB";
-import * as PointYenC from "./PointYenC";
-import * as PointYenD from "./PointYenD";
-import * as StackTextBigSmallA from "./StackTextBigSmallA";
-import * as StackTextSmallA from "./StackTextSmallA";
-import * as VertTextA from "./VertTextA";
-import * as VertTextBubbleA from "./VertTextBubbleA";
+import * as CuttingEdge from './CuttingEdge';
+import * as JaggedCircleText from './JaggedCircleText';
+import * as LargeTextA from './LargeTextA';
+import * as LargeTextB from './LargeTextB';
+import * as LargeTextC from './LargeTextC';
+import * as LeftRecA from './LeftRecA';
+import * as PointYenA from './PointYenA';
+import * as PointYenB from './PointYenB';
+import * as PointYenC from './PointYenC';
+import * as PointYenD from './PointYenD';
+import * as StackTextBigSmallA from './StackTextBigSmallA';
+import * as StackTextSmallA from './StackTextSmallA';
+import * as VertTextA from './VertTextA';
+import * as VertTextBubbleA from './VertTextBubbleA';
+import * as ImageA from './ImageA';
 
 interface ElementDescriptor {
   default: React.FC<any>;
@@ -33,7 +34,8 @@ const elements: Record<string, ElementDescriptor> = {
   StackTextBigSmallA,
   StackTextSmallA,
   VertTextA,
-  VertTextBubbleA
+  VertTextBubbleA,
+  ImageA,
 };
 
 export default elements;

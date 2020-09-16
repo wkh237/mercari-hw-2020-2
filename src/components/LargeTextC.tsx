@@ -8,7 +8,7 @@ export const meta: ElementMeta = {
   inputs: ["text"]
 };
 
-export const defaultProps = {
+export const defaultProps: ElementPropDesciptor = {
   color: "$foreground",
   values: ["無料"]
 };

@@ -38,7 +38,6 @@ const MJP31273 = ({ color, element, overlay }: Layout) => {
       <StackTextSmallA
         values={element[1].values}
         color={textColor}
-        singleColor
       />
       <LargeTextA color={textColor} values={element[2].values} />
       {element[3]?.values?.[0] && <StyledImage src={element[3].values[0]} />}

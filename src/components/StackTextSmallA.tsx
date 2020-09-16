@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import tinycolor from "tinycolor2";
 
 export const meta: ElementMeta = {
   type: "text",
@@ -8,22 +9,22 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
-export const defaultProps = {
-  color: "$secondary",
+export const defaultProps: ElementPropDesciptor = {
+  colors: ['$background', '$secondary'],
   values: ["かしこく", "みつけて"]
 };
 
 const StackTextSmallA = ({
-  color,
+  colors,
   values,
-  singleColor
-}: {
-  values: string[];
-  color: string;
-  singleColor?: boolean;
-}) => {
+}: ElementPropDesciptor) => {
+  const [background, secondary] = colors || [];
+  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
+  if (tinycolor.readability(textColor, background) < 2) {
+    textColor.darken(10)
+  }
   return (
-    <StyledContainer color={color}>
+    <StyledContainer color={textColor.toHexString()}>
       <StyledBlock>{values[0]}</StyledBlock>
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>

@@ -14,11 +14,11 @@ const MJP34046 = ({ color, element, overlay }: Layout) => {
   return (
     <StyledContainer color={color[0]}>
       {overlay && <StyledOverlay src={overlay} />}
-      <StackTextSmallA
+      {/* <StackTextSmallA
         values={element[1].values}
         color={textColor}
         singleColor
-      />
+      /> */}
       {/* <CuttingEdge color={color[0]} /> */}
     </StyledContainer>
   );
@@ -65,7 +65,7 @@ export default () => (
         values: ["出品", "するだけで"]
       },
       {
-        type: "pointYen",
+        type: "point",
         position: "left",
         values: ["最大", "1,000"]
       }

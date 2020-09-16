@@ -9,22 +9,27 @@ export const meta: ElementMeta = {
   inputs: ["text", "text"]
 };
 
-export const defaultProps = {
-  color: "$secondary",
+export const defaultProps: ElementPropDesciptor = {
+  colors: ['$background', '$secondary'],
   values: ["出品", "するだけで"]
 };
 
 const StackTextBigSmallA = ({
-  color,
+  colors,
   values,
   singleColor
 }: {
   values: string[];
-  color: string;
+  colors: string[];
   singleColor?: boolean;
 }) => {
+  const [background, secondary] = colors || [];
+  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
+  if (tinycolor.readability(textColor, background) < 5) {
+    textColor.darken(10);
+  }
   return (
-    <StyledContainer color={color}>
+    <StyledContainer color={textColor.toHexString()}>
       <StyledBlock>{values[0]}</StyledBlock>
       <StyledBlock>{values[1]}</StyledBlock>
     </StyledContainer>
@@ -32,19 +37,12 @@ const StackTextBigSmallA = ({
 };
 
 const fontColorGen = (baseColor: string) => {
-  const colors = tinycolor(baseColor)
-    .tetrad()
-    .map((c) => c.toHexString());
-  return colors;
+  const color = tinycolor(baseColor).lighten(15).desaturate(40).toHexString();
+  return color;
 };
-
-const underline = `data:image/svg+xml;base64,${btoa(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M0 0 h30v30h-30 Z" fill="#ffffffa0" /></svg>'
-)}`;
 
 const StyledBlock = styled.div`
   position: relative;
-  background-image: url(${underline});
   background-size: 100% 20%;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -58,7 +56,6 @@ const StyledContainer = styled.div<{
   align-self: flex-start;
   flex: 1;
   justify-content: center;
-  color: ${(props) => props.color};
   align-self: center;
   line-height: 24px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -69,13 +66,13 @@ const StyledContainer = styled.div<{
   div:nth-child(1) {
     text-align: center;
     font-size: 2.5em;
-    color: ${(props) => fontColorGen(props.color)[1]};
+    color: ${(props) => props.color};
     line-height: 100%;
   }
   div:nth-child(2) {
     text-align: center;
     font-size: 1em;
-    color: ${(props) => fontColorGen(props.color)[3]};
+    color: ${(props) => fontColorGen(props.color)};
   }
   > div {
     position: relative;
