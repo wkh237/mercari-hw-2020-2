@@ -1,0 +1,86 @@
+import React  from 'react';
+import Elements from '../components';
+import styled from 'styled-components';
+import DecorationOverlay from '../components/DecorationOverlay';
+
+import { shouldRenderWithChance } from '../utils/random';
+import BackgroundOverlay from '../components/BackgroundOverlay';
+
+interface DynamicBannerProps {
+  border: BannerBorderType;
+  colors: BannerColors;
+  elements: Array<{ id: keyof typeof Elements; props: any }>;
+}
+
+const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
+  const replaceColorToken = (token: string) => {
+    if (token?.startsWith('$')) {
+      // @ts-ignore
+      return colors[token.substr(1)] || colors.primary;
+    }
+    return token;
+  };
+  const elemetMeta = Elements[elements[0]?.id]?.meta;
+  // for those elements has position "left" or "right" we don't need extra space
+  // on each sides, otherwise give it a 1% padding
+  const shouldPadLeft = elemetMeta?.position !== 'left';
+  const shouldPadRight = elemetMeta?.position !== 'right';
+  return (
+    <StyledWrapper background={colors.background}>
+      {shouldRenderWithChance(0.3) && <DecorationOverlay />}
+      {shouldRenderWithChance(0.4) && <BackgroundOverlay color="#ffffff60" />}
+      <StyledContainer
+        color={colors.primary}
+        border={colors.border}
+        borderType={border}
+        paddingLeft={shouldPadLeft}
+        paddingRight={shouldPadRight}
+      >
+        {elements.map((el, i) => {
+          const elementDef = Elements[el.id];
+          const ElementClass = elementDef.default;
+          const props = {
+            ...elementDef.defaultProps,
+            hasBorder: border,
+            color: replaceColorToken(elementDef.defaultProps.color),
+            colors: elementDef.defaultProps.colors
+              ? elementDef.defaultProps.colors.map(replaceColorToken)
+              : [colors.primary, colors.secondary, colors.foreground, colors.background],
+          };
+          return <ElementClass key={i} {...props} />;
+        })}
+      </StyledContainer>
+    </StyledWrapper>
+  );
+};
+
+interface StyledContainerProps {
+  color: string;
+  border: string;
+  borderType: BannerBorderType;
+  paddingLeft: boolean;
+  paddingRight: boolean;
+}
+
+const StyledWrapper = styled.div<{ background: string }>`
+  overflow: hidden;
+  position: relative;
+  background-color: ${(props) => props.background};
+`;
+
+const StyledContainer = styled.div<StyledContainerProps>`
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  max-height: 100px;
+  min-height: 100px;
+  max-width: 600px;
+  min-width: 600px;
+  justify-content: space-between;
+  align-items: center;
+  border: ${(props) => (props.borderType ? `4px ${props.borderType} ${props.border}` : 'none')};
+  padding-left: ${(props) => (props.paddingLeft ? '1%' : '0')};
+  padding-right: ${(props) => (props.paddingRight ? '1%' : '0')};
+`;
+
+export default DynamicBanner;
