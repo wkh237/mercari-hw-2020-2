@@ -1,9 +1,9 @@
-import React from "react";
-import Elements from "../components";
-import shuffle from "../utils/shuffle";
-import styled from "styled-components";
-import DecorationOverlay from "../components/DecorationOverlay";
-import BackgroundOverlay from "../components/BackgroundOverlay";
+import React from 'react';
+import Elements from '../components';
+import shuffle from '../utils/shuffle';
+import styled from 'styled-components';
+import DecorationOverlay from '../components/DecorationOverlay';
+import BackgroundOverlay from '../components/BackgroundOverlay';
 import { definedThemes } from '../utils/colors';
 import { shouldRenderWithChance } from '../utils/random';
 
@@ -23,12 +23,22 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
     }
     return token;
   };
-  console.log(border);
+  // for those elements has position "left" or "right" we don't need extra space
+  // on each sides, otherwise give it a 1% padding
+  const shouldPadLeft = Elements[elements[0].id].meta.position !== 'left';
+  const shouldPadRight = Elements[elements[0].id].meta.position !== 'right';
   return (
     <StyledWrapper>
-      <StyledContainer color={colors.primary} border={colors.border} background={colors.background} borderType={border}>
-      { shouldRenderWithChance(0.3) && <DecorationOverlay />}
-      { shouldRenderWithChance(0.4) && <BackgroundOverlay color="#ffffff60" /> }
+      <StyledContainer
+        color={colors.primary}
+        border={colors.border}
+        background={colors.background}
+        borderType={border}
+        paddingLeft={shouldPadLeft}
+        paddingRight={shouldPadRight}
+      >
+        {shouldRenderWithChance(0.3) && <DecorationOverlay />}
+        {shouldRenderWithChance(0.4) && <BackgroundOverlay color="#ffffff60" />}
         {elements.map((el, i) => {
           const elementDef = Elements[el.id];
           const ElementClass = elementDef.default;
@@ -52,6 +62,8 @@ interface StyledContainerProps {
   background: string;
   border: string;
   borderType: BannerBorderType;
+  paddingLeft: boolean;
+  paddingRight: boolean;
 }
 
 const StyledWrapper = styled.div`
@@ -70,6 +82,8 @@ const StyledContainer = styled.div<StyledContainerProps>`
   align-items: center;
   background-color: ${(props) => props.background};
   border: ${(props) => (props.borderType ? `4px ${props.borderType} ${props.border}` : 'none')};
+  padding-left: ${(props) => (props.paddingLeft ? '1%' : '0')};
+  padding-right: ${(props) => (props.paddingRight ? '1%' : '0')};
 `;
 
 export default () => {
@@ -133,7 +147,7 @@ export default () => {
       });
     }
   };
-  findCombinations(ids, [], 100);
+  findCombinations(ids, [], 98);
   console.log(`${combinations.length} combinations (${maxIteration} iterations)`);
   const banners = definedThemes.map((theme, i) => {
     const n = i * ~~(combinations.length / 10);
