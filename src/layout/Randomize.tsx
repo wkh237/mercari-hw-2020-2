@@ -188,10 +188,10 @@ export default () => {
         key={i}
         border={borderType}
         colors={theme(borderType)}
-        elements={combinations[n].map((id) => ({
+        elements={combinations[n]?.map((id) => ({
           id,
           props: {},
-        }))}
+        })) || []}
       />
     );
   });
