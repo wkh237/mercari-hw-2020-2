@@ -1,23 +1,23 @@
-import React from "react";
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import React from 'react';
+import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
-  type: "point",
+  type: 'point',
   percentage: 65,
-  position: "any",
-  inputs: ["text", "text", "text"]
+  position: 'any',
+  inputs: ['text', 'text', 'text'],
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  colors: ['$background', '$secondary'],
-  values: ["最大", "1,000", "GET!"]
+  colors: ['$secondary'],
+  values: ['最大', '1,000', 'GET!'],
 };
 
 const StyledPointYen = styled.div<{ textColor: string }>`
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
   color: ${(props) => props.textColor};
   display: flex;
   align-items: center;
@@ -57,21 +57,12 @@ const StyledPointYenAdjective = styled.div`
   font-weight: 700;
 `;
 
-const PointYen = ({
-  values,
-  colors
-}: {
-  values: string[];
-  colors: string[];
-}) => {
+const PointYen = ({ values, colors }: ElementPropDesciptor) => {
   const [left, amount, right] = values;
-  const [background, secondary] = colors || [];
-  let textColor = tinycolor(secondary).lighten(15).desaturate(40);
-  if (tinycolor.readability(textColor, background) < 5) {
-    textColor.darken(10);
-  }
+  const [secondary] = colors || [];
+  let textColor = tinycolor(secondary).toHexString()
   return (
-    <StyledPointYen textColor={textColor.toHex8String()}>
+    <StyledPointYen textColor={textColor}>
       {left && <StyledPointYenAdjective>{left}</StyledPointYenAdjective>}
       <StyledValue>{amount}</StyledValue>
       <StyledPointYenWord>

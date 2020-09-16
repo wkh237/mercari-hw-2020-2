@@ -1,35 +1,46 @@
 // type of input field
-type LayoutInput = "text" | "number";
+type LayoutInput = 'text' | 'number';
 
 interface BaseElement {
   percentage: number;
-  position?: "left" | "right" | "any" | "center";
+  position?: 'left' | 'right' | 'any' | 'center';
   inputs: LayoutInput[];
   values: string[];
 }
 
+type BannerBorderType = '' | 'dotted' | 'dashed' | 'solid' | 'double' | undefined ;
+
+interface BannerColors {
+  primary: string;
+  secondary: string;
+  border: string;
+  foreground: string;
+  background: string;
+  text: string;
+}
+
 type LayoutElement =
   | ({
-      type: "image";
+      type: 'image';
     } & BaseElement)
   | ({
-      type: "text";
+      type: 'text';
       backgroundImage?: string;
     } & BaseElement)
   | ({
-      type: "point";
+      type: 'point';
     } & BaseElement)
   | ({
-    type: "cuttingEdge";
-  } & BaseElement)
+      type: 'cuttingEdge';
+    } & BaseElement);
 
-type ElementMeta = Omit<LayoutElement, "values"> & { position: BaseElement['position'] };
+type ElementMeta = Omit<LayoutElement, 'values'> & { position: BaseElement['position'] };
 
 type LayoutMeta = {
   // width of border
   border?: number;
   overlay?: string;
-  hasBorder?: boolean;
+  borderType?: BannerBorderType;
   // omit values because it's a metadata
   element: ElementMeta[];
 };
@@ -37,7 +48,7 @@ type LayoutMeta = {
 interface ElementPropDesciptor {
   colors?: string[];
   color?: string;
-  hasBorder?: boolean;
+  borderType?: BannerBorderType;
   values: string[];
 }
 
@@ -46,8 +57,8 @@ interface Layout {
   // width of border
   border?: number;
   overlay?: string;
-  element: Omit<LayoutElement, "inputs" | "percentage">[];
+  element: Omit<LayoutElement, 'inputs' | 'percentage'>[];
 
   // coupon pos
-  couponPos?: "left" | "right";
+  couponPos?: 'left' | 'right';
 }

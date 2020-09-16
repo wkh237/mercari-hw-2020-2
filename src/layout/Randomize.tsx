@@ -1,19 +1,13 @@
-import React from "react";
-import Elements from "../components";
-import shuffle from "../utils/shuffle";
-import styled from "styled-components";
-import DecorationOverlay from "../components/DecorationOverlay";
-import { getThemeFromColor } from '../utils/colors';
+import React from 'react';
+import Elements from '../components';
+import shuffle from '../utils/shuffle';
+import styled from 'styled-components';
+import DecorationOverlay from '../components/DecorationOverlay';
+import { definedThemes, getThemeFromColor } from '../utils/colors';
 
 interface RandomLayoutProps {
-  border: boolean;
-  colors: {
-    primary: string;
-    secondary: string;
-    border: string;
-    foreground: string;
-    background: string;
-  };
+  border: BannerBorderType;
+  colors: BannerColors;
   elements: Array<{ id: keyof typeof Elements; props: any }>;
 }
 
@@ -27,9 +21,10 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
     }
     return token;
   };
+  console.log(border);
   return (
     <StyledWrapper>
-      <StyledContainer color={colors.primary} border={border} background={colors.background}>
+      <StyledContainer color={colors.primary} border={colors.border} background={colors.background} borderType={border}>
         {elements.map((el, i) => {
           const elementDef = Elements[el.id];
           const ElementClass = elementDef.default;
@@ -52,7 +47,8 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
 interface StyledContainerProps {
   color: string;
   background: string;
-  border: boolean;
+  border: string;
+  borderType: BannerBorderType;
 }
 
 const StyledWrapper = styled.div`
@@ -69,7 +65,7 @@ const StyledContainer = styled.div<StyledContainerProps>`
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.background};
-  border: ${(props) => (props.border ? `4px solid ${props.color}` : 'none')};
+  border: ${(props) => (props.borderType ? `4px ${props.borderType} ${props.border}` : 'none')};
 `;
 
 export default () => {
@@ -99,7 +95,7 @@ export default () => {
       const isFirst = current.length === 0;
       const el = Elements[id];
       const size = el.meta.percentage;
-      const isLast = (space - size) <= findMinAndCanBeLast(remained);
+      const isLast = space - size <= findMinAndCanBeLast(remained);
       const isCenter = !isLast && !isFirst;
       if (
         (isFirst && el.meta.position === 'right') ||
@@ -135,26 +131,20 @@ export default () => {
   };
   findCombinations(ids, [], 100);
   console.log(`${combinations.length} combinations (${maxIteration} iterations)`);
-  const banners = [
-    'red',
-    'yellow',
-    '#0077ff',
-    '#ff5533',
-    '#33cc00',
-    'red',
-    'yellow',
-    '#0077ff',
-    '#ff5533',
-    '#33cc00',
-  ].map((baseColor, i) => {
+  const banners = definedThemes.map((theme, i) => {
     const n = i * ~~(combinations.length / 10);
-    const hasBorder = i > 4;
-    console.log(combinations[n].map((id) => `${id}:${Elements[id].meta.percentage}`));
+    let borderType: BannerBorderType = '';
+    let rseed = Math.random();
+    if (rseed < 0.2) borderType = '';
+    else if (rseed < 0.4) borderType = 'dotted';
+    else if (rseed < 0.6) borderType = 'dashed';
+    else if (rseed < 0.8) borderType = 'solid';
+    else borderType = 'solid';
     return (
       <DynamicLayout
         key={i}
-        border={hasBorder}
-        colors={getThemeFromColor(baseColor, hasBorder)}
+        border={borderType}
+        colors={theme(borderType)}
         elements={combinations[n].map((id) => ({
           id,
           props: {},

@@ -11,26 +11,35 @@ export const meta: ElementMeta = {
 };
 
 export const defaultProps: ElementPropDesciptor = {
-  colors: ['$foreground', '$background'],
+  colors: ['$primary', '$background', '$secondary'],
   values: ['のこり', '3', '日'],
 };
 
-const JaggedCircleText = ({ colors, values, hasBorder }: ElementPropDesciptor) => {
-  const [bg, fg] = colors || [];
-  const tempColor = hasBorder ? bg : fg;
-  const color = tinycolor.readability(tempColor, '#fff') > 2 ? tempColor : '#000';
+const JaggedCircleText = ({ colors, values, borderType }: ElementPropDesciptor) => {
+  const [primary, bg, second] = colors || [];
+  const isVariation = Math.random() > 0.5;
+  let finalColors: string[] = [];
+  if (isVariation) {
+    finalColors = ['#fff', second];
+  } else {
+    if (borderType) {
+      finalColors = [bg, primary];
+    } else {
+      finalColors = [primary, '#fff'];
+    }
+  }
   return (
     <StyledJaggedCircleTextA>
       <StyledJaggedCircle viewBox="0 0 20 20">
-        <path d={jaggedCircle(20)} fill="#fff" />
+        <path d={jaggedCircle(20)} fill={finalColors[1]} />
       </StyledJaggedCircle>
-      <StyledText color={color} style={{ top: '23%', left: '4%', fontSize: 20 }}>
+      <StyledText color={finalColors[0]} style={{ top: '23%', left: '4%', fontSize: 20 }}>
         {values[0]}
       </StyledText>
-      <StyledText color={color} style={{ top: '40%', left: '8%', fontSize: 42 }}>
+      <StyledText color={finalColors[0]} style={{ top: '40%', left: '8%', fontSize: 42 }}>
         {values[1]}
       </StyledText>
-      <StyledText color={color} style={{ top: '46%', left: '40%', fontSize: 28 }}>
+      <StyledText color={finalColors[0]} style={{ top: '46%', left: '40%', fontSize: 28 }}>
         {values[2]}
       </StyledText>
     </StyledJaggedCircleTextA>

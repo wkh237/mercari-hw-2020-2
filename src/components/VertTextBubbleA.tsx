@@ -22,7 +22,7 @@ const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[
         <svg viewBox="0 0 230 332" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M188.881 224.011C192.837 205.953 195 186.406 195 166C195 74.3207 151.348 0 97.5 0C43.6522 0 0 74.3207 0 166C0 257.679 43.6522 332 97.5 332C133.249 332 164.504 299.243 181.476 250.398C189.089 250.851 196.747 249.89 201 249C213 246.5 235.3 239.3 228.5 230.5C214.528 233.775 200.416 229.85 188.881 224.011Z"
-            fill={tinycolor(bgColor).setAlpha(0.75).toHex8String()}
+            fill="#fff"
           />
         </svg>
       </StyledSVG>

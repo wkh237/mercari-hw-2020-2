@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import tinycolor from 'tinycolor2';
 
 export const meta: ElementMeta = {
   type: 'cuttingEdge',
@@ -14,13 +13,9 @@ export const defaultProps: ElementPropDesciptor = {
   values: []
 };
 
-const CuttingEdge = ({ colors = [], hasBorder }: ElementPropDesciptor) => {
-  if (!hasBorder) return null; 
-  const dotColor = tinycolor(colors[4])
-    .triad()
-    .map((s) => s.toHex8String());
+const CuttingEdge = ({ colors = [], borderType }: ElementPropDesciptor) => {
   return (
-    <StyledCuttingEdge colors={colors} dotColor={dotColor}>
+    <StyledCuttingEdge colors={colors} dotColor={[]}>
       <div />
       <ul>
         <li />
