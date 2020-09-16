@@ -119,6 +119,7 @@ const Randomize = () => {
   return (
     <StyledContainer>
       <StyledLayer>
+        <img src={require('../assets/imgs/header.png')} />
         <Input setUserInput={setUserInput} />
         <Col>{banners}</Col>
       </StyledLayer>
@@ -133,6 +134,10 @@ const StyledLayer = styled(Col)`
   background-color: white;
   border-radius: 16px;
   padding: 24px;
+  > img {
+    margin-bottom: 16px;
+    width: 600px;
+  }
   > div {
     width: 600px;
   }
