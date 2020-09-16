@@ -43,7 +43,7 @@ const DynamicLayout = ({ border, colors, elements }: RandomLayoutProps) => {
           };
           return <ElementClass key={i} {...props} />;
         })}
-        <DecorationOverlay decorationCount={6} />
+        <DecorationOverlay />
       </StyledContainer>
     </StyledWrapper>
   );

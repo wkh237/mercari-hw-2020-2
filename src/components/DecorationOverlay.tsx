@@ -48,7 +48,7 @@ const positions = (num: number) => {
 };
 
 export default ({ decorationCount }: Props) => {
-  const arr = positions(decorationCount || 4);
+  const arr = positions(decorationCount || getRandomInt(0, 6));
   return (
     <>
       {arr.map(({ left, top }) => {
