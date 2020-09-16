@@ -75,15 +75,29 @@ export default () => {
   let maxIteration = 10000;
   let i = 0;
   const ids = shuffle(Object.keys(Elements));
+
+  const findMinAndCanBeLast = (ids: string[]) => {
+    let min = 100;
+    for (let id of ids) {
+      const meta = Elements[id].meta;
+      if (meta.percentage < min && meta.position !== 'right' && meta.position !== 'center') {
+        min = meta.percentage;
+      }
+    }
+    return min;
+  };
+
   const findCombinations = (availableElementIds: ElementKey[], current: ElementKey[], space: number) => {
     i++;
     if (i > maxIteration) return;
     const matched: string[] = [];
+    const remained = [...availableElementIds];
     for (let id of availableElementIds) {
+      remained.pop();
       const isFirst = current.length === 0;
       const el = Elements[id];
       const size = el.meta.percentage;
-      const isLast = space - size < 8;
+      const isLast = (space - size) <= findMinAndCanBeLast(remained);
       const isCenter = !isLast && !isFirst;
       if (
         (isFirst && el.meta.position === 'right') ||
@@ -133,6 +147,7 @@ export default () => {
   ].map((baseColor, i) => {
     const n = i * ~~(combinations.length / 10);
     const hasBorder = i > 4;
+    console.log(combinations[n].map((id) => `${id}:${Elements[id].meta.percentage}`));
     return (
       <DynamicLayout
         key={i}
