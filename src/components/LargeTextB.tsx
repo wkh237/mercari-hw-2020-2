@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { predictFirstMatchText } from '../utils/predict';
 
 export const meta: ElementMeta = {
   type: 'text',
@@ -13,6 +14,8 @@ export const defaultProps: ElementPropDesciptor = {
   color: '$foreground',
   values: ['販売手数料'],
 };
+
+export const predict: ValuePredictor = predictFirstMatchText;
 
 const LargeTextB = ({ color, values }: { color: string; values: string[] }) => (
   <StyledContainer color={color}>{values[0]}</StyledContainer>

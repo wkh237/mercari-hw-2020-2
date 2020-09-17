@@ -1,7 +1,6 @@
 import React from 'react';
 import { jaggedCircle } from '../utils/svg';
 import styled from 'styled-components';
-import { ValueSuggestion } from '../Input';
 
 export const meta: ElementMeta = {
   position: 'left',
@@ -15,10 +14,6 @@ export const defaultProps: ElementPropDesciptor = {
   colors: ['$primary', '$background', '$secondary'],
   values: ['のこり', '3', '日'],
 };
-
-interface Props extends ElementPropDesciptor {
-  suggestion: ValueSuggestion;
-}
 
 export const predict = (suggestion: ValueSuggestion): { fulfill: boolean; values: string[] } => {
   const predictFirst = () => {
@@ -49,7 +44,7 @@ export const predict = (suggestion: ValueSuggestion): { fulfill: boolean; values
   return { fulfill: !!values[0] && !!values[1] && !!values[2], values };
 };
 
-const JaggedCircleText = ({ colors, values, borderType, suggestion }: Props) => {
+const JaggedCircleText = ({ colors, values, borderType }: ElementPropDesciptor) => {
   const [primary, bg, second] = colors || [];
   const isVariation = Math.random() > 0.5;
 
@@ -71,10 +66,10 @@ const JaggedCircleText = ({ colors, values, borderType, suggestion }: Props) => 
       <StyledText color={finalColors[0]} style={{ top: '23%', left: '4%', fontSize: 20 }}>
         {values[0]}
       </StyledText>
-      <StyledText color={finalColors[0]} style={{ top: '42%', left: '3%', fontSize: 36 }}>
+      <StyledText color={finalColors[0]} style={{ top: '44%', left: '3%', fontSize: 36 }}>
         {values[1]}
       </StyledText>
-      <StyledText color={finalColors[0]} style={{ top: '46%', left: '40%', fontSize: 28 }}>
+      <StyledText color={finalColors[0]} style={{ top: '45%', left: '40%', fontSize: 28 }}>
         {values[2]}
       </StyledText>
     </StyledJaggedCircleTextA>
