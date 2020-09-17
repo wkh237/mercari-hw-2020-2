@@ -10,7 +10,6 @@ import boot from '../assets/decorations/boot.svg';
 import boot2 from '../assets/decorations/boot2.svg';
 import camera from '../assets/decorations/camera.svg';
 import coins from '../assets/decorations/coins.svg';
-import cup from '../assets/decorations/cup.svg';
 import cup1 from '../assets/decorations/cup1.svg';
 import fishhook1 from '../assets/decorations/fishhook1.svg';
 import fishhook2 from '../assets/decorations/fishhook2.svg';
@@ -66,4 +65,4 @@ export const BackgroundOverlays = [
   }
 ];
 
-export const Decorations = [boot2, coins, cup, cup1, fishhook1, fishhook2, game, hat, jacket, jacket1, jacket3, lagguage, book, bag, boot, camera, golfbag, lamp, speaker, waterbottle, vacumn,skirt, shoe, shirt2, shirt, purse, perfume, people, nut, nike, microwave,lipstick1, lipstick,leaf2, leaf1, leaf,lamp2 ];
+export const Decorations = [boot2, coins, cup1, fishhook1, fishhook2, game, hat, jacket, jacket1, jacket3, lagguage, book, bag, boot, camera, golfbag, lamp, speaker, waterbottle, vacumn,skirt, shoe, shirt2, shirt, purse, perfume, people, nut, nike, microwave,lipstick1, lipstick,leaf2, leaf1, leaf,lamp2 ];

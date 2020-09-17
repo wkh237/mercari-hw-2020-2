@@ -36,8 +36,8 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
   }
   return (
     <StyledWrapper background={colors.background}>
-      {shouldRenderWithChance(0.3) && <DecorationOverlay />}
-      {shouldRenderWithChance(0.7) && <BackgroundOverlay color="#ffffffa0" />}
+      {shouldRenderWithChance(0.5) && <DecorationOverlay />}
+      {shouldRenderWithChance(0.8) && <BackgroundOverlay color="#ffffffa0" />}
       <StyledContainer
         color={colors.primary}
         border={colors.border}

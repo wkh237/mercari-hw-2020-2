@@ -20,8 +20,8 @@ interface Props {
   color?: string;
 }
 
-const verticalTransformRange = [5, 20]
-const horiztonalTransformRange = [-50, 50]
+const verticalTransformRange = [0, 20]
+const horiztonalTransformRange = [-20, 50]
 
 export default ({ color }: Props) => {
   const index = getRandomInt(0, BackgroundOverlays.length);
@@ -31,5 +31,5 @@ export default ({ color }: Props) => {
     x: defaultTransform.x + getRandomInt(horiztonalTransformRange[0], horiztonalTransformRange[1]),
     y: defaultTransform.y + getRandomInt(verticalTransformRange[0], verticalTransformRange[1])
   }
-  return shouldRenderWithChance(0.5) ? <StyledSvg src={svg} color={color} transform={transform} /> : <BackgroundDecoration color={color} />;
+  return shouldRenderWithChance(0.2) ? <StyledSvg src={svg} color={color} transform={transform} /> : <BackgroundDecoration color={color} />;
 };

@@ -4,7 +4,7 @@ import { getRandomInt } from "../utils/random";
 
 const horizontalRange = [20, 580];
 const verticalRange = [20, 80];
-const imageSizeRange = [12, 18];
+const imageSizeRange = [14, 18];
 
 const positions = (num: number) => {
   const arr = [];
@@ -20,7 +20,7 @@ const positions = (num: number) => {
 };
 
 export default ({ color, size }: {color?: string, size?: number}) => {
-  const arr = positions( size || getRandomInt(0, 20) );
+  const arr = positions( size || getRandomInt(10, 20) );
   const imgs = Object.keys(imgMap) as any;
   const index = getRandomInt(0, imgs.length);
   return <>
