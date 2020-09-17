@@ -14,7 +14,7 @@ interface DynamicBannerProps {
   suggestion: ElementSuggestion | null;
 }
 
-const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerProps) => {
+const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
   const replaceColorToken = (token: string) => {
     if (token?.startsWith('$')) {
       // @ts-ignore
@@ -27,6 +27,14 @@ const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerPr
   // on each sides, otherwise give it a 1% padding
   const shouldPadLeft = elemetMeta?.position !== 'left';
   const shouldPadRight = elemetMeta?.position !== 'right';
+  const addCouponDecoration = Math.random() < 0.5;
+  const renderElements = [...elements];
+  if (addCouponDecoration) {
+    renderElements.splice(Math.floor(Math.random() * elements.length) + 1, 0, {
+      key: 'CuttingEdge',
+      predictedValues: null,
+    });
+  }
   return (
     <StyledWrapper background={colors.background}>
       {shouldRenderWithChance(0.3) && <DecorationOverlay />}
@@ -38,7 +46,7 @@ const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerPr
         paddingLeft={shouldPadLeft}
         paddingRight={shouldPadRight}
       >
-        {elements.map((el, i) => {
+        {renderElements.map((el, i) => {
           const elementDef = Elements[el.key];
           const ElementClass = elementDef.default;
           const values = (el?.predictedValues?.length || -1) > 0 ? el.predictedValues : elementDef.defaultProps.values;

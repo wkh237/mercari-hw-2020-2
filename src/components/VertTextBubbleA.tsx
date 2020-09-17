@@ -1,13 +1,14 @@
 import React from 'react';
-import { getBasicPredictor } from '../utils/predict';
+import { consumeTopMatched, isValuesNonEmpty } from '../utils/predict';
 import styled from 'styled-components';
+import { isNumber } from '../utils/text';
 
 export const meta: ElementMeta = {
   type: 'text',
   percentage: 8,
   position: 'center',
   inputs: ['text'],
-  keywords: [['$len:3:2', '実質']],
+  keywords: [['$len:3:2', '実質', '抽選で']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
@@ -15,7 +16,11 @@ export const defaultProps: ElementPropDesciptor = {
   values: ['抽選で'],
 };
 
-export const predict = getBasicPredictor(meta.keywords.length);
+export const predict: ValuePredictor = (suggest, dict, skipDict) => {
+  const consumedWords: string[] = [];
+  const value = consumeTopMatched(suggest.valueSuggestions[0], dict, consumedWords, skipDict);
+  return { fulfill: isValuesNonEmpty(value) && !isNumber(value), values: [value], consumedWords };
+};
 
 const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {
   const [, textColor] = colors;

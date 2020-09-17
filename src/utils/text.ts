@@ -25,9 +25,14 @@ export const splitWords = (str: string[]) => {
     if (match && match.index) {
       res.push(word.substr(0, match.index));
       res.push(word.substr(match.index));
+      res.push(word);
     } else {
       res.push(word);
     }
     return res;
   }, []);
 };
+
+export const isNumber = (str: string): boolean => {
+  return /[一二三四五六七八九十百千萬万億零0123456789１２３４５６７８９０]+/.test(str)
+}

@@ -17,7 +17,7 @@ export type MatchedElement = {
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
-const maxIteration = 10000;
+const maxIteration = 1000;
 const threshold = 0;
 const maxResults = 25;
 
@@ -27,7 +27,11 @@ const Randomize = () => {
   const ids = ElementKeys.filter((id) => (suggestion?.[id]?.score || 0) > threshold).sort(
     (a, b) => -((suggestion?.[a].score || -1) - (suggestion?.[b].score || -1)),
   );
-  console.log(ids)
+  console.table(
+    ids.map((id) => {
+      return [id, suggestion?.[id].score] || 0;
+    }),
+  );
   const findMinAndCanBeLast = (ids: string[]) => {
     let min = 100;
     for (let id of ids) {
@@ -53,8 +57,9 @@ const Randomize = () => {
       if (i > maxIteration) return;
       const matched: MatchedElement[] = [];
       const remained = [...availableElementIds];
+
       for (let id of availableElementIds) {
-        remained.pop();
+        remained.shift();
         const isFirst = current.length === 0;
         const el = Elements[id];
         const size = el.meta.percentage;
@@ -88,13 +93,8 @@ const Randomize = () => {
           });
         }
       }
-      // const unusedWords = Object.keys(dictionary).reduce((used, s) => {
-      //   used += dictionary[s] ? 1 : 0;
-      //   return used;
-      // }, 0);
       // no more elements can be put into the banner
       if (matched.length === 0 && space >= 0 && score > 0) {
-        console.log();
         combinations.push({ els: current, score });
       }
       // continue with next slot
@@ -122,7 +122,7 @@ const Randomize = () => {
     findCombinations(
       ids,
       [],
-      100,
+      96,
       0,
       words.reduce<Record<string, boolean>>((dict, word) => {
         dict[word] = true;

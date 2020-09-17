@@ -8,7 +8,7 @@ export const meta: ElementMeta = {
   percentage: 60,
   position: 'any',
   inputs: ['text', 'text'],
-  keywords: [['$num:6:2'], ['GET', 'UP', '上限', '$len:4:3']],
+  keywords: [['$num:6:2', '¥'], ['GET', 'UP', '上限', '$len:4:3']],
 };
 
 export const defaultProps: ElementPropDesciptor = {

@@ -1,20 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import { consumeTopMatched } from '../utils/predict';
 
 export const meta: ElementMeta = {
   type: 'cuttingEdge',
   percentage: 3,
   position: 'center',
   inputs: [],
-  keywords: [['ポイント', 'point', '円', 'かね', 'カネ', 'クーポン', 'coupon', 'discount', 'ディスカウント']],
+  keywords: [[]],
 };
 
 export const defaultProps: ElementPropDesciptor = {
   colors: ['$border'],
-  values: ['ポイント'],
+  values: [],
 };
 
-const CuttingEdge = ({ colors = [], borderType }: ElementPropDesciptor) => {
+export const predict: ValuePredictor = (suggest, dict, skip) => {
+  const consumedWords: string[] = [];
+  const rseed = Math.random() < 0.5;
+  if (rseed) {
+    const value = consumeTopMatched(suggest.valueSuggestions[0], dict, consumedWords, skip);
+    return { fulfill: !!value, values: [value], consumedWords };
+  }
+  return { fulfill: false, values: [], consumedWords: [] };
+};
+
+const CuttingEdge = ({ colors = [] }: ElementPropDesciptor) => {
   return (
     <StyledCuttingEdge colors={colors} dotColor={[]}>
       <div />

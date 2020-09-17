@@ -8,8 +8,8 @@ type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
 const DescriptorWeight = {
   $len: 0.8,
-  $num: 1.5,
-  $date: 1.5,
+  $num: 2,
+  $date: 2,
 };
 
 let debounce: NodeJS.Timeout | null = null;
@@ -20,7 +20,7 @@ let throttle = -1;
 const matchElements = (words: string[]) => {
   const q = [...words];
   const ranksByWord: Record<string, Record<ElementKey, KeywordMatchResult[]>> = {};
-  console.log('match ..', q)
+  console.log('match ..', q);
   while (q.length) {
     const word = q.shift();
     if (!word) break;
@@ -97,7 +97,7 @@ const matchElements = (words: string[]) => {
         }, {});
         result.push({
           topMatch: top[0],
-          sum: sum / kw.length,
+          sum: (sum / kw.length) * (1 + 0.3 * kw.length),
           word,
           matches: scoreMap,
         });
@@ -146,7 +146,7 @@ function Input({ commitChange }: InputProps) {
     // calculate score and commit update
     debounce = setTimeout(() => {
       lastValue.current = words.join('-');
-      const suggestions = matchElements(splitWords(words));
+      const suggestions = matchElements(words);
       commitChange(...suggestions);
     }, 1000);
   }, [value, commitChange]);
@@ -174,7 +174,7 @@ function Input({ commitChange }: InputProps) {
         />
         <button
           onClick={() => {
-            if (Date.now() - throttle > 500) {
+            if (Date.now() - throttle > 200) {
               throttle = Date.now();
               const suggestions = matchElements(value.split(/ /));
               commitChange(...suggestions);
