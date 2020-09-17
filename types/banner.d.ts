@@ -9,7 +9,6 @@ interface BaseElement {
 }
 
 type BannerBorderType = '' | 'dotted' | 'dashed' | 'solid' | 'double' | undefined;
-
 interface BannerColors {
   primary: string;
   secondary: string;
@@ -20,19 +19,19 @@ interface BannerColors {
 }
 
 type LayoutElement =
-  | ({
-      type: 'image';
-    } & BaseElement)
-  | ({
-      type: 'text';
-      backgroundImage?: string;
-    } & BaseElement)
-  | ({
-      type: 'point';
-    } & BaseElement)
-  | ({
-      type: 'cuttingEdge';
-    } & BaseElement);
+| ({
+  type: 'image';
+} & BaseElement)
+| ({
+  type: 'text';
+  backgroundImage?: string;
+} & BaseElement)
+| ({
+  type: 'point';
+} & BaseElement)
+| ({
+  type: 'cuttingEdge';
+} & BaseElement);
 
 type ElementMeta = Omit<LayoutElement, 'values'> & { position: BaseElement['position']; keywords: string[][] };
 
@@ -60,7 +59,26 @@ interface Layout {
   border?: number;
   overlay?: string;
   element: Omit<LayoutElement, 'inputs' | 'percentage'>[];
-
+  
   // coupon pos
   couponPos?: 'left' | 'right';
 }
+
+///// PREDICTION
+
+type DescriptorMatchResult = Record<string, number>;
+interface KeywordMatchResult {
+  topMatch: string;
+  sum: number;
+  word: string;
+  matches: DescriptorMatchResult;
+}
+interface InputProps {
+  commitChange: (suggestions: ElementSuggestion) => void;
+}
+interface ValueSuggestion {
+  score: number;
+  valueSuggestions: Record<number, KeywordMatchResult[]>;
+}
+type ElementSuggestion = Record<ElementKey, ValueSuggestion>;
+type ValuePredictor = (suggestion: ValueSuggestion) => { fulfill: boolean; values: string[] };

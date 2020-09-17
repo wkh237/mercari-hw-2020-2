@@ -13,7 +13,6 @@ import * as StackTextSmallA from './StackTextSmallA';
 import * as VertTextA from './VertTextA';
 import * as VertTextBubbleA from './VertTextBubbleA';
 import * as ImageA from './ImageA';
-import { ValueSuggestion } from '../Input';
 
 interface ElementDescriptor {
   default: React.FC<any>;

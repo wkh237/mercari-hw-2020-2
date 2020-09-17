@@ -6,7 +6,6 @@ import DecorationOverlay from '../components/DecorationOverlay';
 import { shouldRenderWithChance } from '../utils/random';
 import BackgroundOverlay from '../components/BackgroundOverlay';
 import { MatchedElement } from './Randomize';
-import { ElementSuggestion } from '../Input';
 
 interface DynamicBannerProps {
   border: BannerBorderType;

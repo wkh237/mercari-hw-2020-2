@@ -4,21 +4,6 @@ import styled from 'styled-components';
 import 'string_score';
 
 type ElementKey = keyof typeof Elements;
-type DescriptorMatchResult = Record<string, number>;
-interface KeywordMatchResult {
-  topMatch: string;
-  sum: number;
-  word: string;
-  matches: DescriptorMatchResult;
-}
-interface InputProps {
-  commitChange: (suggestions: ElementSuggestion) => void;
-}
-export interface ValueSuggestion {
-  score: number;
-  valueSuggestions: Record<number, KeywordMatchResult[]>;
-}
-export type ElementSuggestion = Record<ElementKey, ValueSuggestion>;
 const ElementKeys = Object.keys(Elements);
 const DescriptorWeight = {
   $len: 0.8,

@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import 'string_score';
 import { definedThemes } from '../utils/colors';
 import DynamicBanner from './DynamicLayout';
-import { ElementSuggestion } from '../Input';
 
 export type MatchedElement = { key: ElementKey; predictedValues: string[] | null; debug?: any };
 
