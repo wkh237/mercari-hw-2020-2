@@ -1,14 +1,15 @@
 import React from 'react';
-import { getBasicPredictor } from '../utils/predict';
+import { isValuesNonEmpty } from '../utils/predict';
 import styled from 'styled-components';
 import tinycolor from 'tinycolor2';
+import { isNumber, getNumberPart } from '../utils/text';
 
 export const meta: ElementMeta = {
   type: 'point',
   percentage: 40,
   position: 'any',
   inputs: ['text'],
-  keywords: [['$num:6:2', '¥']],
+  keywords: [['$num'], ['¥', '円', '分', 'ポイント']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
@@ -16,7 +17,24 @@ export const defaultProps: ElementPropDesciptor = {
   values: ['1000'],
 };
 
-export const predict: ValuePredictor = getBasicPredictor(meta.keywords.length);
+export const predict: ValuePredictor = (suggest, dict) => {
+  const consumedWords: string[] = [];
+  let result: [number, string] = [0, ''];
+  suggest.valueSuggestions[0]?.forEach((s) => {
+    if (isNumber(s.word) && dict[s.word]) {
+      if (s.sum > result[0]) result = [s.sum, getNumberPart(s.word)];
+    }
+  });
+  let max2 = 0;
+  suggest.valueSuggestions[0].forEach((s) => {
+    if (meta.keywords[1].includes(s.word) && s.sum > 1) max2 = s.sum;
+  });
+  return {
+    fulfill: isValuesNonEmpty(result[1]) && result[1].length <= 4 && max2 > 0,
+    values: [result[1]],
+    consumedWords,
+  };
+};
 
 const StyledPointYen = styled.div<{ textColor: string }>`
   font-size: 16px;
@@ -31,9 +49,10 @@ const StyledPointYen = styled.div<{ textColor: string }>`
   min-width: ${meta.percentage}%;
 `;
 
-const StyledValue = styled.div`
+const StyledValue = styled.div<{ spacing: number }>`
   font-size: 60px;
   font-weight: 700;
+  letter-spacing: -${(props) => props.spacing || 0}px;
 `;
 
 const StyledPointYenWord = styled.div`
@@ -56,7 +75,7 @@ const PointYen = ({ values, colors }: { values: string[]; colors: string[] }) =>
   let textColor = tinycolor(secondary);
   return (
     <StyledPointYen textColor={textColor.toHex8String()}>
-      <StyledValue>{amount}</StyledValue>
+      <StyledValue spacing={12.5 * (amount.length - 2)}>{amount}</StyledValue>
       <StyledPointYenWord>
         <div>
           <span>円</span>

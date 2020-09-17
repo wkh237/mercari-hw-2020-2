@@ -6,7 +6,7 @@ export const meta: ElementMeta = {
   inputs: ['text'],
   position: 'any',
   type: 'image',
-  keywords: [['mercari', 'メルカリ']],
+  keywords: [['mercari', 'メルカリ', 'merpay', 'メルペイ']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
@@ -21,6 +21,8 @@ export const predict: ValuePredictor = (suggest, dict, skipDict) => {
       if (s.sum > res[1]) {
         if (s.topMatch === 'mercari' || s.topMatch === 'メルカリ')
           res = [require('../assets/imgs/mercari-box.png'), s.sum];
+        else if (s.topMatch === 'merpay' || s.topMatch === 'メルペイ')
+          res = [require('../assets/imgs/merpay-icon.png'), s.sum];
         consumedWords.push(s.word);
       }
     }

@@ -17,9 +17,9 @@ export type MatchedElement = {
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
-const maxIteration = 1000;
-const threshold = 0;
-const maxResults = 25;
+const maxIteration = 10000;
+const threshold = 0.35;
+const maxResults = 30;
 
 const Randomize = () => {
   const [suggestion, setSuggestion] = useState<ElementSuggestion | null>(null);

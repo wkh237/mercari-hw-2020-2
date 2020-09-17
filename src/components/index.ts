@@ -3,10 +3,8 @@ import * as JaggedCircleText from './JaggedCircleText';
 import * as LargeTextA from './LargeTextA';
 import * as LargeTextB from './LargeTextB';
 import * as LargeTextC from './LargeTextC';
+import * as LargeTextD from './LargeTextD';
 import * as LeftRecA from './LeftRecA';
-import * as PointYenA from './PointYenA';
-import * as PointYenB from './PointYenB';
-import * as PointYenC from './PointYenC';
 import * as PointYenD from './PointYenD';
 import * as StackTextBigSmallA from './StackTextBigSmallA';
 import * as StackTextSmallA from './StackTextSmallA';
@@ -28,9 +26,7 @@ const elements: Record<string, ElementDescriptor> = {
   LargeTextB,
   LargeTextC,
   LeftRecA,
-  PointYenA,
-  PointYenB,
-  PointYenC,
+  LargeTextD,
   PointYenD,
   StackTextBigSmallA,
   StackTextSmallA,

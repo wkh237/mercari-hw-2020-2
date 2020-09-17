@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Elements from './components';
 import styled from 'styled-components';
 import 'string_score';
-import { splitWords } from './utils/text';
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
@@ -15,6 +14,7 @@ const DescriptorWeight = {
 let debounce: NodeJS.Timeout | null = null;
 let throttle = -1;
 
+// あと ３ 日 メルカリ 出品で １５００ ポイント GET！
 // のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう
 
 const matchElements = (words: string[]) => {

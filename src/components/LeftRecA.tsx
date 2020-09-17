@@ -29,7 +29,7 @@ export const meta: ElementMeta = {
   percentage: 20,
   position: 'left',
   inputs: ['text', 'text', 'text'],
-  keywords: [['$len:5', '新規登錄者'], ['限定', '$len:3:2', 'のみ', '限る']],
+  keywords: [['$len:5', '新規', '登錄者', '新規登錄者'], ['限定', '$len:3:2', 'のみ', '限る']],
 };
 
 export const predict: ValuePredictor = (suggestion, dict, skpiDict) => {

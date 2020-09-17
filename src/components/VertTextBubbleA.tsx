@@ -19,7 +19,7 @@ export const defaultProps: ElementPropDesciptor = {
 export const predict: ValuePredictor = (suggest, dict, skipDict) => {
   const consumedWords: string[] = [];
   const value = consumeTopMatched(suggest.valueSuggestions[0], dict, consumedWords, skipDict);
-  return { fulfill: isValuesNonEmpty(value) && !isNumber(value), values: [value], consumedWords };
+  return { fulfill: isValuesNonEmpty(value) && !isNumber(value) && value.length <= 3, values: [value], consumedWords };
 };
 
 const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {
