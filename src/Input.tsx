@@ -135,7 +135,7 @@ interface InputProps {
 }
 
 function Input({ commitChange }: InputProps) {
-  const lastValue = useRef('のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう');
+  const lastValue = useRef('のこり ３ 日  出品 １０００点 メルカリ ポイント もらう');
   const update = () => {
     const words = `${lastValue.current}`.split(/[ 　]/).filter((s) => s);
     const suggestions = matchElements(words);
@@ -150,7 +150,7 @@ function Input({ commitChange }: InputProps) {
       <StyledForm>
         <input
           type="text"
-          defaultValue="のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう"
+          defaultValue="のこり ３ 日  出品 １０００点 メルカリ ポイント もらう"
           placeholder="keywords separated by spaces .."
           onChange={(e) => {
             const val = e.target.value;
