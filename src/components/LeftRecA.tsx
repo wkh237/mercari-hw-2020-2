@@ -56,8 +56,7 @@ const StyledContainer = styled.div<{ color: string }>`
   position: relative;
   color: ${(props) => props.color || 'white'};
   padding: 2px 6px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: Roboto;
   > svg {
     transform: scale(1.1);
   }

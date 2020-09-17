@@ -46,8 +46,7 @@ const StyledContainer = styled.div<{ color: string; bg: string }>`
   position: relative;
   color: ${(props) => props.color || 'white'};
   padding: 2px 6px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto Bold';
   > div:nth-child(2) {
     font-size: 16px;
     letter-spacing: 1.5px;

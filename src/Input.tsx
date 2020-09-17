@@ -14,8 +14,8 @@ const DescriptorWeight = {
 let debounce: NodeJS.Timeout | null = null;
 let throttle = -1;
 
-// あと ３ 日 メルカリ 出品で １５００ ポイント GET！
 // のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう
+// あと ３ 日 メルカリ 出品で １５００ ポイント GET！
 // 新規登録 限定 メルカリ 出品 １０００  ポイント もらう 
 
 const matchElements = (words: string[]) => {

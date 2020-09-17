@@ -53,8 +53,7 @@ const StyledContainer = styled.div<{
   justify-content: center;
   align-self: center;
   line-height: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: Roboto Bold;
   max-width: ${meta.percentage}%;
   min-width: ${meta.percentage}%;
   padding: 4px;

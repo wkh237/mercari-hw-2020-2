@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { predictFirstMatchText } from '../utils/predict';
 
+
 export const meta: ElementMeta = {
   type: 'text',
   percentage: 35,
@@ -34,8 +35,7 @@ const StyledContainer = styled.div<{ color: string }>`
   overflow: hidden;
   font-weight: bolder;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto Bold';
 `;
 
 export default LargeTextD;

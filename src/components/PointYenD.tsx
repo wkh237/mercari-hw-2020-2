@@ -38,8 +38,7 @@ export const predict: ValuePredictor = (suggest, dict) => {
 
 const StyledPointYen = styled.div<{ textColor: string }>`
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto Bold';
   color: ${(props) => props.textColor};
   display: flex;
   align-items: center;
@@ -75,9 +74,9 @@ const PointYen = ({ values, colors }: { values: string[]; colors: string[] }) =>
   let textColor = tinycolor(secondary);
   return (
     <StyledPointYen textColor={textColor.toHex8String()}>
-      <StyledValue spacing={12.5 * (amount.length - 2)} contentEditable>{amount}</StyledValue>
+      <StyledValue spacing={12 * (amount.length - 2)} contentEditable>{amount}</StyledValue>
       <StyledPointYenWord>
-        <div>
+        <div style={{ lineHeight: '40px' }}>
           <span contentEditable>円</span>
           <span contentEditable>分</span>
         </div>

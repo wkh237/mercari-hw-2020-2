@@ -1,14 +1,13 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import MJP31271 from "./layout/MJP31271";
-// import MJP45721 from "./layout/MJP45721";
-// import MJP48801 from "./layout/MJP48801";
-// import CouponLayoutMJP34066 from "./layout/CouponLayout-MJP-34046";
-// import Background from "./layout/Background";
-// import BackgroundLayer from './components/BackgroundLayer';
 import BackgroundDecoration from './components/BackgroundDecoration';
 import Randomize from './layout/Randomize';
+import nikumaru from './fonts/nikumaru.otf';
+import lightnovalpop from './fonts/lightnovalpop.otf';
+import roboto from './fonts/NotoSansCJKjp-Regular.otf';
+import robotobold from './fonts/NotoSansCJKjp-Bold.otf';
+import cpfont from './fonts/cp-font.otf';
 
 const GlobalStyle = createGlobalStyle`
  * {
@@ -17,6 +16,28 @@ const GlobalStyle = createGlobalStyle`
  body {
    background-color: #f3f3f3;
  }
+ @font-face {
+    font-family: 'Nikumaru';
+    src: url(${nikumaru});
+  }
+
+  @font-face {
+    font-family: 'LightNovalPop';
+    src: url(${lightnovalpop});
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url(${roboto});
+  }
+  @font-face {
+    font-family: 'Roboto Bold';
+    src: url(${robotobold});
+  }
+  @font-face {
+    font-family: 'CPFont';
+    src: url(${cpfont});
+  }
 `;
 
 export default () => (

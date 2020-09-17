@@ -46,23 +46,23 @@ const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  height: 80%;
-  font-size: 18px;
+  height: 90%;
+  font-size: 17px;
   font-weight: bolder;
   z-index: 2;
   position: absolute;
-  top: 0;
+  top: 20%;
+  line-height: 18px;
   left: 0;
   width: 80%;
-  height: 100%;
+  height: 70%;
 `;
 
 const StyledContainer = styled.div<{ color: string }>`
   position: relative;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: LightNovalPop;
   color: ${(props) => props.color};
   text-orientation: upright;
   padding: 4px 6px;
@@ -77,7 +77,7 @@ const StyledContainer = styled.div<{ color: string }>`
 const StyledSVG = styled.svg`
   left: 0;
   top: 10%;
-  height: 80%;
+  height: 90%;
   width: 100%;
   position: absolute;
   z-index: 1;

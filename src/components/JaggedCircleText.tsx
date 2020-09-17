@@ -7,11 +7,7 @@ export const meta: ElementMeta = {
   type: 'text',
   percentage: 14.3,
   inputs: ['text'],
-  keywords: [
-    ['殘り', '殘', 'のこり', 'あと', '$len:3:2'],
-    ['$num'],
-    ['$date'],
-  ],
+  keywords: [['殘り', '殘', 'のこり', 'あと', '$len:3:2'], ['$num'], ['$date']],
 };
 
 export const defaultProps: ElementPropDesciptor = {
@@ -102,10 +98,9 @@ const StyledText = styled.div<{ color: string }>`
   color: ${(props) => props.color};
   font-size: 20px;
   transform: rotateZ(-10deg);
-  font-weight: 900;
+  font-weight: bolder;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto Bold';
 `;
 
 const StyledJaggedCircle = styled.svg`
