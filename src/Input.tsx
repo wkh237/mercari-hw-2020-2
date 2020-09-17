@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Elements from './components';
 import styled from 'styled-components';
 import 'string_score';
@@ -132,13 +132,16 @@ interface InputProps {
 
 function Input({ commitChange }: InputProps) {
   const [value, setInputValue] = useState<string>('');
+  const lastValue = useRef(value);
 
   useEffect(() => {
     if (debounce) clearTimeout(debounce);
     const words = value.split(/[ 　]/).filter((s) => s);
+    if (words.join('') === lastValue.current) return;
     if (words.length < 1) return;
     // calculate score and commit update
     debounce = setTimeout(() => {
+      lastValue.current = words.join('');
       const suggestions = matchElements(words);
       commitChange(...suggestions);
     }, Math.max(1000 - words.length * 200, 300));

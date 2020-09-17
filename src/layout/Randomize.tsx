@@ -113,7 +113,7 @@ const Randomize = () => {
   findCombinations(
     ids,
     [],
-    100,
+    98,
     0,
     words.reduce<Record<string, boolean>>((dict, word) => {
       dict[word] = true;

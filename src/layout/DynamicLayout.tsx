@@ -30,7 +30,7 @@ const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerPr
   return (
     <StyledWrapper background={colors.background}>
       {shouldRenderWithChance(0.3) && <DecorationOverlay />}
-      {shouldRenderWithChance(0.4) && <BackgroundOverlay color="#ffffff60" />}
+      {shouldRenderWithChance(0.4) && <BackgroundOverlay color="#ffffff90" />}
       <StyledContainer
         color={colors.primary}
         border={colors.border}
@@ -42,9 +42,6 @@ const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerPr
           const elementDef = Elements[el.key];
           const ElementClass = elementDef.default;
           const values = (el?.predictedValues?.length || -1) > 0 ? el.predictedValues : elementDef.defaultProps.values;
-          // if (el.predictedValues) {
-            // console.log(values, elementDef.defaultProps.values);
-          // }
           const props = {
             ...elementDef.defaultProps,
             hasBorder: border,
