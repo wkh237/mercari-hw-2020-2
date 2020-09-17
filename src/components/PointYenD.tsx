@@ -26,7 +26,7 @@ export const predict: ValuePredictor = (suggest, dict) => {
     }
   });
   let max2 = 0;
-  suggest.valueSuggestions[0].forEach((s) => {
+  suggest.valueSuggestions[1]?.forEach((s) => {
     if (meta.keywords[1].includes(s.word) && s.sum > 1) max2 = s.sum;
   });
   return {

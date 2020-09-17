@@ -11,7 +11,6 @@ interface DynamicBannerProps {
   border: BannerBorderType;
   colors: BannerColors;
   elements: MatchedElement[];
-  suggestion: ElementSuggestion | null;
 }
 
 const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {

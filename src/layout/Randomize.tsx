@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import 'string_score';
 import { definedThemes } from '../utils/colors';
 import DynamicBanner from './DynamicLayout';
+import Waypoint from '../components/Waypoint';
 
 export type MatchedElement = {
   key: ElementKey;
@@ -17,13 +18,17 @@ export type MatchedElement = {
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
-const maxIteration = 10000;
+const maxIteration = 5000;
 const threshold = 0.35;
-const maxResults = 30;
 
 const Randomize = () => {
-  const [suggestion, setSuggestion] = useState<ElementSuggestion | null>(null);
-  const [words, setWords] = useState<string[]>([]);
+  const [ctx, setCtx] = useState<{ suggestion: ElementSuggestion | null; words: string[]; size: number }>({
+    suggestion: null,
+    words: [],
+    size: 10,
+  });
+  const { suggestion, words, size } = ctx;
+  console.log(ctx);
   const ids = ElementKeys.filter((id) => (suggestion?.[id]?.score || 0) > threshold).sort(
     (a, b) => -((suggestion?.[a].score || -1) - (suggestion?.[b].score || -1)),
   );
@@ -130,11 +135,10 @@ const Randomize = () => {
       }, {}),
     );
     return combinations.sort((a, b) => -(a.score - b.score));
-  }, [words.join('')]);
+  }, [words.join('-')]);
 
   console.log(`${combinationsMemo.length} combinations from ${ids.length} elements (${i} iterations)`);
-  console.log(combinationsMemo.slice(0, maxResults));
-  const banners = combinationsMemo.slice(0, maxResults).map((comb, i) => {
+  const banners = combinationsMemo.slice(0, size).map((comb, i) => {
     let borderType: BannerBorderType = '';
     let rseed = Math.random();
     if (rseed < 0.2) borderType = '';
@@ -148,13 +152,15 @@ const Randomize = () => {
         border={borderType}
         colors={definedThemes[i % definedThemes.length](borderType)}
         elements={comb.els || []}
-        suggestion={suggestion}
       />
     );
   });
   const onChangeCallback = useCallback((nextSuggestion: ElementSuggestion, nextWords: string[]) => {
-    setSuggestion(nextSuggestion);
-    setWords(nextWords);
+    setCtx({
+      suggestion: nextSuggestion,
+      words: nextWords,
+      size: 10,
+    });
   }, []);
 
   return (
@@ -163,6 +169,16 @@ const Randomize = () => {
         <img src={require('../assets/imgs/header.png')} alt="foo" />
         <Input commitChange={onChangeCallback} />
         <Col>{banners}</Col>
+        <Waypoint
+          onEnter={() => {
+            if (ctx.size < combinationsMemo.length) {
+              setCtx((prev) => ({
+                ...prev,
+                size: prev.size + 10,
+              }));
+            }
+          }}
+        />
       </StyledLayer>
     </StyledContainer>
   );

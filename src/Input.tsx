@@ -16,6 +16,7 @@ let throttle = -1;
 
 // あと ３ 日 メルカリ 出品で １５００ ポイント GET！
 // のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう
+// 新規登録 限定 メルカリ 出品 １０００  ポイント もらう 
 
 const matchElements = (words: string[]) => {
   const q = [...words];
@@ -136,6 +137,7 @@ interface InputProps {
 
 function Input({ commitChange }: InputProps) {
   const [value, setInputValue] = useState<string>('のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう');
+  const lastMatch = useRef(value);
   const lastValue = useRef(value);
 
   useEffect(() => {
@@ -148,7 +150,7 @@ function Input({ commitChange }: InputProps) {
       lastValue.current = words.join('-');
       const suggestions = matchElements(words);
       commitChange(...suggestions);
-    }, 1000);
+    }, 500);
   }, [value, commitChange]);
 
   return (
