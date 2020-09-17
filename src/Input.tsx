@@ -144,7 +144,7 @@ function Input({ commitChange }: InputProps) {
       lastValue.current = words.join('');
       const suggestions = matchElements(words);
       commitChange(...suggestions);
-    }, Math.max(1000 - words.length * 200, 300));
+    }, 1000);
   }, [value, commitChange]);
 
   return (
