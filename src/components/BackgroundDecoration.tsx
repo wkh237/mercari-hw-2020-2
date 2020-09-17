@@ -20,7 +20,7 @@ const positions = (num: number) => {
 };
 
 export default ({ color, size }: {color?: string, size?: number}) => {
-  const arr = positions( size || getRandomInt(0, 10) );
+  const arr = positions( size || getRandomInt(0, 20) );
   const imgs = Object.keys(imgMap) as any;
   const index = getRandomInt(0, imgs.length);
   return <>

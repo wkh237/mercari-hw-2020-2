@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Elements from '../components';
 import { Col } from '../styles/Flex';
 import Input from '../Input';
@@ -18,14 +18,16 @@ export type MatchedElement = {
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
 const maxIteration = 10000;
-const threshold = 0.65;
+const threshold = 0;
 const maxResults = 25;
 
 const Randomize = () => {
   const [suggestion, setSuggestion] = useState<ElementSuggestion | null>(null);
   const [words, setWords] = useState<string[]>([]);
-  let combinations: Array<{ score: number; els: MatchedElement[] }> = [];
-  const ids = ElementKeys.filter((id) => (suggestion?.[id]?.score || 0) > threshold);
+  const ids = ElementKeys.filter((id) => (suggestion?.[id]?.score || 0) > threshold).sort(
+    (a, b) => -((suggestion?.[a].score || -1) - (suggestion?.[b].score || -1)),
+  );
+  console.log(ids)
   const findMinAndCanBeLast = (ids: string[]) => {
     let min = 100;
     for (let id of ids) {
@@ -38,92 +40,101 @@ const Randomize = () => {
   };
 
   let i = 0;
-  const findCombinations = (
-    availableElementIds: ElementKey[],
-    current: MatchedElement[],
-    space: number,
-    score: number = 0,
-    dictionary: Record<string, boolean>,
-  ) => {
-    i++;
-    if (i > maxIteration) return;
-    const matched: MatchedElement[] = [];
-    const remained = [...availableElementIds];
-    for (let id of availableElementIds) {
-      remained.pop();
-      const isFirst = current.length === 0;
-      const el = Elements[id];
-      const size = el.meta.percentage;
-      const isLast = space - size <= findMinAndCanBeLast(remained);
-      const isCenter = !isLast && !isFirst;
-      const predict = el.predict;
-      const hasPredict = predict && suggestion;
-      let predictedResult = null;
-      if (predict && suggestion) {
-        predictedResult = predict(suggestion[id], { ...dictionary });
+  const combinationsMemo = useMemo(() => {
+    let combinations: Array<{ score: number; els: MatchedElement[] }> = [];
+    const findCombinations = (
+      availableElementIds: ElementKey[],
+      current: MatchedElement[],
+      space: number,
+      score: number = 0,
+      dictionary: Record<string, boolean>,
+    ) => {
+      i++;
+      if (i > maxIteration) return;
+      const matched: MatchedElement[] = [];
+      const remained = [...availableElementIds];
+      for (let id of availableElementIds) {
+        remained.pop();
+        const isFirst = current.length === 0;
+        const el = Elements[id];
+        const size = el.meta.percentage;
+        const isLast = space - size <= findMinAndCanBeLast(remained);
+        const isCenter = !isLast && !isFirst;
+        const predict = el.predict;
+        const hasPredict = predict && suggestion;
+        let predictedResult = null;
+        if (predict && suggestion) {
+          predictedResult = predict(suggestion[id], { ...dictionary });
+        }
+        // check if this element can be put in this position
+        if (
+          (isFirst && el.meta.position === 'right') ||
+          (isLast && el.meta.position === 'left') ||
+          ((isFirst || isLast) && el.meta.position === 'center') ||
+          (isCenter && el.meta.position !== 'center' && el.meta.position !== 'any') ||
+          // when the element provides predict function and it failed to pass it
+          // we consider all the words are not suitable for that element
+          (hasPredict && !predictedResult?.fulfill)
+        ) {
+          continue;
+        }
+        // found matched
+        if (space - size >= 0) {
+          matched.push({
+            key: id,
+            predictedValues: predictedResult?.values || [],
+            debug: suggestion?.[id],
+            consumedWords: hasPredict ? predictedResult?.consumedWords || [] : [],
+          });
+        }
       }
-      // check if this element can be put in this position
-      if (
-        (isFirst && el.meta.position === 'right') ||
-        (isLast && el.meta.position === 'left') ||
-        ((isFirst || isLast) && el.meta.position === 'center') ||
-        (isCenter && el.meta.position !== 'center' && el.meta.position !== 'any') ||
-        // when the element provides predict function and it failed to pass it
-        // we consider all the words are not suitable for that element
-        (hasPredict && !predictedResult?.fulfill)
-      ) {
-        continue;
+      // const unusedWords = Object.keys(dictionary).reduce((used, s) => {
+      //   used += dictionary[s] ? 1 : 0;
+      //   return used;
+      // }, 0);
+      // no more elements can be put into the banner
+      if (matched.length === 0 && space >= 0 && score > 0) {
+        console.log();
+        combinations.push({ els: current, score });
       }
-      // found matched
-      if (space - size >= 0) {
-        matched.push({
-          key: id,
-          predictedValues: predictedResult?.values || [],
-          debug: suggestion?.[id],
-          consumedWords: hasPredict ? predictedResult?.consumedWords || [] : [],
+      // continue with next slot
+      else {
+        matched.forEach((m) => {
+          findCombinations(
+            // remove last matched one from available id list
+            availableElementIds.filter((s) => s !== m.key),
+            [...current, m],
+            space - Elements[m.key].meta.percentage,
+            score + (suggestion?.[m.key]?.score || 0),
+            {
+              ...dictionary,
+              // remove used words from dictionary so they won't repeat
+              ...(m.consumedWords || []).reduce<typeof dictionary>((removed, word) => {
+                removed[word] = false;
+                return removed;
+              }, {}),
+            },
+          );
         });
       }
-    }
-    // no more elements can be put into the banner
-    if (matched.length === 0 && space >= 0 && score > 0) {
-      combinations.push({ els: current, score });
-    }
-    // continue with next slot
-    else {
-      matched.forEach((m) => {
-        findCombinations(
-          // remove last matched one from available id list
-          availableElementIds.filter((s) => s !== m.key),
-          [...current, m],
-          space - Elements[m.key].meta.percentage,
-          score + (suggestion?.[m.key]?.score || 0),
-          {
-            ...dictionary,
-            // remove used words from dictionary so they won't repeat
-            ...(m.consumedWords || []).reduce<typeof dictionary>((removed, word) => {
-              removed[word] = false;
-              return removed;
-            }, {}),
-          },
-        );
-      });
-    }
-  };
+    };
 
-  findCombinations(
-    ids,
-    [],
-    98,
-    0,
-    words.reduce<Record<string, boolean>>((dict, word) => {
-      dict[word] = true;
-      return dict;
-    }, {}),
-  );
-  combinations = combinations.sort((a, b) => -(a.score - b.score));
-  console.log(`${combinations.length} combinations from ${ids.length} elements (${i} iterations)`);
-  console.log(combinations.slice(0, maxResults));
-  const banners = combinations.slice(0, maxResults).map((comb, i) => {
+    findCombinations(
+      ids,
+      [],
+      100,
+      0,
+      words.reduce<Record<string, boolean>>((dict, word) => {
+        dict[word] = true;
+        return dict;
+      }, {}),
+    );
+    return combinations.sort((a, b) => -(a.score - b.score));
+  }, [words.join('')]);
+
+  console.log(`${combinationsMemo.length} combinations from ${ids.length} elements (${i} iterations)`);
+  console.log(combinationsMemo.slice(0, maxResults));
+  const banners = combinationsMemo.slice(0, maxResults).map((comb, i) => {
     let borderType: BannerBorderType = '';
     let rseed = Math.random();
     if (rseed < 0.2) borderType = '';

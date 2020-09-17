@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBasicPredictor } from '../utils/predict';
+import { consumeTopMatched } from '../utils/predict';
 import styled from 'styled-components';
 
 export const meta: ElementMeta = {
@@ -15,7 +15,11 @@ export const defaultProps: ElementPropDesciptor = {
   values: ['実質'],
 };
 
-export const predict = getBasicPredictor(meta.keywords.length);
+export const predict: ValuePredictor = (suggest, dict, skip) => {
+  const consumedWords: string[] = [];
+  const val = consumeTopMatched(suggest.valueSuggestions[0], dict, consumedWords, skip);
+  return { fulfill: Boolean(val && val.length < 2), values: [val], consumedWords };
+};
 
 const VertTextA = ({ color, values }: { color: string; values: string[] }) => (
   <StyledContainer color={color}>

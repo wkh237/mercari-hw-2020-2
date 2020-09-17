@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Elements from './components';
 import styled from 'styled-components';
 import 'string_score';
+import { splitWords } from './utils/text';
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
@@ -14,9 +15,12 @@ const DescriptorWeight = {
 let debounce: NodeJS.Timeout | null = null;
 let throttle = -1;
 
+// のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう
+
 const matchElements = (words: string[]) => {
   const q = [...words];
   const ranksByWord: Record<string, Record<ElementKey, KeywordMatchResult[]>> = {};
+  console.log('match ..', q)
   while (q.length) {
     const word = q.shift();
     if (!word) break;
@@ -79,7 +83,7 @@ const matchElements = (words: string[]) => {
           }
           // use string score
           else {
-            score = `${word}`.score(des, 0.5);
+            score = `${word}`.score(des, 0.5) * 2;
           }
           // update top match if the score is larger than current one
           if (score > top[1]) {
@@ -131,18 +135,18 @@ interface InputProps {
 }
 
 function Input({ commitChange }: InputProps) {
-  const [value, setInputValue] = useState<string>('');
+  const [value, setInputValue] = useState<string>('のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう');
   const lastValue = useRef(value);
 
   useEffect(() => {
     if (debounce) clearTimeout(debounce);
     const words = value.split(/[ 　]/).filter((s) => s);
-    if (words.join('') === lastValue.current) return;
+    if (words.join('-') === lastValue.current) return;
     if (words.length < 1) return;
     // calculate score and commit update
     debounce = setTimeout(() => {
-      lastValue.current = words.join('');
-      const suggestions = matchElements(words);
+      lastValue.current = words.join('-');
+      const suggestions = matchElements(splitWords(words));
       commitChange(...suggestions);
     }, 1000);
   }, [value, commitChange]);

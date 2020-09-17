@@ -46,13 +46,13 @@ export default ({ decorationCount }: Props) => {
   const arr = positions(decorationCount || getRandomInt(0, 6));
   return (
     <>
-      {arr.map(({ left, top }) => {
+      {arr.map(({ left, top }, i) => {
         const size = getRandomInt(imageSizeRange[0], imageSizeRange[1]);
         const rotate = getRandomInt(rotationRange[0], rotationRange[1]);
         const index = getRandomInt(0, Decorations.length);
         return (
           <StyledSvg
-            key={index}
+            key={i}
             src={Decorations[index]}
             rotate={rotate}
             height={size}

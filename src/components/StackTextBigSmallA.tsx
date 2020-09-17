@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getBasicPredictor } from '../utils/predict';
+import { consumeTopMatched } from '../utils/predict';
 
 export const meta: ElementMeta = {
   type: 'text',
@@ -18,7 +18,12 @@ export const defaultProps: ElementPropDesciptor = {
   values: ['出品', 'するだけで'],
 };
 
-export const predict = getBasicPredictor(meta.keywords.length);
+export const predict: ValuePredictor = (suggest, dict, skip) => {
+  const consumedWords: string[] = [];
+  const val1 = consumeTopMatched(suggest.valueSuggestions[0], dict, consumedWords, skip);
+  const val2 = consumeTopMatched(suggest.valueSuggestions[1], dict, consumedWords, skip);
+  return { fulfill: Boolean(val1 && val1.length < 2 && val2), values: [val1, val2], consumedWords };
+};
 
 const StackTextBigSmallA = ({ colors, values }: { values: string[]; colors: string[]; singleColor?: boolean }) => {
   const [foreground, textColor] = colors || [];

@@ -19,7 +19,15 @@ export const numericTextCompress = (str: string) => {
   return str;
 };
 
-export const getUnit = (str: string) => {
-  const parts = str.split(/[一二三四五六七八九十百千萬万億零0123456789１２３４５６７８９０]+/g);
-  return parts[parts.length - 1];
+export const splitWords = (str: string[]) => {
+  return str.reduce<string[]>((res, word) => {
+    const match = word.match(/[百千万億日月年週円]/);
+    if (match && match.index) {
+      res.push(word.substr(0, match.index));
+      res.push(word.substr(match.index));
+    } else {
+      res.push(word);
+    }
+    return res;
+  }, []);
 };

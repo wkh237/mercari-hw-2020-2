@@ -15,13 +15,13 @@ export const defaultProps: ElementPropDesciptor = {
   values: ['のこり', '3', '日'],
 };
 
-export const predict: ValuePredictor = (suggestion, dict) => {
+export const predict: ValuePredictor = (suggestion, dict, skipDict) => {
   const consumedWords: string[] = [];
   const predictFirst = () => {
     let answer: [number, string] = [0, ''];
     suggestion.valueSuggestions[0]?.forEach((s) => {
       // if top match from string score, assume the word is the best choice
-      if (s.sum > answer[0] && dict[s.word]) {
+      if ((skipDict || s.sum > answer[0]) && dict[s.word]) {
         answer = [s.sum, s.word];
       }
     });
@@ -33,7 +33,7 @@ export const predict: ValuePredictor = (suggestion, dict) => {
     let answer: [number, string] = [0, ''];
     suggestion.valueSuggestions[1]?.forEach((s) => {
       // if top match from string score, assume the word is the best choice
-      if (s.sum > answer[0] && dict[s.word]) answer = [s.sum, s.word];
+      if (s.sum > answer[0] && (skipDict || dict[s.word])) answer = [s.sum, s.word];
     });
     dict[answer[1]] = false;
     if (answer[1]) consumedWords.push(answer[1]);
@@ -43,14 +43,14 @@ export const predict: ValuePredictor = (suggestion, dict) => {
     let answer: [number, string] = [0, ''];
     suggestion.valueSuggestions[2]?.forEach((s) => {
       // if top match from string score, assume the word is the best choice
-      if (s.sum > answer[0] && dict[s.word]) answer = [s.sum, s.word];
+      if (s.sum > answer[0] && (skipDict || dict[s.word])) answer = [s.sum, s.word];
     });
     dict[answer[1]] = false;
     if (answer[1]) consumedWords.push(answer[1]);
     return answer[1].substr(0, 1);
   };
-  const values = [predictFirst(), predictSecond(), predictThird()];
-  return { fulfill: !!values[0] && !!values[1] && !!values[2], values, consumedWords };
+  const values: string[] = [predictFirst(), predictSecond(), predictThird()];
+  return { fulfill: !!values[0] && !!values[1] && values[1].length === 1 && !!values[2], values, consumedWords };
 };
 
 const JaggedCircleText = ({ colors, values, borderType }: ElementPropDesciptor) => {

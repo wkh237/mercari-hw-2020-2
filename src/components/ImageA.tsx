@@ -13,11 +13,11 @@ export const defaultProps: ElementPropDesciptor = {
   values: [require('../assets/imgs/mercari-box.png')],
 };
 
-export const predict: ValuePredictor = (suggest, dict) => {
+export const predict: ValuePredictor = (suggest, dict, skipDict) => {
   let res: [string, number] = ['', 0];
   const consumedWords: string[] = [];
   suggest.valueSuggestions[0].forEach((s) => {
-    if (dict[s.word] && s.sum > 0.8) {
+    if ((dict[s.word] || skipDict) && s.sum > 0.8) {
       if (s.sum > res[1]) {
         if (s.topMatch === 'mercari' || s.topMatch === 'メルカリ')
           res = [require('../assets/imgs/mercari-box.png'), s.sum];

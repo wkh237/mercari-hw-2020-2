@@ -81,4 +81,5 @@ type ElementSuggestion = Record<ElementKey, ValueSuggestion>;
 type ValuePredictor = (
   suggestion: ValueSuggestion,
   dict: Record<string, boolean>,
+  skipDict?: boolean,
 ) => { fulfill: boolean; values: string[]; consumedWords: string[] };

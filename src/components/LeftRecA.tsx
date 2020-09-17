@@ -29,14 +29,14 @@ export const meta: ElementMeta = {
   percentage: 20,
   position: 'left',
   inputs: ['text', 'text', 'text'],
-  keywords: [['$len:5'], ['限定', '$len:2:2', 'のみ', '限る']],
+  keywords: [['$len:5', '新規登錄者'], ['限定', '$len:3:2', 'のみ', '限る']],
 };
 
-export const predict: ValuePredictor = (suggestion, dict) => {
+export const predict: ValuePredictor = (suggestion, dict, skpiDict) => {
   const consumedWords: string[] = [];
-  const result2 = consumeTopMatched(suggestion.valueSuggestions[1], dict, consumedWords);
-  const result1 = consumeTopMatched(suggestion.valueSuggestions[0], dict, consumedWords);
-  return { fulfill: isValuesNonEmpty(result1, result2), values: [result1, result2], consumedWords };
+  const result2 = consumeTopMatched(suggestion.valueSuggestions[1], dict, consumedWords, skpiDict);
+  const result1 = consumeTopMatched(suggestion.valueSuggestions[0], dict, consumedWords, skpiDict);
+  return { fulfill: isValuesNonEmpty(result1, result2) && result2.length <= 2, values: [result1, result2], consumedWords };
 };
 
 const StyledSVG = styled.svg`
