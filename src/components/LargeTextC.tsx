@@ -30,7 +30,7 @@ const StyledContainer = styled.div<{ color: string }>`
   color: ${(props) => props.color};
   font-size: 68px;
   padding: 0px 4px;
-  letter-spacing: -2px;
+  letter-spacing: 6px;
   font-weight: bolder;
   white-space: nowrap;
   font-family: CPFont;

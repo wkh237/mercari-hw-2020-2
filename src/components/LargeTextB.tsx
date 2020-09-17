@@ -34,7 +34,7 @@ const StyledContainer = styled.div<{ color: string }>`
   overflow: hidden;
   font-weight: bolder;
   white-space: nowrap;
-  font-family: CPFont;
+  font-family: 'Roboto Bold';
 `;
 
 export default LargeTextB;

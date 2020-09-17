@@ -19,12 +19,17 @@ export const defaultProps: ElementPropDesciptor = {
 
 export const predict: ValuePredictor = (suggest, dict) => {
   const consumedWords: string[] = [];
-  let result: [number, string] = [0, ''];
+  let result: [number, string, string] = [0, '', ''];
   suggest.valueSuggestions[0]?.forEach((s) => {
     if (isNumber(s.word) && dict[s.word]) {
-      if (s.sum > result[0]) result = [s.sum, getNumberPart(s.word)];
+      if (s.sum > result[0]) {
+        result = [s.sum, getNumberPart(s.word), s.word];
+      }
     }
   });
+  if (result[1]) {
+    consumedWords.push(result[2]);
+  }
   let max2 = 0;
   suggest.valueSuggestions[1]?.forEach((s) => {
     if (meta.keywords[1].includes(s.word) && s.sum > 1) max2 = s.sum;
@@ -74,7 +79,9 @@ const PointYen = ({ values, colors }: { values: string[]; colors: string[] }) =>
   let textColor = tinycolor(secondary);
   return (
     <StyledPointYen textColor={textColor.toHex8String()}>
-      <StyledValue spacing={12 * (amount.length - 2)} contentEditable>{amount}</StyledValue>
+      <StyledValue spacing={12 * (amount.length - 2)} contentEditable>
+        {amount}
+      </StyledValue>
       <StyledPointYenWord>
         <div style={{ lineHeight: '40px' }}>
           <span contentEditable>円</span>

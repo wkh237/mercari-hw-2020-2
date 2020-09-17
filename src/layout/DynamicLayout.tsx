@@ -29,7 +29,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
   const addCouponDecoration = Math.random() < 0.5;
   const renderElements = [...elements];
   if (addCouponDecoration) {
-    renderElements.splice(Math.floor(Math.random() * elements.length) + 1, 0, {
+    renderElements.splice(Math.floor(Math.random() * (elements.length - 1)) + 1, 0, {
       key: 'CuttingEdge',
       predictedValues: null,
     });
@@ -57,6 +57,7 @@ const DynamicBanner = ({ border, colors, elements }: DynamicBannerProps) => {
               ? elementDef.defaultProps.colors.map(replaceColorToken)
               : [colors.primary, colors.secondary, colors.foreground, colors.background],
             values,
+            isLast: i === renderElements.length - 1,
           };
           return <ElementClass key={`${el.key}-${i}`} {...props} />;
         })}

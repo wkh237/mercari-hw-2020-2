@@ -56,7 +56,7 @@ const StyledContainer = styled.div<{ color: string }>`
   position: relative;
   color: ${(props) => props.color || 'white'};
   padding: 2px 6px;
-  font-family: Roboto;
+  font-family: Nikumaru;
   > svg {
     transform: scale(1.1);
   }

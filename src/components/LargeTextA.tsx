@@ -32,7 +32,7 @@ const StyledContainer = styled.div<{ color: string }>`
   padding: 0px 4px;
   font-weight: bolder;
   white-space: nowrap;
-  font-family: Roboto;
+  font-family: 'Roboto Bold';
 `;
 
 export default LargeTextA;

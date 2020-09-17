@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Elements from './components';
 import styled from 'styled-components';
 import 'string_score';
@@ -11,12 +11,11 @@ const DescriptorWeight = {
   $date: 2,
 };
 
-let debounce: NodeJS.Timeout | null = null;
 let throttle = -1;
 
 // のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう
 // あと ３ 日 メルカリ 出品で １５００ ポイント GET！
-// 新規登録 限定 メルカリ 出品 １０００  ポイント もらう 
+// 新規登録 限定 メルカリ 出品 １０００  ポイント もらう
 
 const matchElements = (words: string[]) => {
   const q = [...words];
@@ -136,41 +135,30 @@ interface InputProps {
 }
 
 function Input({ commitChange }: InputProps) {
-  const [value, setInputValue] = useState<string>('のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう');
-  const lastMatch = useRef(value);
-  const lastValue = useRef(value);
-
+  const lastValue = useRef('のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう');
+  const update = () => {
+    const words = `${lastValue.current}`.split(/[ 　]/).filter((s) => s);
+    const suggestions = matchElements(words);
+    commitChange(...suggestions);
+  };
   useEffect(() => {
-    if (debounce) clearTimeout(debounce);
-    const words = value.split(/[ 　]/).filter((s) => s);
-    if (words.join('-') === lastValue.current) return;
-    if (words.length < 1) return;
-    // calculate score and commit update
-    debounce = setTimeout(() => {
-      lastValue.current = words.join('-');
-      const suggestions = matchElements(words);
-      commitChange(...suggestions);
-    }, 500);
-  }, [value, commitChange]);
+    update();
+  }, []);
 
   return (
     <StyledContainer>
       <StyledForm>
         <input
           type="text"
-          value={value}
+          defaultValue="のこり ３ 日 新規登録 出品 １０００円 メルカリ ポイント もらう"
           placeholder="keywords separated by spaces .."
           onChange={(e) => {
             const val = e.target.value;
-            setInputValue(val.replace(/　/g, ' '));
+            lastValue.current = val.replace(/　/g, ' ');
           }}
           onKeyUp={(e) => {
             if (e.keyCode === 13) {
-              if (Date.now() - throttle > 500) {
-                throttle = Date.now();
-                const suggestions = matchElements(value.split(/ /));
-                commitChange(...suggestions);
-              }
+              update();
             }
           }}
         />
@@ -178,7 +166,7 @@ function Input({ commitChange }: InputProps) {
           onClick={() => {
             if (Date.now() - throttle > 200) {
               throttle = Date.now();
-              const suggestions = matchElements(value.split(/ /));
+              const suggestions = matchElements(lastValue.current.split(/ /));
               commitChange(...suggestions);
             }
           }}

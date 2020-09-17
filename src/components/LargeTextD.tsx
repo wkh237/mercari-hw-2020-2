@@ -5,7 +5,7 @@ import { predictFirstMatchText } from '../utils/predict';
 
 export const meta: ElementMeta = {
   type: 'text',
-  percentage: 35,
+  percentage: 40,
   position: 'any',
   inputs: ['text', 'text'],
   keywords: [['$len:5:3']],

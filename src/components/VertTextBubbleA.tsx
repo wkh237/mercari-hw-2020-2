@@ -22,11 +22,11 @@ export const predict: ValuePredictor = (suggest, dict, skipDict) => {
   return { fulfill: isValuesNonEmpty(value) && !isNumber(value) && value.length <= 3, values: [value], consumedWords };
 };
 
-const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {
+const VertTextBubbleA = ({ colors, values, isLast }: { colors: string[]; values: string[]; isLast: boolean }) => {
   const [, textColor] = colors;
   return (
     <StyledContainer color={textColor}>
-      <StyledSVG viewBox="0 0 230 332">
+      <StyledSVG viewBox="0 0 230 332" isLast={isLast}>
         <svg viewBox="0 0 230 332" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M188.881 224.011C192.837 205.953 195 186.406 195 166C195 74.3207 151.348 0 97.5 0C43.6522 0 0 74.3207 0 166C0 257.679 43.6522 332 97.5 332C133.249 332 164.504 299.243 181.476 250.398C189.089 250.851 196.747 249.89 201 249C213 246.5 235.3 239.3 228.5 230.5C214.528 233.775 200.416 229.85 188.881 224.011Z"
@@ -36,7 +36,9 @@ const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[
       </StyledSVG>
       <StyledContent>
         {values[0].split('').map((s, i) => (
-          <div key={i} contentEditable>{s}</div>
+          <div key={i} contentEditable>
+            {s}
+          </div>
         ))}
       </StyledContent>
     </StyledContainer>
@@ -74,13 +76,14 @@ const StyledContainer = styled.div<{ color: string }>`
   align-self: stretch;
   flex-direction: column;
 `;
-const StyledSVG = styled.svg`
-  left: 0;
+const StyledSVG = styled.svg<{ isLast: boolean }>`
+  left: ${(props) => (props.isLast ? '-10px' : '0')};
   top: 10%;
   height: 90%;
   width: 100%;
   position: absolute;
   z-index: 1;
+  transform: ${(props) => (props.isLast ? 'rotateY(180deg)' : 'none')};
 `;
 
 export default VertTextBubbleA;
