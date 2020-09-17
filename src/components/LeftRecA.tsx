@@ -13,7 +13,7 @@ const LeftRecA = ({ colors, values, borderType }: ElementPropDesciptor) => {
         />
       </StyledSVG>
       {values.map((s, i) => (
-        <div key={i}>{s}</div>
+        <div key={i} contentEditable>{s}</div>
       ))}
     </StyledContainer>
   );

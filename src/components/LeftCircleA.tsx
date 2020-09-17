@@ -8,7 +8,7 @@ const LeftCircleA = ({ color, values }: { color: string; values: string[] }) => 
       <path fill={color} d="M 0 5 L 25 3 Q 15 20 0 20Z" />
     </StyledSVG>
     {values.map((s, i) => (
-      <div key={i}>{s}</div>
+      <div key={i} contentEditable>{s}</div>
     ))}
   </StyledContainer>
 );

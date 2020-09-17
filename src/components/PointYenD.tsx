@@ -75,13 +75,13 @@ const PointYen = ({ values, colors }: { values: string[]; colors: string[] }) =>
   let textColor = tinycolor(secondary);
   return (
     <StyledPointYen textColor={textColor.toHex8String()}>
-      <StyledValue spacing={12.5 * (amount.length - 2)}>{amount}</StyledValue>
+      <StyledValue spacing={12.5 * (amount.length - 2)} contentEditable>{amount}</StyledValue>
       <StyledPointYenWord>
         <div>
-          <span>円</span>
-          <span>分</span>
+          <span contentEditable>円</span>
+          <span contentEditable>分</span>
         </div>
-        <div>ポイント</div>
+        <div contentEditable>ポイント</div>
       </StyledPointYenWord>
     </StyledPointYen>
   );

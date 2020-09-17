@@ -18,7 +18,7 @@ export const defaultProps: ElementPropDesciptor = {
 export const predict: ValuePredictor = predictFirstMatchText;
 
 const LargeTextC = ({ color, values }: { color: string; values: string[] }) => (
-  <StyledContainer color={color}>{values[0]}</StyledContainer>
+  <StyledContainer color={color} contentEditable>{values[0]}</StyledContainer>
 );
 
 const StyledContainer = styled.div<{ color: string }>`

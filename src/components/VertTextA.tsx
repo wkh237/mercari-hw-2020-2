@@ -24,7 +24,7 @@ export const predict: ValuePredictor = (suggest, dict, skip) => {
 const VertTextA = ({ color, values }: { color: string; values: string[] }) => (
   <StyledContainer color={color}>
     {values[0].split('').map((s, i) => (
-      <div key={i}>{s}</div>
+      <div key={i} contentEditable>{s}</div>
     ))}
   </StyledContainer>
 );

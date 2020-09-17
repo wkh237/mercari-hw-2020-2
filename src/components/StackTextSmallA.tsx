@@ -23,8 +23,8 @@ const StackTextSmallA = ({ colors, values }: ElementPropDesciptor) => {
   let textColor = tinycolor(secondary);
   return (
     <StyledContainer color={textColor.toHexString()}>
-      <StyledBlock>{values[0]}</StyledBlock>
-      <StyledBlock>{values[1]}</StyledBlock>
+      <StyledBlock contentEditable>{values[0]}</StyledBlock>
+      <StyledBlock contentEditable>{values[1]}</StyledBlock>
     </StyledContainer>
   );
 };

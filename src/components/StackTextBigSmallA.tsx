@@ -29,8 +29,8 @@ const StackTextBigSmallA = ({ colors, values }: { values: string[]; colors: stri
   const [foreground, textColor] = colors || [];
   return (
     <StyledContainer color={foreground} color2={textColor}>
-      <StyledBlock>{values[0]}</StyledBlock>
-      <StyledBlock>{values[1]}</StyledBlock>
+      <StyledBlock contentEditable>{values[0]}</StyledBlock>
+      <StyledBlock contentEditable>{values[1]}</StyledBlock>
     </StyledContainer>
   );
 };

@@ -68,7 +68,7 @@ const PointYen = ({ values, colors }: ElementPropDesciptor) => {
   return (
     <StyledPointYen textColor={textColor}>
       {left && <StyledPointYenAdjective>{left}</StyledPointYenAdjective>}
-      <StyledValue>{amount}</StyledValue>
+      <StyledValue contentEditable>{amount}</StyledValue>
       <StyledPointYenWord>
         <div>
           <span>円</span>

@@ -76,13 +76,13 @@ const JaggedCircleText = ({ colors, values, borderType }: ElementPropDesciptor) 
       <StyledJaggedCircle viewBox="0 0 20 20">
         <path d={jaggedCircle(20)} fill={finalColors[1]} />
       </StyledJaggedCircle>
-      <StyledText color={finalColors[0]} style={{ top: '23%', left: '4%', fontSize: 20 }}>
+      <StyledText color={finalColors[0]} style={{ top: '23%', left: '4%', fontSize: 20 }} contentEditable>
         {values[0]}
       </StyledText>
-      <StyledText color={finalColors[0]} style={{ top: '44%', left: '3%', fontSize: 36 }}>
+      <StyledText color={finalColors[0]} style={{ top: '44%', left: '3%', fontSize: 36 }} contentEditable>
         {values[1]}
       </StyledText>
-      <StyledText color={finalColors[0]} style={{ top: '45%', left: '40%', fontSize: 28 }}>
+      <StyledText color={finalColors[0]} style={{ top: '45%', left: '40%', fontSize: 28 }} contentEditable>
         {values[2]}
       </StyledText>
     </StyledJaggedCircleTextA>

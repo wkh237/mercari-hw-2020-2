@@ -36,7 +36,7 @@ const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[
       </StyledSVG>
       <StyledContent>
         {values[0].split('').map((s, i) => (
-          <div key={i}>{s}</div>
+          <div key={i} contentEditable>{s}</div>
         ))}
       </StyledContent>
     </StyledContainer>
