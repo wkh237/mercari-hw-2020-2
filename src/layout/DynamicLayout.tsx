@@ -94,7 +94,7 @@ const StyledContainer = styled.div<StyledContainerProps>`
   min-width: 600px;
   border: ${(props) => (props.borderType ? `4px ${props.borderType} ${props.border}` : 'none')};
   padding-left: ${(props) => (props.paddingLeft ? '1%' : '0')};
-  padding-right: ${(props) => (props.paddingRight ? '1%' : '0')};
+  padding-right: ${(props) => (props.paddingRight ? '2%' : '0')};
 `;
 
 export default DynamicBanner;

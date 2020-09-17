@@ -136,9 +136,11 @@ interface InputProps {
 
 function Input({ commitChange }: InputProps) {
   const lastValue = useRef('のこり ３ 日  出品 １０００点 メルカリ ポイント もらう');
+  const lastMatch = useRef<ReturnType<typeof matchElements>>(null as any);
   const update = () => {
     const words = `${lastValue.current}`.split(/[ 　]/).filter((s) => s);
     const suggestions = matchElements(words);
+    lastMatch.current = suggestions;
     commitChange(...suggestions);
   };
   useEffect(() => {
@@ -166,8 +168,9 @@ function Input({ commitChange }: InputProps) {
           onClick={() => {
             if (Date.now() - throttle > 200) {
               throttle = Date.now();
-              const suggestions = matchElements(lastValue.current.split(/ /));
-              commitChange(...suggestions);
+              if (lastMatch.current) {
+                commitChange(...lastMatch.current);
+              }
             }
           }}
         >
