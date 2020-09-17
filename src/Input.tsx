@@ -104,7 +104,7 @@ const matchElements = (words: string[]) => {
       }
     }
   }
-  console.log(ranksByWord);
+  console.log('rank by word', ranksByWord);
   const elementSuggestions: ElementSuggestion = {};
   for (let word in ranksByWord) {
     const elementMatches = ranksByWord[word];
@@ -122,9 +122,13 @@ const matchElements = (words: string[]) => {
       });
     }
   }
-  console.log(elementSuggestions);
-  return elementSuggestions;
+  console.log('similarity by element', elementSuggestions);
+  return [elementSuggestions, words] as const;
 };
+
+interface InputProps {
+  commitChange: (suggestions: ElementSuggestion, words: string[]) => void;
+}
 
 function Input({ commitChange }: InputProps) {
   const [value, setInputValue] = useState<string>('');
@@ -136,7 +140,7 @@ function Input({ commitChange }: InputProps) {
     // calculate score and commit update
     debounce = setTimeout(() => {
       const suggestions = matchElements(words);
-      commitChange(suggestions);
+      commitChange(...suggestions);
     }, Math.max(1000 - words.length * 200, 300));
   }, [value, commitChange]);
 
@@ -156,7 +160,7 @@ function Input({ commitChange }: InputProps) {
               if (Date.now() - throttle > 500) {
                 throttle = Date.now();
                 const suggestions = matchElements(value.split(/ /));
-                commitChange(suggestions);
+                commitChange(...suggestions);
               }
             }
           }}
@@ -165,8 +169,8 @@ function Input({ commitChange }: InputProps) {
           onClick={() => {
             if (Date.now() - throttle > 500) {
               throttle = Date.now();
-              const suggestions = matchElements(value.split(/[ 　]/));
-              commitChange(suggestions);
+              const suggestions = matchElements(value.split(/ /));
+              commitChange(...suggestions);
             }
           }}
         >

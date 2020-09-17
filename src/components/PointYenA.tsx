@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import tinycolor from 'tinycolor2';
+import { getBasicPredictor } from '../utils/predict';
 
 export const meta: ElementMeta = {
   type: 'point',
@@ -14,6 +15,8 @@ export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
   values: ['最大', '1000', 'GET!'],
 };
+
+export const predict: ValuePredictor = getBasicPredictor(meta.keywords.length);
 
 const StyledPointYen = styled.div<{ textColor: string }>`
   font-size: 16px;

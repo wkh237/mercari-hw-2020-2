@@ -1,4 +1,5 @@
 import React from 'react';
+import { getBasicPredictor } from '../utils/predict';
 import styled from 'styled-components';
 import tinycolor from 'tinycolor2';
 
@@ -14,6 +15,8 @@ export const defaultProps: ElementPropDesciptor = {
   colors: ['$secondary'],
   values: ['かしこく', 'みつけて'],
 };
+
+export const predict = getBasicPredictor(meta.keywords.length);
 
 const StackTextSmallA = ({ colors, values }: ElementPropDesciptor) => {
   const [secondary] = colors || [];

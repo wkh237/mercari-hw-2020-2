@@ -41,6 +41,10 @@ const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerPr
         {elements.map((el, i) => {
           const elementDef = Elements[el.key];
           const ElementClass = elementDef.default;
+          const values = (el?.predictedValues?.length || -1) > 0 ? el.predictedValues : elementDef.defaultProps.values;
+          // if (el.predictedValues) {
+            // console.log(values, elementDef.defaultProps.values);
+          // }
           const props = {
             ...elementDef.defaultProps,
             hasBorder: border,
@@ -48,7 +52,7 @@ const DynamicBanner = ({ border, colors, elements, suggestion }: DynamicBannerPr
             colors: elementDef.defaultProps.colors
               ? elementDef.defaultProps.colors.map(replaceColorToken)
               : [colors.primary, colors.secondary, colors.foreground, colors.background],
-            values: el.predictedValues || elementDef.defaultProps.values,
+            values,
           };
           return <ElementClass key={`${el.key}-${i}`} {...props} />;
         })}

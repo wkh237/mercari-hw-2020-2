@@ -19,19 +19,19 @@ interface BannerColors {
 }
 
 type LayoutElement =
-| ({
-  type: 'image';
-} & BaseElement)
-| ({
-  type: 'text';
-  backgroundImage?: string;
-} & BaseElement)
-| ({
-  type: 'point';
-} & BaseElement)
-| ({
-  type: 'cuttingEdge';
-} & BaseElement);
+  | ({
+      type: 'image';
+    } & BaseElement)
+  | ({
+      type: 'text';
+      backgroundImage?: string;
+    } & BaseElement)
+  | ({
+      type: 'point';
+    } & BaseElement)
+  | ({
+      type: 'cuttingEdge';
+    } & BaseElement);
 
 type ElementMeta = Omit<LayoutElement, 'values'> & { position: BaseElement['position']; keywords: string[][] };
 
@@ -59,7 +59,7 @@ interface Layout {
   border?: number;
   overlay?: string;
   element: Omit<LayoutElement, 'inputs' | 'percentage'>[];
-  
+
   // coupon pos
   couponPos?: 'left' | 'right';
 }
@@ -73,12 +73,12 @@ interface KeywordMatchResult {
   word: string;
   matches: DescriptorMatchResult;
 }
-interface InputProps {
-  commitChange: (suggestions: ElementSuggestion) => void;
-}
 interface ValueSuggestion {
   score: number;
   valueSuggestions: Record<number, KeywordMatchResult[]>;
 }
 type ElementSuggestion = Record<ElementKey, ValueSuggestion>;
-type ValuePredictor = (suggestion: ValueSuggestion) => { fulfill: boolean; values: string[] };
+type ValuePredictor = (
+  suggestion: ValueSuggestion,
+  dict: Record<string, boolean>,
+) => { fulfill: boolean; values: string[]; consumedWords: string[] };

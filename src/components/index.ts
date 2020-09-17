@@ -18,7 +18,7 @@ interface ElementDescriptor {
   default: React.FC<any>;
   meta: ElementMeta;
   defaultProps: any;
-  predict?: (suggestion: ValueSuggestion) => { fulfill: boolean; values: string[] };
+  predict?: ValuePredictor;
 }
 
 const elements: Record<string, ElementDescriptor> = {

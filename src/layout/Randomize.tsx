@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Elements from '../components';
 import { Col } from '../styles/Flex';
 import Input from '../Input';
@@ -8,7 +8,12 @@ import 'string_score';
 import { definedThemes } from '../utils/colors';
 import DynamicBanner from './DynamicLayout';
 
-export type MatchedElement = { key: ElementKey; predictedValues: string[] | null; debug?: any };
+export type MatchedElement = {
+  key: ElementKey;
+  predictedValues: string[] | null;
+  debug?: any;
+  consumedWords?: string[];
+};
 
 type ElementKey = keyof typeof Elements;
 const ElementKeys = Object.keys(Elements);
@@ -18,6 +23,7 @@ const maxResults = 25;
 
 const Randomize = () => {
   const [suggestion, setSuggestion] = useState<ElementSuggestion | null>(null);
+  const [words, setWords] = useState<string[]>([]);
   let combinations: Array<{ score: number; els: MatchedElement[] }> = [];
   const ids = ElementKeys.filter((id) => (suggestion?.[id]?.score || 0) > threshold);
   const findMinAndCanBeLast = (ids: string[]) => {
@@ -37,6 +43,7 @@ const Randomize = () => {
     current: MatchedElement[],
     space: number,
     score: number = 0,
+    dictionary: Record<string, boolean>,
   ) => {
     i++;
     if (i > maxIteration) return;
@@ -51,14 +58,9 @@ const Randomize = () => {
       const isCenter = !isLast && !isFirst;
       const predict = el.predict;
       const hasPredict = predict && suggestion;
-      let predictedValues = null;
-      let predictFulfill = false;
+      let predictedResult = null;
       if (predict && suggestion) {
-        const predictResult = predict(suggestion[id]);
-        if (predictResult.fulfill) {
-          predictFulfill = predictResult.fulfill;
-          predictedValues = predictResult.values;
-        }
+        predictedResult = predict(suggestion[id], { ...dictionary });
       }
       // check if this element can be put in this position
       if (
@@ -68,13 +70,18 @@ const Randomize = () => {
         (isCenter && el.meta.position !== 'center' && el.meta.position !== 'any') ||
         // when the element provides predict function and it failed to pass it
         // we consider all the words are not suitable for that element
-        (hasPredict && predictFulfill === false)
+        (hasPredict && !predictedResult?.fulfill)
       ) {
         continue;
       }
       // found matched
       if (space - size >= 0) {
-        matched.push({ key: id, predictedValues, debug: suggestion?.[id] });
+        matched.push({
+          key: id,
+          predictedValues: predictedResult?.values || [],
+          debug: suggestion?.[id],
+          consumedWords: hasPredict ? predictedResult?.consumedWords || [] : [],
+        });
       }
     }
     // no more elements can be put into the banner
@@ -90,12 +97,29 @@ const Randomize = () => {
           [...current, m],
           space - Elements[m.key].meta.percentage,
           score + (suggestion?.[m.key]?.score || 0),
+          {
+            ...dictionary,
+            // remove used words from dictionary so they won't repeat
+            ...(m.consumedWords || []).reduce<typeof dictionary>((removed, word) => {
+              removed[word] = false;
+              return removed;
+            }, {}),
+          },
         );
       });
     }
   };
 
-  findCombinations(ids, [], 100);
+  findCombinations(
+    ids,
+    [],
+    100,
+    0,
+    words.reduce<Record<string, boolean>>((dict, word) => {
+      dict[word] = true;
+      return dict;
+    }, {}),
+  );
   combinations = combinations.sort((a, b) => -(a.score - b.score));
   console.log(`${combinations.length} combinations from ${ids.length} elements (${i} iterations)`);
   console.log(combinations.slice(0, maxResults));
@@ -117,12 +141,16 @@ const Randomize = () => {
       />
     );
   });
+  const onChangeCallback = useCallback((nextSuggestion: ElementSuggestion, nextWords: string[]) => {
+    setSuggestion(nextSuggestion);
+    setWords(nextWords);
+  }, []);
 
   return (
     <StyledContainer>
       <StyledLayer>
         <img src={require('../assets/imgs/header.png')} alt="foo" />
-        <Input commitChange={setSuggestion} />
+        <Input commitChange={onChangeCallback} />
         <Col>{banners}</Col>
       </StyledLayer>
     </StyledContainer>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { consumeTopMatched, isValuesNonEmpty } from '../utils/predict';
 
 const LeftRecA = ({ colors, values, borderType }: ElementPropDesciptor) => {
   const [borderColor, primaryColor] = colors || [];
@@ -29,6 +30,13 @@ export const meta: ElementMeta = {
   position: 'left',
   inputs: ['text', 'text', 'text'],
   keywords: [['$len:5'], ['限定', '$len:2:2', 'のみ', '限る']],
+};
+
+export const predict: ValuePredictor = (suggestion, dict) => {
+  const consumedWords: string[] = [];
+  const result2 = consumeTopMatched(suggestion.valueSuggestions[1], dict, consumedWords);
+  const result1 = consumeTopMatched(suggestion.valueSuggestions[0], dict, consumedWords);
+  return { fulfill: isValuesNonEmpty(result1, result2), values: [result1, result2], consumedWords };
 };
 
 const StyledSVG = styled.svg`

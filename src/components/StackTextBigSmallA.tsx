@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getBasicPredictor } from '../utils/predict';
 
 export const meta: ElementMeta = {
   type: 'text',
@@ -16,6 +17,8 @@ export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$text'],
   values: ['出品', 'するだけで'],
 };
+
+export const predict = getBasicPredictor(meta.keywords.length);
 
 const StackTextBigSmallA = ({ colors, values }: { values: string[]; colors: string[]; singleColor?: boolean }) => {
   const [foreground, textColor] = colors || [];

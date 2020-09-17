@@ -1,4 +1,5 @@
 import React from 'react';
+import { getBasicPredictor } from '../utils/predict';
 import styled from 'styled-components';
 
 export const meta: ElementMeta = {
@@ -13,6 +14,8 @@ export const defaultProps: ElementPropDesciptor = {
   colors: ['$foreground', '$background'],
   values: ['抽選で'],
 };
+
+export const predict = getBasicPredictor(meta.keywords.length);
 
 const VertTextBubbleA = ({ colors, values }: { colors: string[]; values: string[] }) => {
   const [, textColor] = colors;
